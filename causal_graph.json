@@ -1,0 +1,1885 @@
+{
+  "nodes": [
+    {
+      "id": "A191RL1Q225SBEA",
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "BAMLH0A0HYM2",
+      "in_degree": 6,
+      "out_degree": 5
+    },
+    {
+      "id": "CL=F",
+      "in_degree": 8,
+      "out_degree": 5
+    },
+    {
+      "id": "CPIAUCSL",
+      "in_degree": 3,
+      "out_degree": 6
+    },
+    {
+      "id": "DGS10",
+      "in_degree": 2,
+      "out_degree": 7
+    },
+    {
+      "id": "DGS2",
+      "in_degree": 3,
+      "out_degree": 6
+    },
+    {
+      "id": "DX-Y.NYB",
+      "in_degree": 7,
+      "out_degree": 4
+    },
+    {
+      "id": "EEM",
+      "in_degree": 10,
+      "out_degree": 7
+    },
+    {
+      "id": "EURUSD=X",
+      "in_degree": 17,
+      "out_degree": 2
+    },
+    {
+      "id": "FEDFUNDS",
+      "in_degree": 5,
+      "out_degree": 6
+    },
+    {
+      "id": "GC=F",
+      "in_degree": 10,
+      "out_degree": 4
+    },
+    {
+      "id": "HOUST",
+      "in_degree": 2,
+      "out_degree": 2
+    },
+    {
+      "id": "HYG",
+      "in_degree": 9,
+      "out_degree": 7
+    },
+    {
+      "id": "ICSA",
+      "in_degree": 0,
+      "out_degree": 0
+    },
+    {
+      "id": "INDPRO",
+      "in_degree": 4,
+      "out_degree": 5
+    },
+    {
+      "id": "LQD",
+      "in_degree": 3,
+      "out_degree": 3
+    },
+    {
+      "id": "M2SL",
+      "in_degree": 6,
+      "out_degree": 7
+    },
+    {
+      "id": "PAYEMS",
+      "in_degree": 5,
+      "out_degree": 8
+    },
+    {
+      "id": "PCEPILFE",
+      "in_degree": 6,
+      "out_degree": 7
+    },
+    {
+      "id": "RSXFS",
+      "in_degree": 9,
+      "out_degree": 10
+    },
+    {
+      "id": "T10Y2Y",
+      "in_degree": 2,
+      "out_degree": 3
+    },
+    {
+      "id": "TEDRATE",
+      "in_degree": 0,
+      "out_degree": 0
+    },
+    {
+      "id": "TLT",
+      "in_degree": 3,
+      "out_degree": 4
+    },
+    {
+      "id": "UMCSENT",
+      "in_degree": 4,
+      "out_degree": 1
+    },
+    {
+      "id": "UNRATE",
+      "in_degree": 2,
+      "out_degree": 4
+    },
+    {
+      "id": "XLE",
+      "in_degree": 9,
+      "out_degree": 10
+    },
+    {
+      "id": "XLF",
+      "in_degree": 9,
+      "out_degree": 11
+    },
+    {
+      "id": "XLK",
+      "in_degree": 7,
+      "out_degree": 9
+    },
+    {
+      "id": "XLRE",
+      "in_degree": 14,
+      "out_degree": 4
+    },
+    {
+      "id": "XLU",
+      "in_degree": 10,
+      "out_degree": 6
+    },
+    {
+      "id": "XLV",
+      "in_degree": 6,
+      "out_degree": 8
+    },
+    {
+      "id": "XLY",
+      "in_degree": 5,
+      "out_degree": 10
+    },
+    {
+      "id": "^GSPC",
+      "in_degree": 7,
+      "out_degree": 13
+    },
+    {
+      "id": "^NDX",
+      "in_degree": 7,
+      "out_degree": 11
+    },
+    {
+      "id": "^RUT",
+      "in_degree": 5,
+      "out_degree": 11
+    },
+    {
+      "id": "^VIX",
+      "in_degree": 4,
+      "out_degree": 3
+    },
+    {
+      "id": "^VVIX",
+      "in_degree": 1,
+      "out_degree": 1
+    }
+  ],
+  "edges": [
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.9784800006989722,
+      "lag": 1,
+      "confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "CL=F",
+      "weight": 0.0597258787882886,
+      "lag": 0,
+      "confidence": 0.81,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "HYG",
+      "weight": 0.34229872508370923,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLRE",
+      "weight": 0.2538630990999131,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLU",
+      "weight": 0.06585692404093886,
+      "lag": 0,
+      "confidence": 0.845,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.05135725934495945,
+      "lag": 5,
+      "confidence": 0.585,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "CL=F",
+      "target": "GC=F",
+      "weight": 0.12053739379671743,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLE",
+      "weight": 0.30293402598001695,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLU",
+      "weight": 0.07370441114270904,
+      "lag": 0,
+      "confidence": 0.88,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "CPIAUCSL",
+      "weight": 0.1,
+      "lag": 1,
+      "confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "CL=F",
+      "target": "RSXFS",
+      "weight": 0.05402634166047215,
+      "lag": 1,
+      "confidence": 0.355,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "FEDFUNDS",
+      "weight": 0.10001703035037277,
+      "lag": 0,
+      "confidence": 0.585,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "M2SL",
+      "weight": 0.16519458851032484,
+      "lag": 0,
+      "confidence": 0.465,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "PCEPILFE",
+      "weight": 0.595209765844858,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "RSXFS",
+      "weight": 0.2705395739803066,
+      "lag": 0,
+      "confidence": 0.965,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "UMCSENT",
+      "weight": 0.23214247545636016,
+      "lag": 0,
+      "confidence": 0.765,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "EURUSD=X",
+      "weight": 0.18213019372779082,
+      "lag": 5,
+      "confidence": 0.75,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.27478667707056686,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "DGS2",
+      "weight": 1.0975588249703585,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "LQD",
+      "weight": 0.1704165927047455,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "T10Y2Y",
+      "weight": 1.419922721333476,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "TLT",
+      "weight": 0.6997272632927249,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLRE",
+      "weight": 0.08207339800312756,
+      "lag": 0,
+      "confidence": 0.74,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "GC=F",
+      "weight": 0.057568098540993436,
+      "lag": 1,
+      "confidence": 0.465,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS2",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.15947736221394337,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "DGS10",
+      "weight": 0.9065112422825351,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "DX-Y.NYB",
+      "weight": 0.19813619321791548,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "HYG",
+      "weight": 0.07682710693429352,
+      "lag": 0,
+      "confidence": 0.765,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "T10Y2Y",
+      "weight": 1.2943069839037133,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLRE",
+      "weight": 0.07889406116210043,
+      "lag": 0,
+      "confidence": 0.775,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "EEM",
+      "weight": 0.10672324404873697,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "EURUSD=X",
+      "weight": 0.6917174292246104,
+      "lag": 1,
+      "confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "GC=F",
+      "weight": 0.30493457606611396,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "DX-Y.NYB",
+      "weight": 0.1415618763536922,
+      "lag": 1,
+      "confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EEM",
+      "target": "DX-Y.NYB",
+      "weight": 0.18560636239556438,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "GC=F",
+      "weight": 0.19174683282302957,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "HYG",
+      "weight": 0.05979970450422288,
+      "lag": 0,
+      "confidence": 0.575,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLE",
+      "weight": 0.13496616994824256,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLRE",
+      "weight": 0.3186346473219062,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLU",
+      "weight": 0.11295411673393714,
+      "lag": 0,
+      "confidence": 0.95,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "^RUT",
+      "weight": 0.05100094457726973,
+      "lag": 0,
+      "confidence": 0.69,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "DX-Y.NYB",
+      "weight": 0.28355306081951975,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "EURUSD=X",
+      "weight": 0.706763888310518,
+      "lag": 1,
+      "confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "M2SL",
+      "weight": 0.3089443184862849,
+      "lag": 0,
+      "confidence": 0.955,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "PCEPILFE",
+      "weight": 0.12054686373469327,
+      "lag": 0,
+      "confidence": 0.83,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "RSXFS",
+      "weight": 0.06511330024633845,
+      "lag": 0,
+      "confidence": 0.43,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "UMCSENT",
+      "weight": 0.09075226065575996,
+      "lag": 0,
+      "confidence": 0.51,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "DGS2",
+      "weight": 0.1,
+      "lag": 1,
+      "confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "EURUSD=X",
+      "weight": 0.17246191529825866,
+      "lag": 5,
+      "confidence": 0.915,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "GC=F",
+      "target": "CL=F",
+      "weight": 0.08323794978978018,
+      "lag": 0,
+      "confidence": 0.99,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "DX-Y.NYB",
+      "weight": 0.25029634102669357,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "EEM",
+      "weight": 0.06137749307462572,
+      "lag": 0,
+      "confidence": 0.975,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "XLF",
+      "weight": 0.05446983234591732,
+      "lag": 0,
+      "confidence": 0.65,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "INDPRO",
+      "weight": 0.13225606146811367,
+      "lag": 0,
+      "confidence": 0.885,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "RSXFS",
+      "weight": 0.14651059716530992,
+      "lag": 0,
+      "confidence": 0.98,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.3683067191088321,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "DX-Y.NYB",
+      "weight": 0.08013787081951908,
+      "lag": 0,
+      "confidence": 0.99,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "EEM",
+      "weight": 0.055701533028714445,
+      "lag": 0,
+      "confidence": 0.495,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "GC=F",
+      "weight": 0.06869508206832872,
+      "lag": 0,
+      "confidence": 0.62,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "LQD",
+      "weight": 0.44332324201405204,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "HYG",
+      "weight": 0.11173494375134817,
+      "lag": 3,
+      "confidence": 0.855,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "XLRE",
+      "weight": 0.06029974471099897,
+      "lag": 2,
+      "confidence": 0.58,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "INDPRO",
+      "target": "HOUST",
+      "weight": 0.3281930037857564,
+      "lag": 0,
+      "confidence": 0.965,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "M2SL",
+      "weight": 0.15770146303868474,
+      "lag": 0,
+      "confidence": 0.625,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "PAYEMS",
+      "weight": 0.08245095460348233,
+      "lag": 0,
+      "confidence": 0.82,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "RSXFS",
+      "weight": 0.2428639612185737,
+      "lag": 0,
+      "confidence": 0.945,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "EURUSD=X",
+      "weight": 0.08962097513935241,
+      "lag": 5,
+      "confidence": 0.55,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "HYG",
+      "weight": 0.37356243893780294,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "TLT",
+      "weight": 0.11731583069805793,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "XLRE",
+      "weight": 0.10821027175739278,
+      "lag": 2,
+      "confidence": 0.72,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "M2SL",
+      "target": "FEDFUNDS",
+      "weight": 0.4357549479998905,
+      "lag": 0,
+      "confidence": 0.975,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "INDPRO",
+      "weight": 0.07736416593971047,
+      "lag": 0,
+      "confidence": 0.575,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "PAYEMS",
+      "weight": 0.06275342470109431,
+      "lag": 0,
+      "confidence": 0.465,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "PCEPILFE",
+      "weight": 0.5365820605912272,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "RSXFS",
+      "weight": 0.32320468236950534,
+      "lag": 0,
+      "confidence": 0.765,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "CL=F",
+      "weight": 0.05572150461458153,
+      "lag": 2,
+      "confidence": 0.31,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "M2SL",
+      "target": "EURUSD=X",
+      "weight": 0.056736037004542154,
+      "lag": 5,
+      "confidence": 0.46,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "FEDFUNDS",
+      "weight": 0.08224787087029871,
+      "lag": 0,
+      "confidence": 0.7,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "INDPRO",
+      "weight": 0.630475447706032,
+      "lag": 0,
+      "confidence": 0.96,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "M2SL",
+      "weight": 0.5164235495587569,
+      "lag": 0,
+      "confidence": 0.8,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "PCEPILFE",
+      "weight": 1.0062876729232852,
+      "lag": 0,
+      "confidence": 0.8,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "RSXFS",
+      "weight": 0.5239606400523611,
+      "lag": 0,
+      "confidence": 0.945,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "UNRATE",
+      "weight": 0.9918165541889131,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "XLRE",
+      "weight": 0.0833823865530137,
+      "lag": 0,
+      "confidence": 0.52,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "EURUSD=X",
+      "weight": 0.3894165687788693,
+      "lag": 5,
+      "confidence": 0.715,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "CPIAUCSL",
+      "weight": 0.5536420394279826,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "FEDFUNDS",
+      "weight": 0.20527121376932758,
+      "lag": 0,
+      "confidence": 0.86,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "M2SL",
+      "weight": 0.6045396054563819,
+      "lag": 0,
+      "confidence": 0.98,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "PAYEMS",
+      "weight": 0.11376590563115922,
+      "lag": 0,
+      "confidence": 0.925,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "RSXFS",
+      "weight": 0.21453172944054744,
+      "lag": 0,
+      "confidence": 0.69,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "UNRATE",
+      "weight": 0.09012275282923106,
+      "lag": 0,
+      "confidence": 0.81,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "EURUSD=X",
+      "weight": 0.11743211515280128,
+      "lag": 5,
+      "confidence": 0.715,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "RSXFS",
+      "target": "CPIAUCSL",
+      "weight": 0.11550700645463566,
+      "lag": 0,
+      "confidence": 0.895,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "FEDFUNDS",
+      "weight": 0.09757575041671669,
+      "lag": 0,
+      "confidence": 0.605,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "HOUST",
+      "weight": 0.2359718773642206,
+      "lag": 0,
+      "confidence": 0.985,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "INDPRO",
+      "weight": 0.1372266752304555,
+      "lag": 0,
+      "confidence": 0.885,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "M2SL",
+      "weight": 0.3447969645229247,
+      "lag": 0,
+      "confidence": 0.585,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "PAYEMS",
+      "weight": 0.05607541608824416,
+      "lag": 0,
+      "confidence": 0.52,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "PCEPILFE",
+      "weight": 0.22853858534015906,
+      "lag": 0,
+      "confidence": 0.72,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "UMCSENT",
+      "weight": 0.11711859572989644,
+      "lag": 0,
+      "confidence": 0.685,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "XLRE",
+      "weight": 0.0662743738790942,
+      "lag": 0,
+      "confidence": 0.575,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "EURUSD=X",
+      "weight": 0.11907327057456242,
+      "lag": 5,
+      "confidence": 0.8,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "DGS10",
+      "weight": 0.6976765976418162,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "DGS2",
+      "weight": 0.7690510740013529,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "TLT",
+      "weight": 0.1764359876415685,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "GC=F",
+      "weight": 0.07014502448030294,
+      "lag": 0,
+      "confidence": 0.62,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "HYG",
+      "weight": 0.10450458622332508,
+      "lag": 0,
+      "confidence": 0.97,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "LQD",
+      "weight": 0.4205816671170467,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "EURUSD=X",
+      "weight": 0.0731102894554918,
+      "lag": 1,
+      "confidence": 0.395,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "RSXFS",
+      "weight": 0.09691915719392995,
+      "lag": 0,
+      "confidence": 0.825,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "PAYEMS",
+      "weight": 0.8200598494867442,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "PCEPILFE",
+      "weight": 0.6596423019077581,
+      "lag": 0,
+      "confidence": 0.685,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "UMCSENT",
+      "weight": 0.32001698185843025,
+      "lag": 0,
+      "confidence": 0.635,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "EURUSD=X",
+      "weight": 0.0751711721326001,
+      "lag": 5,
+      "confidence": 0.3,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "CL=F",
+      "weight": 0.6535606152284656,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "EEM",
+      "weight": 0.15582950954775546,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLF",
+      "weight": 0.163952943623233,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLK",
+      "weight": 0.06997301446534249,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLV",
+      "weight": 0.16367498866585162,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLY",
+      "weight": 0.11074149950732588,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "^GSPC",
+      "weight": 0.11328705089463495,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "^NDX",
+      "weight": 0.07053317121838858,
+      "lag": 0,
+      "confidence": 0.935,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "^RUT",
+      "weight": 0.17123405381068854,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "GC=F",
+      "weight": 0.051063253413965067,
+      "lag": 1,
+      "confidence": 0.485,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "CL=F",
+      "weight": 0.10004636685644931,
+      "lag": 0,
+      "confidence": 0.965,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "EEM",
+      "weight": 0.06239819610367478,
+      "lag": 0,
+      "confidence": 0.665,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "GC=F",
+      "weight": 0.18028540862311063,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "HYG",
+      "weight": 0.07604031271062284,
+      "lag": 0,
+      "confidence": 0.705,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLE",
+      "weight": 0.2511328466058996,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLK",
+      "weight": 0.10602590381525415,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLU",
+      "weight": 0.31305195912573386,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLV",
+      "weight": 0.2863130734397079,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^GSPC",
+      "weight": 0.218728742959454,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^NDX",
+      "weight": 0.15787344104497514,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^RUT",
+      "weight": 0.25248915024124424,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLE",
+      "weight": 0.3262110273713488,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLF",
+      "weight": 0.3119344092464555,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLRE",
+      "weight": 0.18411547555962582,
+      "lag": 0,
+      "confidence": 0.935,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLU",
+      "weight": 0.216454770184358,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLV",
+      "weight": 0.5092848237808487,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "^GSPC",
+      "weight": 0.21203647683113352,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "^NDX",
+      "weight": 0.5281483722230068,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLK",
+      "weight": 0.09409407388871746,
+      "lag": 1,
+      "confidence": 0.975,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLK",
+      "target": "EURUSD=X",
+      "weight": 0.0598590699612374,
+      "lag": 5,
+      "confidence": 0.18,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLRE",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.13198320293867402,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "EEM",
+      "weight": 0.13835023184563944,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "EURUSD=X",
+      "weight": 0.052164353395050836,
+      "lag": 0,
+      "confidence": 0.36,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLU",
+      "weight": 0.23047014569658944,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "CL=F",
+      "weight": 0.08907338862711016,
+      "lag": 0,
+      "confidence": 0.96,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "EEM",
+      "weight": 0.07698222179958762,
+      "lag": 0,
+      "confidence": 0.86,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "XLF",
+      "weight": 0.1324593751672119,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "XLRE",
+      "weight": 0.33622368560983446,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^GSPC",
+      "weight": 0.07881564114607185,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^NDX",
+      "weight": 0.05979023598837766,
+      "lag": 0,
+      "confidence": 0.805,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "CL=F",
+      "weight": 0.06811595438948642,
+      "lag": 0,
+      "confidence": 0.835,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "XLE",
+      "weight": 0.17025298273461273,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "XLF",
+      "weight": 0.19556737296438478,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "XLK",
+      "weight": 0.12413785936086001,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "XLRE",
+      "weight": 0.0938652585952968,
+      "lag": 0,
+      "confidence": 0.82,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "XLY",
+      "weight": 0.06990621877698876,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "^GSPC",
+      "weight": 0.12432518135461453,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "^VIX",
+      "weight": 0.050148392703436545,
+      "lag": 0,
+      "confidence": 0.79,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "GC=F",
+      "weight": 0.08967596441759558,
+      "lag": 0,
+      "confidence": 0.875,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLE",
+      "weight": 0.29554299924582406,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLF",
+      "weight": 0.11017360416633717,
+      "lag": 0,
+      "confidence": 0.99,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLK",
+      "weight": 0.14124396746714948,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLRE",
+      "weight": 0.11167852132119675,
+      "lag": 0,
+      "confidence": 0.94,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLU",
+      "weight": 0.20212324696244327,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLV",
+      "weight": 0.260405569190606,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "^GSPC",
+      "weight": 0.1413332924771604,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "^NDX",
+      "weight": 0.11270920835862823,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "^RUT",
+      "weight": 0.2886040899512311,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "EEM",
+      "weight": 0.26520495462475163,
+      "lag": 0,
+      "confidence": 0.995,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "EURUSD=X",
+      "weight": 0.16096090502151053,
+      "lag": 0,
+      "confidence": 0.585,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "HYG",
+      "weight": 0.17877505223626283,
+      "lag": 0,
+      "confidence": 0.995,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLE",
+      "weight": 1.609087094582918,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLF",
+      "weight": 2.0002352541334316,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLK",
+      "weight": 0.6727847903362782,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLU",
+      "weight": 1.7242369763112606,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLV",
+      "weight": 1.8335961841130066,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLY",
+      "weight": 0.6915165460416346,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^NDX",
+      "weight": 0.5005139176063804,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^VIX",
+      "weight": 0.16975763110762696,
+      "lag": 0,
+      "confidence": 0.995,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.0982417367411552,
+      "lag": 1,
+      "confidence": 0.73,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "DX-Y.NYB",
+      "weight": 0.0711958183542388,
+      "lag": 1,
+      "confidence": 0.705,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "EEM",
+      "weight": 0.21351865135425585,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLE",
+      "weight": 0.4217641709949513,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLF",
+      "weight": 0.5836936445579728,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLK",
+      "weight": 0.6990300404399821,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLRE",
+      "weight": 0.08457045866143681,
+      "lag": 0,
+      "confidence": 0.6,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLU",
+      "weight": 0.5342304908514416,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLY",
+      "weight": 0.20860632775698587,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "^GSPC",
+      "weight": 0.1929330284543602,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "^RUT",
+      "weight": 0.16276962717508045,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "^VIX",
+      "weight": 0.09653830973222068,
+      "lag": 0,
+      "confidence": 0.79,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "EURUSD=X",
+      "weight": 0.07103806690636133,
+      "lag": 2,
+      "confidence": 0.235,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^RUT",
+      "target": "CL=F",
+      "weight": 0.0686644460097785,
+      "lag": 0,
+      "confidence": 0.88,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "EEM",
+      "weight": 0.08478926631668021,
+      "lag": 0,
+      "confidence": 0.975,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "EURUSD=X",
+      "weight": 0.05393269096853446,
+      "lag": 0,
+      "confidence": 0.255,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "GC=F",
+      "weight": 0.06319816071461154,
+      "lag": 0,
+      "confidence": 0.615,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "HYG",
+      "weight": 0.05436545063759775,
+      "lag": 0,
+      "confidence": 0.57,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLE",
+      "weight": 0.2706236920347702,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLF",
+      "weight": 0.20480220459167867,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLRE",
+      "weight": 0.19163335396894687,
+      "lag": 0,
+      "confidence": 0.995,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLU",
+      "weight": 0.07775618868251663,
+      "lag": 0,
+      "confidence": 0.835,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLY",
+      "weight": 0.23484670630301965,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "^NDX",
+      "weight": 0.05280612647283773,
+      "lag": 0,
+      "confidence": 0.575,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "EURUSD=X",
+      "weight": 0.05729223152240069,
+      "lag": 0,
+      "confidence": 0.315,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLV",
+      "weight": 0.06504160378526544,
+      "lag": 0,
+      "confidence": 0.73,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "^VVIX",
+      "weight": 0.7874940464066527,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "^VIX",
+      "weight": 0.5287228156649129,
+      "lag": 0,
+      "confidence": 1.0,
+      "edge_type": "contemporaneous"
+    }
+  ],
+  "metadata": {
+    "n_nodes": 37,
+    "n_edges": 211,
+    "max_lag": 5,
+    "created_at": "2026-03-23T03:10:48.608874"
+  }
+}
