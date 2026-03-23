@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  # ── PostgreSQL + TimescaleDB ──
+  db:
+    image: timescale/timescaledb:latest-pg16
+    container_name: causalstress-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis (caching & job queue) ──
+  redis:
+    image: redis:7-alpine
+    container_name: causalstress-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── FastAPI Backend ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: causalstress-api
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      FRED_API_KEY: ${FRED_API_KEY}
+      ENV: ${ENV}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./ml_pipeline:/ml_pipeline
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
