@@ -1,0 +1,30 @@
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-dotenv==1.0.1
+
+# Database
+sqlalchemy==2.0.36
+asyncpg==0.30.0
+psycopg2-binary==2.9.10
+alembic==1.14.1
+
+# Redis
+redis==5.2.1
+
+# Data processing
+pandas==2.2.3
+numpy==2.2.1
+scipy==1.15.0
+statsmodels==0.14.4
+
+# Data sources
+fredapi==0.5.2
+yfinance==0.2.51
+
+# CORS and validation
+pydantic==2.10.4
+
+# Testing
+pytest==8.3.4
+httpx==0.28.1
