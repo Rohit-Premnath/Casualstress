@@ -1,0 +1,6197 @@
+{
+  "nodes": [
+    {
+      "id": "A191RL1Q225SBEA",
+      "in_degree": 8,
+      "out_degree": 8
+    },
+    {
+      "id": "BAMLH0A0HYM2",
+      "in_degree": 21,
+      "out_degree": 21
+    },
+    {
+      "id": "CL=F",
+      "in_degree": 25,
+      "out_degree": 24
+    },
+    {
+      "id": "CPIAUCSL",
+      "in_degree": 10,
+      "out_degree": 10
+    },
+    {
+      "id": "DGS10",
+      "in_degree": 19,
+      "out_degree": 20
+    },
+    {
+      "id": "DGS2",
+      "in_degree": 21,
+      "out_degree": 22
+    },
+    {
+      "id": "DX-Y.NYB",
+      "in_degree": 18,
+      "out_degree": 18
+    },
+    {
+      "id": "EEM",
+      "in_degree": 23,
+      "out_degree": 23
+    },
+    {
+      "id": "EURUSD=X",
+      "in_degree": 24,
+      "out_degree": 12
+    },
+    {
+      "id": "FEDFUNDS",
+      "in_degree": 10,
+      "out_degree": 12
+    },
+    {
+      "id": "GC=F",
+      "in_degree": 12,
+      "out_degree": 10
+    },
+    {
+      "id": "HOUST",
+      "in_degree": 9,
+      "out_degree": 10
+    },
+    {
+      "id": "HYG",
+      "in_degree": 21,
+      "out_degree": 21
+    },
+    {
+      "id": "ICSA",
+      "in_degree": 0,
+      "out_degree": 0
+    },
+    {
+      "id": "INDPRO",
+      "in_degree": 11,
+      "out_degree": 11
+    },
+    {
+      "id": "LQD",
+      "in_degree": 19,
+      "out_degree": 22
+    },
+    {
+      "id": "M2SL",
+      "in_degree": 10,
+      "out_degree": 12
+    },
+    {
+      "id": "PAYEMS",
+      "in_degree": 11,
+      "out_degree": 13
+    },
+    {
+      "id": "PCEPILFE",
+      "in_degree": 8,
+      "out_degree": 9
+    },
+    {
+      "id": "RSXFS",
+      "in_degree": 11,
+      "out_degree": 12
+    },
+    {
+      "id": "T10Y2Y",
+      "in_degree": 9,
+      "out_degree": 9
+    },
+    {
+      "id": "TEDRATE",
+      "in_degree": 11,
+      "out_degree": 11
+    },
+    {
+      "id": "TLT",
+      "in_degree": 19,
+      "out_degree": 20
+    },
+    {
+      "id": "UMCSENT",
+      "in_degree": 9,
+      "out_degree": 9
+    },
+    {
+      "id": "UNRATE",
+      "in_degree": 11,
+      "out_degree": 12
+    },
+    {
+      "id": "XLE",
+      "in_degree": 23,
+      "out_degree": 23
+    },
+    {
+      "id": "XLF",
+      "in_degree": 23,
+      "out_degree": 23
+    },
+    {
+      "id": "XLK",
+      "in_degree": 21,
+      "out_degree": 21
+    },
+    {
+      "id": "XLRE",
+      "in_degree": 21,
+      "out_degree": 18
+    },
+    {
+      "id": "XLU",
+      "in_degree": 18,
+      "out_degree": 18
+    },
+    {
+      "id": "XLV",
+      "in_degree": 20,
+      "out_degree": 20
+    },
+    {
+      "id": "XLY",
+      "in_degree": 21,
+      "out_degree": 21
+    },
+    {
+      "id": "^GSPC",
+      "in_degree": 23,
+      "out_degree": 23
+    },
+    {
+      "id": "^NDX",
+      "in_degree": 21,
+      "out_degree": 21
+    },
+    {
+      "id": "^RUT",
+      "in_degree": 22,
+      "out_degree": 23
+    },
+    {
+      "id": "^VIX",
+      "in_degree": 19,
+      "out_degree": 20
+    },
+    {
+      "id": "^VVIX",
+      "in_degree": 18,
+      "out_degree": 18
+    }
+  ],
+  "edges": [
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.7005591691910085,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "INDPRO",
+      "weight": 0.34418304707986935,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.274568899898232e-153,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "PAYEMS",
+      "weight": 0.3094485890940005,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8072019103390144e-122,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "UNRATE",
+      "weight": 0.2926206565927523,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.603604930659675e-109,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "RSXFS",
+      "weight": 0.2508994590191739,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.620163283643335e-80,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "HOUST",
+      "weight": 0.24746871945921453,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.08959927917353e-77,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "M2SL",
+      "weight": 0.1716193062899477,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1240030763105376e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "A191RL1Q225SBEA",
+      "target": "FEDFUNDS",
+      "weight": 0.16306421796027643,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.8277474788601992e-34,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "HYG",
+      "weight": 0.04097790806433582,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.002419560545651097,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLRE",
+      "weight": 0.046167397824448383,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.000627819519352859,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLU",
+      "weight": 0.31415334230439906,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 7.316071940473669e-126,
+      "dyno_confidence": 0.845,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "CL=F",
+      "weight": 0.04090443184035725,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0024545693133345616,
+      "dyno_confidence": 0.81,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.04795932828899233,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0003849050292860339,
+      "dyno_confidence": 0.585,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "^GSPC",
+      "weight": 0.5572547782021364,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "DGS10",
+      "weight": 0.5148429695179005,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "^RUT",
+      "weight": 0.5123231072963514,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLY",
+      "weight": 0.5025573019169776,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLK",
+      "weight": 0.4951543424464451,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "EEM",
+      "weight": 0.4933768003341221,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "^NDX",
+      "weight": 0.4912659707975271,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLF",
+      "weight": 0.4887120368369402,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLE",
+      "weight": 0.4748879976029238,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0559264199392081e-306,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "DGS2",
+      "weight": 0.4618622139741646,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.1783805802896337e-288,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "TLT",
+      "weight": 0.4597244076944347,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.6619691384375955e-285,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "^VIX",
+      "weight": 0.43991169400101804,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4840620475990632e-258,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "XLV",
+      "weight": 0.4332140268175686,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.241236638577854e-250,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "^VVIX",
+      "weight": 0.34092046672204035,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5053324138046085e-149,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "TEDRATE",
+      "weight": 0.14232175675733974,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.2119193034119565e-26,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "BAMLH0A0HYM2",
+      "target": "T10Y2Y",
+      "weight": 0.13508013029337046,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.380515411498829e-24,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLE",
+      "weight": 0.03458725095207421,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.010372932503181765,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "CL=F",
+      "target": "GC=F",
+      "weight": 0.18405105322461812,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.330695234000779e-43,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLU",
+      "weight": 0.05429857912485993,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 5.681860153212141e-05,
+      "dyno_confidence": 0.88,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "CL=F",
+      "target": "RSXFS",
+      "weight": 0.05373928237441957,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 6.752337323757195e-05,
+      "dyno_confidence": 0.355,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "CPIAUCSL",
+      "weight": 0.03943591806434615,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0034491378266328946,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "EEM",
+      "weight": 0.299195175570749,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.257554272861547e-114,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.2942604317336556,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.140364431523774e-110,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "^GSPC",
+      "weight": 0.27997031833031777,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.042654389716768e-99,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "^RUT",
+      "weight": 0.261059451626971,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.033030591558085e-86,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "HYG",
+      "weight": 0.2566371974752634,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.2949117575439564e-83,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLK",
+      "weight": 0.21988261929138952,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.181227905309045e-61,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "^NDX",
+      "weight": 0.21432156629204335,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.712857742293501e-58,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLF",
+      "weight": 0.20747609841413403,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8559740275195822e-54,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLY",
+      "weight": 0.20257175605401798,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.040019203539367e-52,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "TLT",
+      "weight": 0.20104670683728124,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.126960117904944e-51,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "DGS10",
+      "weight": 0.20038098620750314,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.320884660266604e-51,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "^VIX",
+      "weight": 0.19895121787271375,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.697283202939764e-50,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "DX-Y.NYB",
+      "weight": 0.1718936715287305,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0450737256660525e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLV",
+      "weight": 0.1492004309875995,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0764369778006946e-28,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "^VVIX",
+      "weight": 0.14023730158482423,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4864515754613494e-25,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "DGS2",
+      "weight": 0.12885579458364305,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.760982828407107e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "T10Y2Y",
+      "weight": 0.11903629381260473,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.547736484803665e-19,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "EURUSD=X",
+      "weight": 0.11689670692724755,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.648764327891037e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CL=F",
+      "target": "XLRE",
+      "weight": 0.10930887895575628,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.597286986345464e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "PCEPILFE",
+      "weight": 0.7437699665614044,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "RSXFS",
+      "weight": 0.41796417014316495,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.2630361819064491e-231,
+      "dyno_confidence": 0.965,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "FEDFUNDS",
+      "weight": 0.31086690453999694,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.0604035467842621e-123,
+      "dyno_confidence": 0.585,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "EURUSD=X",
+      "weight": 0.13043827496070248,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 2.68023342717088e-22,
+      "dyno_confidence": 0.75,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "M2SL",
+      "weight": 0.12286361647655843,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 5.859246188618214e-20,
+      "dyno_confidence": 0.465,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "UMCSENT",
+      "weight": 0.11917811856038453,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 6.870889442757037e-19,
+      "dyno_confidence": 0.765,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "PAYEMS",
+      "weight": 0.30160332268484746,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.671996614612514e-116,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "INDPRO",
+      "weight": 0.2654870602209856,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9858194989250935e-89,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "UNRATE",
+      "weight": 0.2459715842063085,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2683113648429786e-76,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "CPIAUCSL",
+      "target": "HOUST",
+      "weight": 0.21051768274955943,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.3844161638197767e-56,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "TLT",
+      "weight": 0.031187305882996376,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.020725422433497703,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "DGS2",
+      "weight": 0.050266787652641684,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00019142406139130539,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "LQD",
+      "weight": 0.044425957567024554,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0009894955283427766,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.03282304193345493,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.015047953627592144,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "T10Y2Y",
+      "weight": 0.47152925808943785,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 2.2798612492948454e-302,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "GC=F",
+      "weight": 0.08632597910017109,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 1.4086304912414985e-10,
+      "dyno_confidence": 0.465,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLRE",
+      "weight": 0.030533103649085014,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.02365045077788227,
+      "dyno_confidence": 0.74,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLF",
+      "weight": 0.30091097172554715,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9995432940158395e-115,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLE",
+      "weight": 0.28279682991346816,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2133745077832832e-101,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "^GSPC",
+      "weight": 0.2821702971994405,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.5003627254606856e-101,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "^RUT",
+      "weight": 0.25295889564791496,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.947371655965958e-81,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "EEM",
+      "weight": 0.24489970981937442,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.154821200394166e-76,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "^NDX",
+      "weight": 0.23403608344311644,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.7985138629552524e-69,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "^VIX",
+      "weight": 0.2305678771873922,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.896946072496823e-67,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLK",
+      "weight": 0.2298869941532403,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.62170536704513e-67,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLY",
+      "weight": 0.2287306670053415,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.47072879450844e-66,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "CL=F",
+      "weight": 0.20038098620750314,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.320884660266604e-51,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "^VVIX",
+      "weight": 0.18628791571978592,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.515195255690284e-44,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "XLV",
+      "weight": 0.18508067036278264,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5128474737889041e-43,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS10",
+      "target": "DX-Y.NYB",
+      "weight": 0.13390666565518958,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.93758525555813e-23,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "DGS10",
+      "weight": 0.7323150708167017,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.03003656582318527,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.026058563675288332,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS2",
+      "target": "T10Y2Y",
+      "weight": 0.045242494608417255,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0007901309651164303,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DGS2",
+      "target": "DX-Y.NYB",
+      "weight": 0.216591135472595,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.9483592602327375e-59,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "HYG",
+      "weight": 0.07083232538159066,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.486924895273897e-07,
+      "dyno_confidence": 0.765,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLRE",
+      "weight": 0.06648001667855907,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 8.123193859941587e-07,
+      "dyno_confidence": 0.775,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "TLT",
+      "weight": 0.5366331178121303,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "LQD",
+      "weight": 0.34688437719692555,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.936220126983183e-155,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLF",
+      "weight": 0.26698516720277415,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.0808009346672e-90,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "^GSPC",
+      "weight": 0.23812610083339686,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.412483772330054e-72,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLE",
+      "weight": 0.2205888820175177,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.3907740568015878e-61,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLK",
+      "weight": 0.20744584158508134,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.6126646805622824e-54,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "^NDX",
+      "weight": 0.2066296750490097,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.367416084614956e-54,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "EEM",
+      "weight": 0.20564498438167825,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4069409324002462e-53,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "^VIX",
+      "weight": 0.20360868005394556,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4245119056254564e-52,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "TEDRATE",
+      "weight": 0.20089588717274556,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.426769840702751e-51,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "^RUT",
+      "weight": 0.19730645350856843,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.1306103883214892e-49,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLY",
+      "weight": 0.19713231317593882,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.5954176716786042e-49,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "^VVIX",
+      "weight": 0.16977374704233106,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.7814754345625025e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "GC=F",
+      "weight": 0.16326258135355337,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.4072999473749927e-34,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "XLV",
+      "weight": 0.12978091716772241,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.458653331704854e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DGS2",
+      "target": "CL=F",
+      "weight": 0.12885579458364305,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.760982828407107e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "EURUSD=X",
+      "weight": 0.1975789603171253,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 1.6606752475557238e-49,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "GC=F",
+      "weight": 0.38399339600939886,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 6.625706789433507e-193,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "EEM",
+      "weight": 0.2953474250451119,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.502752258037135e-111,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "HYG",
+      "weight": 0.23085215814007948,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.331412178778278e-67,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "DGS2",
+      "weight": 0.216591135472595,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9483592602327375e-59,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLE",
+      "weight": 0.2035791565679555,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5718043186901718e-52,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "^GSPC",
+      "weight": 0.1880005038073522,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.240439213097777e-45,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "LQD",
+      "weight": 0.18621754466127594,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.688143813154382e-44,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "^RUT",
+      "weight": 0.18538101119611544,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0259140229348605e-43,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "CL=F",
+      "weight": 0.1718936715287305,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0450737256660525e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLU",
+      "weight": 0.17028792170469922,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.919219769308993e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLY",
+      "weight": 0.15391954340295186,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.6865973616650195e-30,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLK",
+      "weight": 0.14943911879423188,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.942334139615436e-29,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "^NDX",
+      "weight": 0.14900143440710295,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1369166082907e-28,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLV",
+      "weight": 0.13402169201249933,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8760991670790858e-23,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "DGS10",
+      "weight": 0.13390666565518958,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.93758525555813e-23,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLF",
+      "weight": 0.1303976035186124,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.8100425632563123e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "DX-Y.NYB",
+      "target": "XLRE",
+      "weight": 0.11629326754964647,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.24038550643598e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "^RUT",
+      "weight": 0.05268873591902142,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 9.378716168635281e-05,
+      "dyno_confidence": 0.69,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EEM",
+      "target": "XLE",
+      "weight": 0.03362096307541187,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.012728856853269672,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EEM",
+      "target": "HYG",
+      "weight": 0.040258378770334925,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.002867908461589436,
+      "dyno_confidence": 0.575,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EEM",
+      "target": "XLU",
+      "weight": 0.5308292918808313,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.95,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "DX-Y.NYB",
+      "weight": 0.030830379171165802,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.022287867416706266,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EEM",
+      "target": "XLRE",
+      "weight": 0.27052880945352936,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.1051238560438397e-92,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "GC=F",
+      "weight": 0.03300527365133146,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.014389033023881604,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EEM",
+      "target": "^GSPC",
+      "weight": 0.8137413395568189,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "^NDX",
+      "weight": 0.7539633998174738,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLK",
+      "weight": 0.7319832860830544,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLY",
+      "weight": 0.7170584089994455,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLF",
+      "weight": 0.6945539669822427,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "^VIX",
+      "weight": 0.612799282948784,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "XLV",
+      "weight": 0.6085210355043436,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4933768003341221,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "^VVIX",
+      "weight": 0.438237959981029,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.4912382699641075e-257,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "CL=F",
+      "weight": 0.299195175570749,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.257554272861547e-114,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "TLT",
+      "weight": 0.25150847611337335,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.701909441755684e-80,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "DGS10",
+      "weight": 0.24489970981937442,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.154821200394166e-76,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "DGS2",
+      "weight": 0.20564498438167825,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4069409324002462e-53,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "EURUSD=X",
+      "weight": 0.18751240262998922,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2401019822191806e-44,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "LQD",
+      "weight": 0.17715968260494092,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.020407385860862e-40,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EEM",
+      "target": "TEDRATE",
+      "weight": 0.1249185142262775,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.493444596143548e-20,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "EURUSD=X",
+      "weight": 0.1680956866905232,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 4.426969929353712e-36,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "DX-Y.NYB",
+      "weight": 0.04258247266579156,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0015893535790093803,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "EEM",
+      "weight": 0.18751240262998922,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2401019822191806e-44,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "GC=F",
+      "weight": 0.16721178847041412,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.036583837533939e-36,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "^GSPC",
+      "weight": 0.1458888801092102,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.6507725659132033e-27,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "XLE",
+      "weight": 0.1444574608138087,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.3459750217906564e-27,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "XLF",
+      "weight": 0.13293586509365227,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.4506784336723574e-23,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "XLY",
+      "weight": 0.11753573701260477,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.3588644887248413e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "^RUT",
+      "weight": 0.11716325012676565,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.9969665299414018e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "CL=F",
+      "weight": 0.11689670692724755,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.648764327891037e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "^NDX",
+      "weight": 0.1114817744458929,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1821080969780913e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "EURUSD=X",
+      "target": "XLK",
+      "weight": 0.10635823829633202,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.7466445838271117e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "M2SL",
+      "weight": 0.46552971145254046,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 3.407082924506113e-294,
+      "dyno_confidence": 0.955,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "RSXFS",
+      "weight": 0.4098882545507574,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 5.079486678370285e-222,
+      "dyno_confidence": 0.43,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "UMCSENT",
+      "weight": 0.25196671845890406,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.4567542057200788e-80,
+      "dyno_confidence": 0.51,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "PCEPILFE",
+      "weight": 0.1965055115771565,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.500846401028962e-49,
+      "dyno_confidence": 0.83,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "EURUSD=X",
+      "weight": 0.1958871815236814,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 1.1007997580236865e-48,
+      "dyno_confidence": 0.915,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "DGS2",
+      "weight": 0.03993890177588249,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.003038619571212581,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "PAYEMS",
+      "weight": 0.5228454598131758,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "UNRATE",
+      "weight": 0.48079545336518514,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "INDPRO",
+      "weight": 0.4625620577127199,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.356309107724607e-290,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "CPIAUCSL",
+      "weight": 0.31086690453999694,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0604035467842621e-123,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "HOUST",
+      "weight": 0.271779875370157,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.672707412501258e-94,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "FEDFUNDS",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.16306421796027643,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.8277474788601992e-34,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "DX-Y.NYB",
+      "weight": 0.05319988005008601,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 7.844496954686419e-05,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "GC=F",
+      "target": "CL=F",
+      "weight": 0.18405105322461812,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.330695234000779e-43,
+      "dyno_confidence": 0.99,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "EEM",
+      "weight": 0.041808617931850575,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0019288184443976063,
+      "dyno_confidence": 0.975,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "GC=F",
+      "target": "XLF",
+      "weight": 0.04603737603784126,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0006379436085602974,
+      "dyno_confidence": 0.65,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "EURUSD=X",
+      "weight": 0.16721178847041412,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.036583837533939e-36,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "DGS2",
+      "weight": 0.16326258135355337,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.4072999473749927e-34,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "DGS10",
+      "weight": 0.14604371686198064,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2889882867657921e-27,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "XLE",
+      "weight": 0.12842108942125136,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1714156357470178e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "LQD",
+      "weight": 0.12610272240077747,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.3527590818388064e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "GC=F",
+      "target": "TLT",
+      "weight": 0.12523105117809785,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1058556764532847e-20,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "INDPRO",
+      "weight": 0.5605091173539628,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.885,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "RSXFS",
+      "weight": 0.5272496965282429,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.98,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "PAYEMS",
+      "weight": 0.4917049036465155,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "UNRATE",
+      "weight": 0.4893243135771749,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "M2SL",
+      "weight": 0.2856162141552058,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.397043984111977e-104,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "FEDFUNDS",
+      "weight": 0.271779875370157,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.672707412501258e-94,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.24746871945921453,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.08959927917353e-77,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "CPIAUCSL",
+      "weight": 0.21051768274955943,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.3844161638197767e-56,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "UMCSENT",
+      "weight": 0.16657283818879606,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.398694447090033e-35,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HOUST",
+      "target": "EURUSD=X",
+      "weight": 0.12380561084216654,
+      "lag": 5,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.1602009317246426e-20,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "EEM",
+      "weight": 0.04313166166202827,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.001400535363305576,
+      "dyno_confidence": 0.495,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.04967740293916192,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0002354764679392897,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "LQD",
+      "weight": 0.03939865281751175,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0035337937831468134,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "XLRE",
+      "weight": 0.03262081710349654,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01571989950028577,
+      "dyno_confidence": 0.58,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "DX-Y.NYB",
+      "weight": 0.06621105513777624,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 9.121529866055499e-07,
+      "dyno_confidence": 0.99,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "HYG",
+      "weight": 0.034213683415172766,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.011297382957672783,
+      "dyno_confidence": 0.855,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "HYG",
+      "target": "GC=F",
+      "weight": 0.042501442190448505,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.001630444751370759,
+      "dyno_confidence": 0.62,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "^GSPC",
+      "weight": 0.6636543715112379,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "^RUT",
+      "weight": 0.6098679995974725,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "^NDX",
+      "weight": 0.593624339249906,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "XLY",
+      "weight": 0.5869767442951574,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "XLK",
+      "weight": 0.5829932500000177,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "XLF",
+      "weight": 0.571545690738827,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "XLV",
+      "weight": 0.5292551905892158,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "XLE",
+      "weight": 0.5046323417967684,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "XLU",
+      "weight": 0.48602895721535,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "^VIX",
+      "weight": 0.4657030058072966,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.47703758550478e-294,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "^VVIX",
+      "weight": 0.3564401877215389,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.5546223349341576e-164,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "CL=F",
+      "weight": 0.2566371974752634,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.2949117575439564e-83,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "TEDRATE",
+      "weight": 0.15273075078031603,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.2140867186674434e-30,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "HYG",
+      "target": "TLT",
+      "weight": 0.12754255763426797,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.3427206981999464e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "PAYEMS",
+      "weight": 0.030647445732100813,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.023095038872614278,
+      "dyno_confidence": 0.82,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "INDPRO",
+      "target": "RSXFS",
+      "weight": 0.031970921086972956,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.017787333694517213,
+      "dyno_confidence": 0.945,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "INDPRO",
+      "target": "HOUST",
+      "weight": 0.5605091173539628,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.965,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "M2SL",
+      "weight": 0.04216127132098455,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0017684637976098,
+      "dyno_confidence": 0.625,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "INDPRO",
+      "target": "EURUSD=X",
+      "weight": 0.09387064169263713,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 3.1466305968008582e-12,
+      "dyno_confidence": 0.55,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "INDPRO",
+      "target": "UNRATE",
+      "weight": 0.8528693122971674,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "FEDFUNDS",
+      "weight": 0.4625620577127199,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.356309107724607e-290,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.34418304707986935,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.274568899898232e-153,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "UMCSENT",
+      "weight": 0.32639581981165355,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.229492464577902e-137,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "CPIAUCSL",
+      "weight": 0.2654870602209856,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9858194989250935e-89,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "INDPRO",
+      "target": "PCEPILFE",
+      "weight": 0.14330531716802541,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2163427448540389e-26,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "TLT",
+      "weight": 0.56119065645199,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "HYG",
+      "weight": 0.036391992217815264,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.007033536449380663,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "XLRE",
+      "weight": 0.04337026215596413,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.001314407968321119,
+      "dyno_confidence": 0.72,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "DGS10",
+      "weight": 0.5503555060200419,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "DGS2",
+      "weight": 0.34688437719692555,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.936220126983183e-155,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "T10Y2Y",
+      "weight": 0.32940929799168417,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.293295979929614e-139,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "XLU",
+      "weight": 0.26280991740110365,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.332307361938663e-87,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "^NDX",
+      "weight": 0.19293889732306066,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.3095088199211847e-47,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "^GSPC",
+      "weight": 0.18932764151259496,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8192608334254722e-45,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "DX-Y.NYB",
+      "weight": 0.18621754466127594,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.688143813154382e-44,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "XLK",
+      "weight": 0.18128466750939187,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.200684072604396e-42,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "EEM",
+      "weight": 0.17715968260494092,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.020407385860862e-40,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "XLY",
+      "weight": 0.16353991470002635,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.186905591487798e-34,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "XLV",
+      "weight": 0.15578108547162464,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.675206858725831e-31,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "^RUT",
+      "weight": 0.15230607390778905,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.523530586371513e-30,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "UNRATE",
+      "weight": 0.12879590883353859,
+      "lag": 5,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.465707768618207e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "PAYEMS",
+      "weight": 0.1266999727639664,
+      "lag": 5,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.357315000490858e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "GC=F",
+      "weight": 0.12610272240077747,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.3527590818388064e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "TEDRATE",
+      "weight": 0.11485224183645334,
+      "lag": 1,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.3680026536325787e-17,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "INDPRO",
+      "weight": 0.10772391124293651,
+      "lag": 5,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2047820997777659e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "LQD",
+      "target": "^VIX",
+      "weight": 0.1072947010064263,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5535503349599897e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "LQD",
+      "target": "XLF",
+      "weight": 0.10487283658802538,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.651586018961372e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "PAYEMS",
+      "weight": 0.5180957087464262,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.465,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "INDPRO",
+      "weight": 0.4921988265406892,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.575,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "FEDFUNDS",
+      "weight": 0.46552971145254046,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 3.407082924506113e-294,
+      "dyno_confidence": 0.975,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "PCEPILFE",
+      "weight": 0.4001846859679124,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 8.14874054154531e-211,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "RSXFS",
+      "weight": 0.03200971999477404,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01759783310507775,
+      "dyno_confidence": 0.765,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "M2SL",
+      "target": "EURUSD=X",
+      "weight": 0.08767393269334933,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 7.53590561469705e-11,
+      "dyno_confidence": 0.46,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "M2SL",
+      "target": "CL=F",
+      "weight": 0.0635611050073528,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 2.4178006553523753e-06,
+      "dyno_confidence": 0.31,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "M2SL",
+      "target": "UNRATE",
+      "weight": 0.5336068302295253,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "UMCSENT",
+      "weight": 0.30324535866337976,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.640244968769113e-117,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "HOUST",
+      "weight": 0.2856162141552058,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.397043984111977e-104,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.1716193062899477,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1240030763105376e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "M2SL",
+      "target": "CPIAUCSL",
+      "weight": 0.12286361647655843,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.859246188618214e-20,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "UNRATE",
+      "weight": 0.034272038320566016,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.011055917806788527,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "INDPRO",
+      "weight": 0.032358434458087414,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.016450823869722485,
+      "dyno_confidence": 0.96,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "RSXFS",
+      "weight": 0.040133857803851966,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.002926979419776897,
+      "dyno_confidence": 0.945,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "FEDFUNDS",
+      "weight": 0.5228454598131758,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.7,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "M2SL",
+      "weight": 0.04869423029166593,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0003047030832849344,
+      "dyno_confidence": 0.8,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "PCEPILFE",
+      "weight": 0.1978748339059056,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.073460871051689e-49,
+      "dyno_confidence": 0.8,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "EURUSD=X",
+      "weight": 0.11500590051865936,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 1.2300477342682192e-17,
+      "dyno_confidence": 0.715,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "XLRE",
+      "weight": 0.04801885399021868,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00037155893849741603,
+      "dyno_confidence": 0.52,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "HOUST",
+      "weight": 0.4917049036465155,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "UMCSENT",
+      "weight": 0.39772541891074176,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.237453590132186e-208,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.3094485890940005,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8072019103390144e-122,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "CPIAUCSL",
+      "weight": 0.30160332268484746,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.671996614612514e-116,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PAYEMS",
+      "target": "CL=F",
+      "weight": 0.10481324933727106,
+      "lag": 1,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.813157118009231e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "CPIAUCSL",
+      "weight": 0.7437699665614044,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "M2SL",
+      "weight": 0.4001846859679124,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 8.14874054154531e-211,
+      "dyno_confidence": 0.98,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "RSXFS",
+      "weight": 0.26132419744960395,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.2715729431038613e-86,
+      "dyno_confidence": 0.69,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "PAYEMS",
+      "weight": 0.1978748339059056,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.073460871051689e-49,
+      "dyno_confidence": 0.925,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "FEDFUNDS",
+      "weight": 0.1965055115771565,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.500846401028962e-49,
+      "dyno_confidence": 0.86,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "EURUSD=X",
+      "weight": 0.1382587936527696,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 6.993598178507894e-25,
+      "dyno_confidence": 0.715,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "UNRATE",
+      "weight": 0.11821773908688248,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.3763786686607389e-18,
+      "dyno_confidence": 0.81,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "INDPRO",
+      "weight": 0.14330531716802541,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2163427448540389e-26,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "PCEPILFE",
+      "target": "UMCSENT",
+      "weight": 0.10813571243009217,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.223654519985728e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "PAYEMS",
+      "weight": 0.7520071250375696,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.52,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "INDPRO",
+      "weight": 0.7266955410719613,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.885,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "HOUST",
+      "weight": 0.5272496965282429,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.985,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "CPIAUCSL",
+      "weight": 0.41796417014316495,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.2630361819064491e-231,
+      "dyno_confidence": 0.895,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "FEDFUNDS",
+      "weight": 0.4098882545507574,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 5.079486678370285e-222,
+      "dyno_confidence": 0.605,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "UMCSENT",
+      "weight": 0.32428444052096556,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.9957248887736647e-135,
+      "dyno_confidence": 0.685,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "PCEPILFE",
+      "weight": 0.26132419744960395,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.2715729431038613e-86,
+      "dyno_confidence": 0.72,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "M2SL",
+      "weight": 0.03025891212571584,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.024880814617004768,
+      "dyno_confidence": 0.585,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "RSXFS",
+      "target": "EURUSD=X",
+      "weight": 0.0968183946252246,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 6.46567752956243e-13,
+      "dyno_confidence": 0.8,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "RSXFS",
+      "target": "XLRE",
+      "weight": 0.0365008525133645,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.006834571161954695,
+      "dyno_confidence": 0.575,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "RSXFS",
+      "target": "UNRATE",
+      "weight": 0.7303491502660082,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "RSXFS",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.2508994590191739,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.620163283643335e-80,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "TLT",
+      "weight": 0.5764277116530354,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "DGS10",
+      "weight": 0.47152925808943785,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 2.2798612492948454e-302,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "DGS2",
+      "weight": 0.24526214613295694,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 3.8720737810464216e-76,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "LQD",
+      "weight": 0.32940929799168417,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.293295979929614e-139,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.13508013029337046,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.380515411498829e-24,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "TEDRATE",
+      "weight": 0.12607053828316558,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.499944748607517e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "CL=F",
+      "weight": 0.11903629381260473,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.547736484803665e-19,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "XLE",
+      "weight": 0.11629743500920825,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.3353464405035405e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "T10Y2Y",
+      "target": "^RUT",
+      "weight": 0.10595401233892719,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.4387132338665935e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "TEDRATE",
+      "weight": 0.2203968152013756,
+      "lag": 1,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.777869469258191e-61,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "DGS2",
+      "weight": 0.20089588717274556,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.426769840702751e-51,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "HYG",
+      "weight": 0.15273075078031603,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.2140867186674434e-30,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.14232175675733974,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.2119193034119565e-26,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "XLF",
+      "weight": 0.12805645525761816,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5642466240267826e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "T10Y2Y",
+      "weight": 0.12607053828316558,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.499944748607517e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "EEM",
+      "weight": 0.1249185142262775,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.493444596143548e-20,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "^GSPC",
+      "weight": 0.12167275658665537,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4275994374969995e-19,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "XLU",
+      "weight": 0.11063398320746645,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9847536056023168e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "XLE",
+      "weight": 0.10927364408999432,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.584996626038506e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TEDRATE",
+      "target": "LQD",
+      "weight": 0.10650708663730474,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.4261666623243762e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "LQD",
+      "weight": 0.035450963042838624,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00859118984066647,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "TLT",
+      "target": "HYG",
+      "weight": 0.040934212523192515,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0024144758759187942,
+      "dyno_confidence": 0.97,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "TLT",
+      "target": "GC=F",
+      "weight": 0.12523105117809785,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.1058556764532847e-20,
+      "dyno_confidence": 0.62,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "EURUSD=X",
+      "weight": 0.03566821686889617,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.008181082699399872,
+      "dyno_confidence": 0.395,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "TLT",
+      "target": "DGS10",
+      "weight": 0.8949325009396788,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "T10Y2Y",
+      "weight": 0.5764277116530354,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "DGS2",
+      "weight": 0.5366331178121303,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4597244076944347,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.6619691384375955e-285,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "XLF",
+      "weight": 0.3211507922348586,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.349283488605956e-132,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "^GSPC",
+      "weight": 0.30293050539778804,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.742831120873645e-117,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "XLE",
+      "weight": 0.301872133104671,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.144731679417325e-116,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "^RUT",
+      "weight": 0.2767370151195912,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.9312357916920856e-97,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "EEM",
+      "weight": 0.25150847611337335,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.701909441755684e-80,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "^NDX",
+      "weight": 0.24459509060783596,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.107540220414095e-75,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "XLY",
+      "weight": 0.24456278185198205,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0572445066989924e-75,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "XLK",
+      "weight": 0.2409635047589587,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8760473633475917e-73,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "^VIX",
+      "weight": 0.23356072989241292,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.917026995248128e-69,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "XLV",
+      "weight": 0.22535455589299055,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.152014020723321e-64,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "CL=F",
+      "weight": 0.20104670683728124,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.126960117904944e-51,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "TLT",
+      "target": "^VVIX",
+      "weight": 0.18248560098459032,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.915484948982015e-42,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "RSXFS",
+      "weight": 0.32428444052096556,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 4.9957248887736647e-135,
+      "dyno_confidence": 0.825,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "UNRATE",
+      "weight": 0.4244058033237432,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.067779282138018e-240,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "PAYEMS",
+      "weight": 0.39772541891074176,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.237453590132186e-208,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "INDPRO",
+      "weight": 0.32639581981165355,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.229492464577902e-137,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "M2SL",
+      "weight": 0.30324535866337976,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.640244968769113e-117,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "FEDFUNDS",
+      "weight": 0.25196671845890406,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4567542057200788e-80,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "HOUST",
+      "weight": 0.16657283818879606,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.398694447090033e-35,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "CPIAUCSL",
+      "weight": 0.11917811856038453,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.870889442757037e-19,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UMCSENT",
+      "target": "PCEPILFE",
+      "weight": 0.10813571243009217,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.223654519985728e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "PAYEMS",
+      "weight": 0.03153654271591277,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.019375607293427848,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "UNRATE",
+      "target": "UMCSENT",
+      "weight": 0.4244058033237432,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 9.067779282138018e-240,
+      "dyno_confidence": 0.635,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "PCEPILFE",
+      "weight": 0.11821773908688248,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.3763786686607389e-18,
+      "dyno_confidence": 0.685,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "EURUSD=X",
+      "weight": 0.07984008385125155,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 3.0941617736653157e-09,
+      "dyno_confidence": 0.3,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "UNRATE",
+      "target": "INDPRO",
+      "weight": 0.8528693122971674,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "RSXFS",
+      "weight": 0.7303491502660082,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "M2SL",
+      "weight": 0.5336068302295253,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "HOUST",
+      "weight": 0.4893243135771749,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "FEDFUNDS",
+      "weight": 0.48079545336518514,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "A191RL1Q225SBEA",
+      "weight": 0.2926206565927523,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.603604930659675e-109,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "CPIAUCSL",
+      "weight": 0.2459715842063085,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2683113648429786e-76,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "UNRATE",
+      "target": "CL=F",
+      "weight": 0.10122236473395785,
+      "lag": 1,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.462142017851614e-14,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "^GSPC",
+      "weight": 0.7135843526675789,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "^RUT",
+      "weight": 0.6902125441369641,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "EEM",
+      "weight": 0.6690946724079941,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLF",
+      "weight": 0.031576762782706616,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01930941780335533,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "XLY",
+      "weight": 0.06705954528450522,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 6.539191598687978e-07,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "^NDX",
+      "weight": 0.5591430810349614,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.935,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "CL=F",
+      "weight": 0.048449863546681834,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0003292074735267731,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "XLK",
+      "weight": 0.05018186509470353,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0001994605318162794,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "XLV",
+      "weight": 0.035992804570448705,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0076447465813403274,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "GC=F",
+      "weight": 0.09250616798767489,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 6.259112100728576e-12,
+      "dyno_confidence": 0.485,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLE",
+      "target": "^VIX",
+      "weight": 0.5168297915821818,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "HYG",
+      "weight": 0.5046323417967684,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLU",
+      "weight": 0.4974448551255106,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4748879976029238,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0559264199392081e-306,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "^VVIX",
+      "weight": 0.3631030938212969,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.1234277041967348e-171,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "XLRE",
+      "weight": 0.3057546173804063,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.63533996948718e-119,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "TLT",
+      "weight": 0.301872133104671,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.144731679417325e-116,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "DGS10",
+      "weight": 0.28279682991346816,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2133745077832832e-101,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "DGS2",
+      "weight": 0.2205888820175177,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.3907740568015878e-61,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "DX-Y.NYB",
+      "weight": 0.2035791565679555,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5718043186901718e-52,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "EURUSD=X",
+      "weight": 0.1444574608138087,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.3459750217906564e-27,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "T10Y2Y",
+      "weight": 0.11629743500920825,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.3353464405035405e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLE",
+      "target": "TEDRATE",
+      "weight": 0.10927364408999432,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.584996626038506e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^GSPC",
+      "weight": 0.8502218395850012,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^RUT",
+      "weight": 0.8082106951657521,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "EEM",
+      "weight": 0.03000564076176607,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.026226382294286834,
+      "dyno_confidence": 0.665,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "^NDX",
+      "weight": 0.03933237797226544,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.003562441395624176,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "XLK",
+      "weight": 0.6784956609427175,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLV",
+      "weight": 0.6312132991627205,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLE",
+      "weight": 0.6211277681796463,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "HYG",
+      "weight": 0.041534741712812205,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0020968465919929346,
+      "dyno_confidence": 0.705,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "XLU",
+      "weight": 0.03262534429017777,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01565796887265661,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "CL=F",
+      "weight": 0.03586668723102369,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.007871482586178157,
+      "dyno_confidence": 0.965,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "GC=F",
+      "weight": 0.03158684132807919,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01918299545361052,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLF",
+      "target": "XLY",
+      "weight": 0.7557047062713977,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^VIX",
+      "weight": 0.5853619804623177,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4887120368369402,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "^VVIX",
+      "weight": 0.4232902545485203,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.337709621945879e-238,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "XLRE",
+      "weight": 0.32820074850428677,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.9693679030666854e-138,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "TLT",
+      "weight": 0.3211507922348586,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.349283488605956e-132,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "DGS10",
+      "weight": 0.30091097172554715,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9995432940158395e-115,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "DGS2",
+      "weight": 0.26698516720277415,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.0808009346672e-90,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "EURUSD=X",
+      "weight": 0.13293586509365227,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.4506784336723574e-23,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "DX-Y.NYB",
+      "weight": 0.1303976035186124,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.8100425632563123e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "TEDRATE",
+      "weight": 0.12805645525761816,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5642466240267826e-21,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLF",
+      "target": "LQD",
+      "weight": 0.10487283658802538,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.651586018961372e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "^NDX",
+      "weight": 0.03013107266677703,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.02559231164365797,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLK",
+      "target": "^GSPC",
+      "weight": 0.9113836221987617,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLF",
+      "weight": 0.034209583448011005,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.011255108501311914,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLK",
+      "target": "XLV",
+      "weight": 0.6705729557376647,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLE",
+      "weight": 0.5535729204197057,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "XLU",
+      "weight": 0.03176428798677074,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.018613164993195434,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLK",
+      "target": "XLRE",
+      "weight": 0.4212750352446885,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 3.125354497129151e-235,
+      "dyno_confidence": 0.935,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "EURUSD=X",
+      "weight": 0.043597890915145224,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.001234133174807671,
+      "dyno_confidence": 0.18,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLK",
+      "target": "XLY",
+      "weight": 0.829961602161666,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "^RUT",
+      "weight": 0.7886384743440747,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "EEM",
+      "weight": 0.7319832860830544,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "^VIX",
+      "weight": 0.6981641300052239,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "HYG",
+      "weight": 0.5829932500000177,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "^VVIX",
+      "weight": 0.530999170991214,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4951543424464451,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "TLT",
+      "weight": 0.2409635047589587,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8760473633475917e-73,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "DGS10",
+      "weight": 0.2298869941532403,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.62170536704513e-67,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "CL=F",
+      "weight": 0.21988261929138952,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.181227905309045e-61,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "DGS2",
+      "weight": 0.20744584158508134,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.6126646805622824e-54,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "LQD",
+      "weight": 0.18128466750939187,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.200684072604396e-42,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLK",
+      "target": "DX-Y.NYB",
+      "weight": 0.14943911879423188,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.942334139615436e-29,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLU",
+      "weight": 0.05155207083860222,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0001332607406847613,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLRE",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.04466943214357337,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0009378133528895204,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLRE",
+      "target": "EEM",
+      "weight": 0.03767422197144142,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.005249670184806058,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLRE",
+      "target": "EURUSD=X",
+      "weight": 0.052381936877927325,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00010347756740433746,
+      "dyno_confidence": 0.36,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLRE",
+      "target": "^GSPC",
+      "weight": 0.462360710213052,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.357976011593783e-289,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "^RUT",
+      "weight": 0.43657862945950027,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.7882875929428797e-254,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLV",
+      "weight": 0.4316847934372921,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.784066635149658e-248,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLY",
+      "weight": 0.4248623264240765,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0977852710203172e-239,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLK",
+      "weight": 0.4212750352446885,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.125354497129151e-235,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "^NDX",
+      "weight": 0.39889101721375586,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.85551054953603e-209,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "HYG",
+      "weight": 0.38735307645826156,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.09741502472766e-196,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "^VIX",
+      "weight": 0.34228465603695785,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.304555853297538e-151,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLF",
+      "weight": 0.32820074850428677,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.9693679030666854e-138,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "XLE",
+      "weight": 0.3057546173804063,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.63533996948718e-119,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "LQD",
+      "weight": 0.2835429861786241,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.666808300206627e-102,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "^VVIX",
+      "weight": 0.2683553070220756,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.3590503399611022e-91,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "DX-Y.NYB",
+      "weight": 0.11629326754964647,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.24038550643598e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLRE",
+      "target": "CL=F",
+      "weight": 0.10930887895575628,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.597286986345464e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^GSPC",
+      "weight": 0.045798970893665324,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0006884134265576418,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLU",
+      "target": "EEM",
+      "weight": 0.5308292918808313,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.86,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "XLRE",
+      "weight": 0.030356089856391016,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.024537219741000368,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLU",
+      "target": "XLF",
+      "weight": 0.49968190768592197,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^NDX",
+      "weight": 0.039292111362469795,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.003599726551856213,
+      "dyno_confidence": 0.805,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLU",
+      "target": "CL=F",
+      "weight": 0.0323198990532064,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.016638962301530814,
+      "dyno_confidence": 0.96,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLU",
+      "target": "XLV",
+      "weight": 0.5780230933733368,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^RUT",
+      "weight": 0.5370271817821554,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "XLY",
+      "weight": 0.5056468202687356,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "XLK",
+      "weight": 0.5049951029765569,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "XLE",
+      "weight": 0.4974448551255106,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "HYG",
+      "weight": 0.48602895721535,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^VIX",
+      "weight": 0.4206463174099714,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2393462499686274e-234,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.31415334230439906,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.316071940473669e-126,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "^VVIX",
+      "weight": 0.2967471684182059,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.0710629429431766e-112,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "LQD",
+      "weight": 0.26280991740110365,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.332307361938663e-87,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "DX-Y.NYB",
+      "weight": 0.17028792170469922,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.919219769308993e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLU",
+      "target": "TEDRATE",
+      "weight": 0.11063398320746645,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.9847536056023168e-16,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "^GSPC",
+      "weight": 0.03551342851681706,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.008504839635241939,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "XLY",
+      "weight": 0.046914514284907005,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.000506020673154964,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "XLK",
+      "weight": 0.033901466919595384,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.012010538365286818,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "XLF",
+      "weight": 0.03801127801102201,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.004850403675408555,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "^VIX",
+      "weight": 0.04521125861870416,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.000802956680609255,
+      "dyno_confidence": 0.79,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "XLE",
+      "weight": 0.055333852803252356,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 4.0867613233932086e-05,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "XLRE",
+      "weight": 0.040216504342677935,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0028817432040104877,
+      "dyno_confidence": 0.82,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLV",
+      "target": "CL=F",
+      "weight": 0.1492004309875995,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 1.0764369778006946e-28,
+      "dyno_confidence": 0.835,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "^NDX",
+      "weight": 0.7085184946168941,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "^RUT",
+      "weight": 0.6977435074957405,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "EEM",
+      "weight": 0.6085210355043436,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "XLU",
+      "weight": 0.5780230933733368,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "HYG",
+      "weight": 0.5292551905892158,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "^VVIX",
+      "weight": 0.47577341285445496,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.853272782354153e-309,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4332140268175686,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.241236638577854e-250,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "TLT",
+      "weight": 0.22535455589299055,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.152014020723321e-64,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "DGS10",
+      "weight": 0.18508067036278264,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5128474737889041e-43,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "LQD",
+      "weight": 0.15578108547162464,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.675206858725831e-31,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "DX-Y.NYB",
+      "weight": 0.13402169201249933,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8760991670790858e-23,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLV",
+      "target": "DGS2",
+      "weight": 0.12978091716772241,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.458653331704854e-22,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "^GSPC",
+      "weight": 0.03175232451279393,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.018625362541738123,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "^NDX",
+      "weight": 0.03626360492163837,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.007205231166120564,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "^RUT",
+      "weight": 0.08556864620067492,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 2.1238089182620004e-10,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "XLK",
+      "weight": 0.04510385481895533,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00082910964556054,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "XLF",
+      "weight": 0.051206989318328934,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00014697237641383683,
+      "dyno_confidence": 0.99,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "XLV",
+      "weight": 0.672904153881674,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLE",
+      "weight": 0.03224617189278222,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01685857262117956,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "XLU",
+      "weight": 0.5056468202687356,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "XLRE",
+      "weight": 0.04292939112993565,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0014662295888397652,
+      "dyno_confidence": 0.94,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "XLY",
+      "target": "EEM",
+      "weight": 0.7170584089994455,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "^VIX",
+      "weight": 0.6758587008500856,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "HYG",
+      "weight": 0.5869767442951574,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "^VVIX",
+      "weight": 0.5174152920431729,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.5025573019169776,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "TLT",
+      "weight": 0.24456278185198205,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0572445066989924e-75,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "DGS10",
+      "weight": 0.2287306670053415,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.47072879450844e-66,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "CL=F",
+      "weight": 0.20257175605401798,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.040019203539367e-52,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "DGS2",
+      "weight": 0.19713231317593882,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.5954176716786042e-49,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "LQD",
+      "weight": 0.16353991470002635,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.186905591487798e-34,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "DX-Y.NYB",
+      "weight": 0.15391954340295186,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.6865973616650195e-30,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "XLY",
+      "target": "EURUSD=X",
+      "weight": 0.11753573701260477,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.3588644887248413e-18,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^NDX",
+      "weight": 0.031945776891703026,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.017929416598396815,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLK",
+      "weight": 0.9113836221987617,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLY",
+      "weight": 0.03193265956706408,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.017955657371190325,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLF",
+      "weight": 0.031483963920233365,
+      "lag": 5,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01966788038066752,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "EEM",
+      "weight": 0.13120230615970097,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 1.6345294130954515e-22,
+      "dyno_confidence": 0.995,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLV",
+      "weight": 0.7950779103133485,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^VIX",
+      "weight": 0.04509518948558126,
+      "lag": 2,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00082739329828278,
+      "dyno_confidence": 0.995,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLE",
+      "weight": 0.7135843526675789,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "HYG",
+      "weight": 0.04955080925139959,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00024047620436494632,
+      "dyno_confidence": 0.995,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLU",
+      "weight": 0.03480621995482787,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00991801112490342,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.035719473284758566,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.008159144773614345,
+      "dyno_confidence": 0.73,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "DX-Y.NYB",
+      "weight": 0.11469823810270383,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 1.4614709793952278e-17,
+      "dyno_confidence": 0.705,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "EURUSD=X",
+      "weight": 0.043429245093601215,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0012879312684520045,
+      "dyno_confidence": 0.585,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^RUT",
+      "weight": 0.8966337915650087,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^VVIX",
+      "weight": 0.5507393200678379,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "XLRE",
+      "weight": 0.462360710213052,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.357976011593783e-289,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "TLT",
+      "weight": 0.30293050539778804,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.742831120873645e-117,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "DGS10",
+      "weight": 0.2821702971994405,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.5003627254606856e-101,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "CL=F",
+      "weight": 0.27997031833031777,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.042654389716768e-99,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "DGS2",
+      "weight": 0.23812610083339686,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.412483772330054e-72,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "LQD",
+      "weight": 0.18932764151259496,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.8192608334254722e-45,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "TEDRATE",
+      "weight": 0.12167275658665537,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4275994374969995e-19,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^GSPC",
+      "target": "^GSPC",
+      "weight": 0.12099699227277633,
+      "lag": 1,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.3011260694719146e-19,
+      "dyno_confidence": 0.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLK",
+      "weight": 0.9605623072331544,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "^GSPC",
+      "weight": 0.032944513829888784,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01464198545324743,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLY",
+      "weight": 0.034946828535807724,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00960299663487101,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "^RUT",
+      "weight": 0.8219912277766724,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "EEM",
+      "weight": 0.03469174379339248,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01015744700790539,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "^VIX",
+      "weight": 0.04736556203049096,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00044478184812739286,
+      "dyno_confidence": 0.79,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLF",
+      "weight": 0.04196124030115321,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0018723930035560814,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLE",
+      "weight": 0.5591430810349614,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLU",
+      "weight": 0.03331232602225629,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.013589522099692799,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLRE",
+      "weight": 0.39889101721375586,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 8.85551054953603e-209,
+      "dyno_confidence": 0.6,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "EURUSD=X",
+      "weight": 0.043506227022491725,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.001262518326263378,
+      "dyno_confidence": 0.235,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^NDX",
+      "target": "XLV",
+      "weight": 0.7085184946168941,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "HYG",
+      "weight": 0.593624339249906,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "^VVIX",
+      "weight": 0.5398643347296412,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.4912659707975271,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "TLT",
+      "weight": 0.24459509060783596,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.107540220414095e-75,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "DGS10",
+      "weight": 0.23403608344311644,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.7985138629552524e-69,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "CL=F",
+      "weight": 0.21432156629204335,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.712857742293501e-58,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "DGS2",
+      "weight": 0.2066296750490097,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.367416084614956e-54,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "LQD",
+      "weight": 0.19293889732306066,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.3095088199211847e-47,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^NDX",
+      "target": "DX-Y.NYB",
+      "weight": 0.14900143440710295,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.1369166082907e-28,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLY",
+      "weight": 0.036946314700484505,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00617520426505753,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^RUT",
+      "target": "^NDX",
+      "weight": 0.8219912277766724,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.575,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLF",
+      "weight": 0.8082106951657521,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "EEM",
+      "weight": 0.031716502136901616,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.018758807745599175,
+      "dyno_confidence": 0.975,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLE",
+      "weight": 0.6902125441369641,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 1.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "HYG",
+      "weight": 0.06465290734096864,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 1.6498881309766614e-06,
+      "dyno_confidence": 0.57,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLU",
+      "weight": 0.5370271817821554,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.835,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLRE",
+      "weight": 0.034914901891611616,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00968247711113896,
+      "dyno_confidence": 0.995,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^RUT",
+      "target": "CL=F",
+      "weight": 0.261059451626971,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 3.033030591558085e-86,
+      "dyno_confidence": 0.88,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "EURUSD=X",
+      "weight": 0.04877520153136285,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.00029961339151718603,
+      "dyno_confidence": 0.255,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^RUT",
+      "target": "GC=F",
+      "weight": 0.05381433797543625,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 6.525237863939428e-05,
+      "dyno_confidence": 0.615,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "^GSPC",
+      "weight": 0.8966337915650087,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLK",
+      "weight": 0.7886384743440747,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "XLV",
+      "weight": 0.6977435074957405,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "^VIX",
+      "weight": 0.6786224930889855,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.5123231072963514,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "^VVIX",
+      "weight": 0.506147393282249,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "TLT",
+      "weight": 0.2767370151195912,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.9312357916920856e-97,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "DGS10",
+      "weight": 0.25295889564791496,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.947371655965958e-81,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "DGS2",
+      "weight": 0.19730645350856843,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.1306103883214892e-49,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "DX-Y.NYB",
+      "weight": 0.18538101119611544,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.0259140229348605e-43,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "LQD",
+      "weight": 0.15230607390778905,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.523530586371513e-30,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^RUT",
+      "target": "T10Y2Y",
+      "weight": 0.10595401233892719,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.4387132338665935e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "^VVIX",
+      "weight": 0.05085054008730443,
+      "lag": 3,
+      "method": "consensus",
+      "pcmci_pvalue": 0.000160565181300021,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLV",
+      "weight": 0.6220098242608294,
+      "lag": 0,
+      "method": "consensus",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.73,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "EURUSD=X",
+      "weight": 0.038575464790751954,
+      "lag": 1,
+      "method": "consensus",
+      "pcmci_pvalue": 0.004240608283912439,
+      "dyno_confidence": 0.315,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^VIX",
+      "target": "^GSPC",
+      "weight": 0.7357045779488427,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "^NDX",
+      "weight": 0.7135479623809591,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLK",
+      "weight": 0.6981641300052239,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "^RUT",
+      "weight": 0.6786224930889855,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLY",
+      "weight": 0.6758587008500856,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "EEM",
+      "weight": 0.612799282948784,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLF",
+      "weight": 0.5853619804623177,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLE",
+      "weight": 0.5168297915821818,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "HYG",
+      "weight": 0.4657030058072966,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 9.47703758550478e-294,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.43991169400101804,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4840620475990632e-258,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLU",
+      "weight": 0.4206463174099714,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.2393462499686274e-234,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "XLRE",
+      "weight": 0.34228465603695785,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 7.304555853297538e-151,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "TLT",
+      "weight": 0.23356072989241292,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.917026995248128e-69,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "DGS10",
+      "weight": 0.2305678771873922,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.896946072496823e-67,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "DGS2",
+      "weight": 0.20360868005394556,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4245119056254564e-52,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "CL=F",
+      "weight": 0.19895121787271375,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.697283202939764e-50,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VIX",
+      "target": "LQD",
+      "weight": 0.1072947010064263,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5535503349599897e-15,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "^VIX",
+      "weight": 0.032845134481231164,
+      "lag": 4,
+      "method": "consensus",
+      "pcmci_pvalue": 0.01481582587214007,
+      "dyno_confidence": 1.0,
+      "edge_type": "lagged"
+    },
+    {
+      "source": "^VVIX",
+      "target": "^GSPC",
+      "weight": 0.5507393200678379,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "^NDX",
+      "weight": 0.5398643347296412,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLK",
+      "weight": 0.530999170991214,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLY",
+      "weight": 0.5174152920431729,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "^RUT",
+      "weight": 0.506147393282249,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 0.0,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLV",
+      "weight": 0.47577341285445496,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 8.853272782354153e-309,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "EEM",
+      "weight": 0.438237959981029,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 5.4912382699641075e-257,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLF",
+      "weight": 0.4232902545485203,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.337709621945879e-238,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLE",
+      "weight": 0.3631030938212969,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 4.1234277041967348e-171,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "HYG",
+      "weight": 0.3564401877215389,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.5546223349341576e-164,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "BAMLH0A0HYM2",
+      "weight": 0.34092046672204035,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.5053324138046085e-149,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLU",
+      "weight": 0.2967471684182059,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.0710629429431766e-112,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "XLRE",
+      "weight": 0.2683553070220756,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 2.3590503399611022e-91,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "DGS10",
+      "weight": 0.18628791571978592,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 3.515195255690284e-44,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "TLT",
+      "weight": 0.18248560098459032,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.915484948982015e-42,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "DGS2",
+      "weight": 0.16977374704233106,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 6.7814754345625025e-37,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    },
+    {
+      "source": "^VVIX",
+      "target": "CL=F",
+      "weight": 0.14023730158482423,
+      "lag": 0,
+      "method": "pcmci_only",
+      "pcmci_pvalue": 1.4864515754613494e-25,
+      "dyno_confidence": 0.0,
+      "edge_type": "contemporaneous"
+    }
+  ],
+  "metadata": {
+    "n_nodes": 37,
+    "n_edges": 600,
+    "method": "ensemble_dynotears_pcmci",
+    "created_at": "2026-03-24T01:45:15.352832"
+  }
+}
