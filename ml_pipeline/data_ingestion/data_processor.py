@@ -78,6 +78,7 @@ YAHOO_TRANSFORMS = {
     "LQD": {"transform": "log_return", "name": "Investment Grade Bond ETF"},
     "HYG": {"transform": "log_return", "name": "High Yield Bond ETF"},
     "EEM": {"transform": "log_return", "name": "Emerging Markets ETF"},
+    "^MOVE": {"transform": "log_return", "name": "MOVE Index (Bond Vol)"},
 }
 
 

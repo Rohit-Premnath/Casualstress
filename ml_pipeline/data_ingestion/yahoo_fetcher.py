@@ -120,6 +120,10 @@ YAHOO_TICKERS = {
         "name": "Emerging Markets ETF",
         "category": "international",
     },
+    "^MOVE": {
+        "name": "ICE BofA MOVE Index (Bond Volatility)",
+        "category": "volatility",
+    },
 }
 
 # How far back to fetch

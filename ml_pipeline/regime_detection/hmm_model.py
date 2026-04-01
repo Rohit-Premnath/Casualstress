@@ -48,11 +48,13 @@ REGIME_FEATURES = {
     "BAMLH0A0HYM2": "High Yield Credit Spread",
     "T10Y2Y": "Yield Curve Spread",
     "^GSPC": "S&P 500 Returns",
+    "^MOVE": "MOVE Index (Bond Volatility)",
+    "TEDRATE": "TED Spread (Interbank Stress)",
 }
 
 # Number of regimes to test
 MIN_STATES = 2
-MAX_STATES = 5
+MAX_STATES = 6
 
 # Regime labels (assigned after training based on characteristics)
 REGIME_NAMES = {
@@ -73,6 +75,13 @@ KNOWN_CRISES = [
     ("2018-09-20", "2018-12-31", "Fed Tightening Selloff"),
     ("2020-02-19", "2020-03-31", "COVID Crash"),
     ("2022-01-01", "2022-10-31", "Rate Hike Selloff"),
+    ("2011-07-22", "2011-08-10", "US Debt Ceiling Crisis"),
+    ("2016-06-23", "2016-06-27", "Brexit Shock"),
+    ("2020-03-06", "2020-04-21", "Oil Price War (COVID + OPEC)"),
+    ("2015-06-12", "2015-08-25", "China Stock Market Crash"),
+    ("2018-10-03", "2018-10-29", "October 2018 Correction"),
+    ("2020-09-02", "2020-09-23", "September 2020 Tech Selloff"),
+    ("2023-03-08", "2023-03-20", "SVB Banking Crisis"),
 ]
 
 
@@ -297,8 +306,16 @@ def characterize_regimes(data, regime_labels, n_states):
         names = ["calm", "stressed", "crisis"]
     elif n_states == 4:
         names = ["calm", "normal", "stressed", "crisis"]
-    else:
+    elif n_states == 5:
         names = ["calm", "normal", "elevated", "stressed", "crisis"]
+    elif n_states == 6:
+        names = ["calm", "normal", "elevated", "stressed", "high_stress", "crisis"]
+    elif n_states == 7:
+        names = ["calm", "low_normal", "normal", "elevated", "stressed", "high_stress", "crisis"]
+    elif n_states == 8:
+        names = ["calm", "low_normal", "normal", "elevated", "pre_stress", "stressed", "high_stress", "crisis"]
+    else:
+        names = [f"regime_{i}" for i in range(n_states)]
 
     regime_name_map = {}
     for i, regime_id in enumerate(sorted_regimes):
@@ -333,7 +350,7 @@ def validate_regimes(data, regime_labels, regime_name_map):
     data_with_regimes["regime_name"] = data_with_regimes["regime"].map(regime_name_map)
 
     # Find the crisis regime label(s)
-    crisis_names = ["crisis", "stressed"]
+    crisis_names = ["crisis", "stressed", "high_stress", "pre_stress"]
 
     correct = 0
     total = len(KNOWN_CRISES)
