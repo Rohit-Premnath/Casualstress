@@ -222,10 +222,11 @@ def run_dynotears(X, X_lag, variable_names):
 
         # Run Lasso regression with cross-validation
         lasso = LassoCV(
-            cv=5,
-            max_iter=10000,
+            cv=3,
+            max_iter=50000,
             n_jobs=-1,
             random_state=42,
+            tol=0.01,
         )
         lasso.fit(features, y)
 
@@ -352,7 +353,7 @@ def bootstrap_confidence(X, X_lag, variable_names, n_bootstrap=N_BOOTSTRAP):
             features = np.hstack([X_contemp, X_lag_boot])
 
             try:
-                lasso = LassoCV(cv=3, max_iter=5000, n_jobs=-1, random_state=b)
+                lasso = LassoCV(cv=2, max_iter=20000, n_jobs=-1, random_state=b, tol=0.01)
                 lasso.fit(features, y)
 
                 n_contemp = len(contemp_indices)

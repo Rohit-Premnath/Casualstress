@@ -50,6 +50,7 @@ REGIME_FEATURES = {
     "^GSPC": "S&P 500 Returns",
     "^MOVE": "MOVE Index (Bond Volatility)",
     "TEDRATE": "TED Spread (Interbank Stress)",
+    "STLFSI4": "St. Louis Fed Financial Stress Index",
 }
 
 # Number of regimes to test
@@ -114,7 +115,7 @@ def load_regime_features():
     dfs = []
 
     for var_code, name in REGIME_FEATURES.items():
-        if var_code in ["^VIX", "BAMLH0A0HYM2"]:
+        if var_code in ["^VIX", "BAMLH0A0HYM2", "STLFSI4"]:
             # Use RAW values for level-based indicators
             query = f"""
                 SELECT date, raw_value as value

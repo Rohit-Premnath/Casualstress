@@ -125,6 +125,100 @@ FRED_SERIES = {
         "category": "credit_risk",
         "frequency": "daily",
     },
+    # ── Credit Spread Ladder (by rating grade) ──
+    "BAMLC0A0CM": {
+        "name": "IG Corporate OAS (All Investment Grade)",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLC0A4CBBB": {
+        "name": "BBB Corporate OAS",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLC0A3CA": {
+        "name": "A-rated Corporate OAS",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLC0A2CAA": {
+        "name": "AA-rated Corporate OAS",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLC0A1CAAA": {
+        "name": "AAA Corporate OAS",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLH0A1HYBB": {
+        "name": "BB High Yield OAS",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLH0A2HYB": {
+        "name": "B High Yield OAS",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLH0A3HYC": {
+        "name": "CCC High Yield OAS (Distress Indicator)",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    "BAMLEMCBPIOAS": {
+        "name": "EM Corporate OAS (Contagion Signal)",
+        "category": "credit_spreads",
+        "frequency": "daily",
+    },
+    # ── Bank Lending Behavior (SLOOS - quarterly) ──
+    "DRTSCILM": {
+        "name": "Banks Tightening C&I Standards (Large Firms)",
+        "category": "bank_lending",
+        "frequency": "quarterly",
+    },
+    "DRTSCIS": {
+        "name": "Banks Tightening C&I Standards (Small Firms)",
+        "category": "bank_lending",
+        "frequency": "quarterly",
+    },
+    "DRTSSP": {
+        "name": "Banks Tightening Mortgage Standards",
+        "category": "bank_lending",
+        "frequency": "quarterly",
+    },
+    "DRSDCILM": {
+        "name": "C&I Loan Demand (Large Firms)",
+        "category": "bank_lending",
+        "frequency": "quarterly",
+    },
+    # ── Short-Term Funding Stress ──
+    "SOFR": {
+        "name": "Secured Overnight Financing Rate",
+        "category": "funding_stress",
+        "frequency": "daily",
+    },
+    "SOFR90DAYAVG": {
+        "name": "90-Day SOFR Average",
+        "category": "funding_stress",
+        "frequency": "daily",
+    },
+    "DCPF3M": {
+        "name": "3M AA Financial Commercial Paper Rate",
+        "category": "funding_stress",
+        "frequency": "daily",
+    },
+    "DCPN3M": {
+        "name": "3M AA Nonfinancial Commercial Paper Rate",
+        "category": "funding_stress",
+        "frequency": "daily",
+    },
+    # ── Composite Stress Index ──
+    "STLFSI4": {
+        "name": "St. Louis Fed Financial Stress Index",
+        "category": "composite_stress",
+        "frequency": "weekly",
+    },
 }
 
 # How far back to fetch (10+ years)

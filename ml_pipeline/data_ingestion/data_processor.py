@@ -55,6 +55,28 @@ FRED_TRANSFORMS = {
     "RSXFS": {"transform": "log_return", "name": "Retail Sales"},
     "TEDRATE": {"transform": "first_diff", "name": "TED Spread"},
     "BAMLH0A0HYM2": {"transform": "first_diff", "name": "High Yield Spread"},
+    # Credit Spread Ladder
+    "BAMLC0A0CM": {"transform": "first_diff", "name": "IG Corporate OAS"},
+    "BAMLC0A4CBBB": {"transform": "first_diff", "name": "BBB Corporate OAS"},
+    "BAMLC0A3CA": {"transform": "first_diff", "name": "A-rated Corporate OAS"},
+    "BAMLC0A2CAA": {"transform": "first_diff", "name": "AA-rated Corporate OAS"},
+    "BAMLC0A1CAAA": {"transform": "first_diff", "name": "AAA Corporate OAS"},
+    "BAMLH0A1HYBB": {"transform": "first_diff", "name": "BB High Yield OAS"},
+    "BAMLH0A2HYB": {"transform": "first_diff", "name": "B High Yield OAS"},
+    "BAMLH0A3HYC": {"transform": "first_diff", "name": "CCC High Yield OAS"},
+    "BAMLEMCBPIOAS": {"transform": "first_diff", "name": "EM Corporate OAS"},
+    # Bank Lending
+    "DRTSCILM": {"transform": "first_diff", "name": "Banks Tightening C&I Large"},
+    "DRTSCIS": {"transform": "first_diff", "name": "Banks Tightening C&I Small"},
+    "DRTSSP": {"transform": "first_diff", "name": "Banks Tightening Mortgages"},
+    "DRSDCILM": {"transform": "first_diff", "name": "C&I Loan Demand Large"},
+    # Funding Stress
+    "SOFR": {"transform": "first_diff", "name": "SOFR Rate"},
+    "SOFR90DAYAVG": {"transform": "first_diff", "name": "90-Day SOFR Average"},
+    "DCPF3M": {"transform": "first_diff", "name": "3M Financial CP Rate"},
+    "DCPN3M": {"transform": "first_diff", "name": "3M Nonfinancial CP Rate"},
+    # Composite
+    "STLFSI4": {"transform": "none", "name": "St. Louis Fed Stress Index"},
 }
 
 YAHOO_TRANSFORMS = {
@@ -351,6 +373,19 @@ def compute_features(transformed_df, raw_df):
         # Forward-fill any NaN from rolling windows
         features_df = features_df.ffill().bfill()
         print(f"\n  Engineered {len(features_df.columns)} additional features")
+    
+    # Credit market engineered features
+    if "BAMLH0A0HYM2" in raw_df.columns and "BAMLC0A0CM" in raw_df.columns:
+        features["HY_IG_SPREAD_GAP"] = raw_df["BAMLH0A0HYM2"] - raw_df["BAMLC0A0CM"]
+        print("  HY_IG_SPREAD_GAP: High yield vs investment grade gap computed")
+
+    if "BAMLH0A3HYC" in raw_df.columns and "BAMLH0A1HYBB" in raw_df.columns:
+        features["CCC_BB_SPREAD_GAP"] = raw_df["BAMLH0A3HYC"] - raw_df["BAMLH0A1HYBB"]
+        print("  CCC_BB_SPREAD_GAP: Distress spread within high yield computed")
+
+    if "DCPF3M" in raw_df.columns and "SOFR" in raw_df.columns:
+        features["SOFR_CP_SPREAD"] = raw_df["DCPF3M"] - raw_df["SOFR"]
+        print("  SOFR_CP_SPREAD: Modern TED spread proxy computed")
         return features_df
     else:
         return pd.DataFrame(index=transformed_df.index)
