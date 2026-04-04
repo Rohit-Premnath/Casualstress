@@ -36,6 +36,8 @@ from scipy import stats
 import psycopg2
 from psycopg2.extras import Json
 from dotenv import load_dotenv
+import warnings
+warnings.filterwarnings("ignore")
 
 load_dotenv()
 
@@ -44,10 +46,46 @@ load_dotenv()
 # CONFIGURATION
 # ============================================
 
-# Scenario generation parameters
-SCENARIO_HORIZON = 60        # Generate 60-day (3 month) forward paths
-N_SCENARIOS_DEFAULT = 100    # Default number of scenarios
-NOISE_SCALE = 1.0            # Scale factor for regime-specific noise
+SCENARIO_HORIZON = 60
+N_SCENARIOS_DEFAULT = 100
+NOISE_SCALE = 1.0
+MAX_VAR_VARIABLES = 25
+
+# Core variables to always include in VAR model
+CORE_VARIABLES = [
+    "^GSPC", "^VIX", "^NDX", "^RUT", "DGS10", "DGS2", "T10Y2Y",
+    "FEDFUNDS", "CL=F", "GC=F", "BAMLH0A0HYM2", "BAMLH0A3HYC",
+    "BAMLC0A0CM", "XLF", "XLK", "XLE", "XLV", "XLY", "XLU",
+    "TLT", "LQD", "HYG", "EEM", "CPIAUCSL", "UNRATE",
+]
+
+# Variables that are LOG RETURNS (Yahoo prices + some FRED)
+# cumulative impact = exp(sum of log returns) - 1 = simple return
+LOG_RETURN_VARS = {
+    "^GSPC", "^NDX", "^RUT", "^VIX", "^VVIX", "^MOVE",
+    "XLF", "XLK", "XLE", "XLV", "XLY", "XLU", "XLRE",
+    "TLT", "LQD", "HYG", "EEM",
+    "CL=F", "GC=F", "DX-Y.NYB", "EURUSD=X",
+    "CPIAUCSL", "PCEPILFE", "PAYEMS", "INDPRO", "M2SL",
+    "HOUST", "ICSA", "RSXFS", "UMCSENT",
+}
+
+# Variables that are FIRST DIFFERENCES (credit spreads, rates)
+# cumulative impact = sum of daily changes (in original units)
+FIRST_DIFF_VARS = {
+    "BAMLH0A0HYM2", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC",
+    "BAMLC0A0CM", "BAMLC0A4CBBB", "BAMLC0A3CA", "BAMLC0A2CAA", "BAMLC0A1CAAA",
+    "BAMLEMCBPIOAS",
+    "DGS10", "DGS2", "T10Y2Y", "FEDFUNDS", "TEDRATE",
+    "SOFR", "SOFR90DAYAVG", "DCPF3M", "DCPN3M",
+    "DRTSCILM", "DRTSCIS", "DRTSSP", "DRSDCILM",
+    "UNRATE",
+}
+
+# Level variables (no transform)
+LEVEL_VARS = {
+    "STLFSI4", "A191RL1Q225SBEA",
+}
 
 
 # ============================================
@@ -79,15 +117,25 @@ def load_regime_causal_graph(regime_name):
         WHERE method = %s
         ORDER BY created_at DESC
         LIMIT 1
-    """, (f"regime_conditional_{regime_name}",))
+    """, (f"regime_{regime_name}",))
 
     row = cursor.fetchone()
+
+    if row is None:
+        cursor.execute("""
+            SELECT id, adjacency_matrix, variables
+            FROM models.causal_graphs
+            WHERE method = %s
+            ORDER BY created_at DESC
+            LIMIT 1
+        """, (f"regime_conditional_{regime_name}",))
+        row = cursor.fetchone()
+
     cursor.close()
     conn.close()
 
     if row is None:
         return None, None, None
-
     return row[0], row[1], row[2]
 
 
@@ -95,7 +143,6 @@ def load_processed_data_with_regimes():
     """Load processed data joined with regime labels."""
     conn = get_db_connection()
 
-    # Load processed data
     df = pd.read_sql("""
         SELECT date, variable_code, transformed_value
         FROM processed.time_series_data
@@ -103,7 +150,6 @@ def load_processed_data_with_regimes():
         ORDER BY date
     """, conn)
 
-    # Load regime labels
     regimes = pd.read_sql("""
         SELECT date, regime_name
         FROM models.regimes
@@ -112,18 +158,14 @@ def load_processed_data_with_regimes():
 
     conn.close()
 
-    # Pivot data
     pivoted = df.pivot_table(
         index="date", columns="variable_code", values="transformed_value"
     )
     pivoted.index = pd.to_datetime(pivoted.index)
     pivoted = pivoted.sort_index()
-
-    # Drop columns with too many NaNs
     pivoted = pivoted.dropna(axis=1, thresh=int(len(pivoted) * 0.7))
     pivoted = pivoted.dropna()
 
-    # Join with regimes
     regimes["date"] = pd.to_datetime(regimes["date"])
     regimes = regimes.set_index("date")
     pivoted = pivoted.join(regimes, how="inner")
@@ -135,16 +177,35 @@ def load_processed_data_with_regimes():
 # STEP 2: FIT REGIME-CONDITIONAL VAR
 # ============================================
 
-def fit_regime_var(data, regime_name, max_lag=5):
-    """
-    Fit a Vector Autoregression model within a specific regime.
-    Returns the coefficient matrices and residual covariance.
-    """
-    # Filter to this regime
+def select_var_variables(regime_data, shock_variable=None):
+    """Select top variables for VAR fitting to prevent overfitting."""
+    available_cols = list(regime_data.columns)
+    selected = [v for v in CORE_VARIABLES if v in available_cols]
+
+    if shock_variable and shock_variable not in selected and shock_variable in available_cols:
+        selected.append(shock_variable)
+
+    if len(selected) < MAX_VAR_VARIABLES:
+        remaining = [c for c in available_cols if c not in selected]
+        if remaining:
+            variances = regime_data[remaining].var().sort_values(ascending=False)
+            extra = list(variances.index[:MAX_VAR_VARIABLES - len(selected)])
+            selected.extend(extra)
+
+    return selected[:MAX_VAR_VARIABLES]
+
+
+def fit_regime_var(data, regime_name, max_lag=5, shock_variable=None):
+    """Fit a VAR model within a specific regime with ridge regularization."""
     regime_data = data[data["regime_name"] == regime_name].drop(columns=["regime_name"])
 
+    if len(regime_data.columns) > MAX_VAR_VARIABLES:
+        selected_vars = select_var_variables(regime_data, shock_variable)
+        regime_data = regime_data[selected_vars]
+        print(f"    Selected {len(selected_vars)} variables for VAR (reduced from {len(data.columns) - 1})")
+
     if len(regime_data) < 50:
-        print(f"    WARNING: Only {len(regime_data)} days in {regime_name} regime, using lag=2")
+        print(f"    WARNING: Only {len(regime_data)} days in {regime_name}, using lag=2")
         max_lag = 2
 
     variables = list(regime_data.columns)
@@ -152,33 +213,34 @@ def fit_regime_var(data, regime_name, max_lag=5):
     d = len(variables)
     T = len(values)
 
-    # Standardize
     means = values.mean(axis=0)
     stds = values.std(axis=0)
     stds[stds == 0] = 1
     standardized = (values - means) / stds
 
-    # Build VAR matrices
-    # Y = X @ B + E
-    # where Y is (T-lag x d), X is (T-lag x d*lag+1), B is (d*lag+1 x d)
     effective_lag = min(max_lag, (T - 10) // d)
     effective_lag = max(effective_lag, 1)
 
     Y = standardized[effective_lag:]
-    X_parts = [np.ones((T - effective_lag, 1))]  # intercept
+    X_parts = [np.ones((T - effective_lag, 1))]
     for lag in range(1, effective_lag + 1):
         X_parts.append(standardized[effective_lag - lag:T - lag])
     X = np.hstack(X_parts)
 
-    # Solve via OLS
     try:
-        B = np.linalg.lstsq(X, Y, rcond=None)[0]
+        ridge_lambda = 0.01
+        XtX = X.T @ X + ridge_lambda * np.eye(X.shape[1])
+        XtY = X.T @ Y
+        B = np.linalg.solve(XtX, XtY)
     except np.linalg.LinAlgError:
         B = np.zeros((X.shape[1], d))
 
-    # Compute residuals and covariance
     residuals = Y - X @ B
     cov = np.cov(residuals.T) if residuals.shape[0] > d else np.eye(d) * 0.01
+
+    eigvals = np.linalg.eigvalsh(cov)
+    if eigvals.min() < 0:
+        cov += np.eye(d) * (abs(eigvals.min()) + 0.001)
 
     return {
         "coefficients": B,
@@ -196,30 +258,13 @@ def fit_regime_var(data, regime_name, max_lag=5):
 # ============================================
 
 def generate_scenarios(
-    var_model,
-    shock_variable,
-    shock_magnitude,
-    n_scenarios=N_SCENARIOS_DEFAULT,
-    horizon=SCENARIO_HORIZON,
+    var_model, shock_variable, shock_magnitude,
+    n_scenarios=N_SCENARIOS_DEFAULT, horizon=SCENARIO_HORIZON,
     causal_adjacency=None,
 ):
     """
     Generate forward-looking crisis scenarios.
-
-    Process:
-    1. Start from the last observed state
-    2. Apply the initial shock to the specified variable
-    3. Propagate forward using the regime-conditional VAR
-    4. Add calibrated random noise at each step
-    5. Optionally enforce causal graph constraints
-
-    Args:
-        var_model: fitted VAR model dict
-        shock_variable: which variable to shock (e.g., "CL=F" for oil)
-        shock_magnitude: size of shock in standard deviations (e.g., 3.0 = 3 sigma)
-        n_scenarios: number of scenarios to generate
-        horizon: number of days to simulate forward
-        causal_adjacency: optional causal graph to constrain propagation
+    Simulation in standardized space, clipped to ±4 sigma per step.
     """
     B = var_model["coefficients"]
     cov = var_model["covariance"]
@@ -235,61 +280,41 @@ def generate_scenarios(
 
     shock_idx = variables.index(shock_variable)
 
-    # Generate Cholesky decomposition for correlated noise
     try:
         L = np.linalg.cholesky(cov)
     except np.linalg.LinAlgError:
-        # If covariance is not positive definite, regularize
         cov_reg = cov + np.eye(d) * 0.001
         L = np.linalg.cholesky(cov_reg)
 
     all_scenarios = []
 
     for s in range(n_scenarios):
-        # Initialize with zeros (standardized space)
         path = np.zeros((horizon + lag, d))
-
-        # Apply initial shock at the first time step
         path[lag, shock_idx] = shock_magnitude
 
-        # If we have causal adjacency, also propagate the initial shock
-        # to directly connected variables
         if causal_adjacency is not None:
             for edge_key, edge_data in causal_adjacency.items():
                 cause, effect = edge_key.split("->")
                 if cause == shock_variable and effect in variables:
                     effect_idx = variables.index(effect)
                     weight = edge_data.get("weight", 0)
-                    # Scale the propagation by causal weight
                     path[lag, effect_idx] += shock_magnitude * weight * 0.3
 
-        # Simulate forward
         for t in range(lag + 1, horizon + lag):
-            # Build feature vector: intercept + lagged values
-            x = [1.0]  # intercept
-            for l in range(1, lag + 1):
-                x.extend(path[t - l])
+            x = [1.0]
+            for l_idx in range(1, lag + 1):
+                x.extend(path[t - l_idx])
             x = np.array(x)
 
-            # Predicted values from VAR
             predicted = x @ B
-
-            # Add correlated noise
             noise = L @ np.random.randn(d) * NOISE_SCALE
-
-            # Combine
             path[t] = predicted + noise
+            # Clip per step: daily moves beyond 4 sigma are unrealistic
+            path[t] = np.clip(path[t], -4.0, 4.0)
 
-        # Convert back from standardized to real scale
         real_path = path[lag:] * stds + means
 
-        # Store as DataFrame
-        scenario_df = pd.DataFrame(
-            real_path,
-            columns=variables,
-            index=range(horizon),
-        )
-
+        scenario_df = pd.DataFrame(real_path, columns=variables, index=range(horizon))
         all_scenarios.append(scenario_df)
 
     return all_scenarios
@@ -301,38 +326,52 @@ def generate_scenarios(
 
 def score_plausibility(scenarios, var_model, causal_adjacency=None):
     """
-    Score each scenario on plausibility:
-    1. Statistical realism (are values within reasonable bounds?)
-    2. Causal consistency (do effects follow causes?)
-    3. Stylized facts (fat tails, volatility clustering)
+    Score plausibility using:
+    1. Daily move realism (extreme day ratio)
+    2. Cumulative move bounds
+    3. Financial consistency (S&P/VIX, credit/equity)
+    4. Causal graph consistency
     """
     variables = var_model["variables"]
     stds = var_model["stds"]
     scores = []
 
-    for i, scenario in enumerate(scenarios):
-        score = 1.0  # Start with perfect score
+    for scenario in scenarios:
+        score = 1.0
 
-        # Check 1: Are any values extremely unrealistic? (>10 sigma)
-        max_deviation = np.abs(scenario.values / stds).max()
-        if max_deviation > 10:
-            score *= 0.5  # Penalize extreme values
-        elif max_deviation > 7:
-            score *= 0.8
+        # Check 1: Daily extreme ratio
+        daily_sigma = np.abs(scenario.values) / stds
+        extreme_ratio = (daily_sigma > 3).sum() / daily_sigma.size
+        if extreme_ratio > 0.10:
+            score *= 0.80
+        elif extreme_ratio > 0.05:
+            score *= 0.90
 
-        # Check 2: Do variables move in internally consistent directions?
+        # Check 2: Cumulative bounds per variable
+        for j, var in enumerate(variables):
+            cum_move = abs(scenario[var].sum())
+            daily_std = stds[j] if stds[j] > 0 else 1
+            cum_sigma = cum_move / (daily_std * np.sqrt(len(scenario)))
+            if cum_sigma > 6:
+                score *= 0.97
+
+        # Check 3: S&P / VIX
         if "^GSPC" in variables and "^VIX" in variables:
-            gspc_idx = variables.index("^GSPC")
-            vix_idx = variables.index("^VIX")
-            # In a crisis, S&P should go down and VIX should go up
-            spx_cum = scenario["^GSPC"].sum()
-            vix_cum = scenario["^VIX"].sum()
-            if spx_cum < 0 and vix_cum < 0:
-                score *= 0.7  # S&P down but VIX also down is unusual
-            if spx_cum > 0 and vix_cum > 0:
-                score *= 0.8  # S&P up but VIX also up is somewhat unusual
+            spx = scenario["^GSPC"].sum()
+            vix = scenario["^VIX"].sum()
+            if spx < 0 and vix < 0:
+                score *= 0.85
+            elif spx > 0 and vix > 0:
+                score *= 0.90
 
-        # Check 3: Causal consistency
+        # Check 4: Credit / Equity
+        if "^GSPC" in variables and "BAMLH0A0HYM2" in variables:
+            spx = scenario["^GSPC"].sum()
+            hy = scenario["BAMLH0A0HYM2"].sum()
+            if spx < -0.5 and hy < -0.5:
+                score *= 0.85
+
+        # Check 5: Causal consistency
         if causal_adjacency is not None:
             violations = 0
             total_checks = 0
@@ -340,20 +379,18 @@ def score_plausibility(scenarios, var_model, causal_adjacency=None):
                 cause, effect = edge_key.split("->")
                 if cause in variables and effect in variables:
                     total_checks += 1
-                    cause_change = scenario[cause].sum()
-                    effect_change = scenario[effect].sum()
-                    weight = edge_data.get("raw_weight", edge_data.get("weight", 0))
-                    # If causal weight is positive, cause and effect should move same direction
-                    if weight > 0 and cause_change * effect_change < 0:
+                    c_chg = scenario[cause].sum()
+                    e_chg = scenario[effect].sum()
+                    w = edge_data.get("raw_weight", edge_data.get("weight", 0))
+                    if w > 0 and c_chg * e_chg < 0:
                         violations += 1
-                    elif weight < 0 and cause_change * effect_change > 0:
+                    elif w < 0 and c_chg * e_chg > 0:
                         violations += 1
-
             if total_checks > 0:
                 consistency = 1 - (violations / total_checks)
-                score *= (0.5 + 0.5 * consistency)  # Scale between 0.5 and 1.0
+                score *= (0.7 + 0.3 * consistency)
 
-        scores.append(round(score, 4))
+        scores.append(round(min(score, 1.0), 4))
 
     return scores
 
@@ -372,7 +409,6 @@ def store_scenarios(scenarios, scores, shock_variable, shock_magnitude,
 
     scenario_id = str(uuid.uuid4())
 
-    # Convert scenarios to storable format (list of dicts)
     paths = []
     for i, scenario in enumerate(scenarios):
         paths.append({
@@ -409,11 +445,32 @@ def store_scenarios(scenarios, scores, shock_variable, shock_magnitude,
 # STEP 6: SUMMARIZE SCENARIOS
 # ============================================
 
+def format_cumulative_impact(var_name, cum_values):
+    """
+    Format cumulative impact correctly based on variable type.
+    - Log-return vars: exp(sum) - 1 as percentage
+    - First-diff vars: sum as basis points or points
+    - Level vars: raw cumulative change
+    """
+    if var_name in LOG_RETURN_VARS:
+        pct = [(np.exp(v) - 1) * 100 for v in cum_values]
+        return pct, "%"
+    elif var_name in FIRST_DIFF_VARS:
+        if "BAML" in var_name or "BAMLEM" in var_name:
+            return [v * 100 for v in cum_values], "bps"
+        elif var_name in ("DGS10", "DGS2", "T10Y2Y", "FEDFUNDS", "TEDRATE", "SOFR"):
+            return [v * 100 for v in cum_values], "bps"
+        else:
+            return list(cum_values), "pts"
+    else:
+        return list(cum_values), ""
+
+
 def summarize_scenarios(scenarios, scores, shock_variable, variables):
-    """Print a summary of the generated scenarios."""
-    print(f"\n{'='*60}")
+    """Print summary with proper units per variable type."""
+    print(f"\n{'='*70}")
     print("  SCENARIO GENERATION SUMMARY")
-    print(f"{'='*60}")
+    print(f"{'='*70}")
 
     n = len(scenarios)
     horizon = len(scenarios[0])
@@ -423,23 +480,33 @@ def summarize_scenarios(scenarios, scores, shock_variable, variables):
     print(f"  Horizon: {horizon} days")
     print(f"  Plausibility: min={min(scores):.2f}, mean={np.mean(scores):.2f}, max={max(scores):.2f}")
 
-    # Aggregate statistics across scenarios
     key_vars = ["^GSPC", "^VIX", "DGS10", "CL=F", "XLF", "BAMLH0A0HYM2"]
     key_vars = [v for v in key_vars if v in variables]
 
     print(f"\n  Cumulative impact over {horizon} days (across {n} scenarios):")
-    print(f"  {'Variable':<20} {'5th pctl':>10} {'Median':>10} {'95th pctl':>10} {'Mean':>10}")
-    print("  " + "-" * 64)
+    print(f"  {'Variable':<20} {'5th pctl':>12} {'Median':>12} {'95th pctl':>12} {'Mean':>12}")
+    print("  " + "-" * 72)
 
     for var in key_vars:
-        cum_returns = [scenario[var].sum() for scenario in scenarios]
-        p5 = np.percentile(cum_returns, 5)
-        p50 = np.percentile(cum_returns, 50)
-        p95 = np.percentile(cum_returns, 95)
-        mean = np.mean(cum_returns)
-        print(f"  {var:<20} {p5:>10.4f} {p50:>10.4f} {p95:>10.4f} {mean:>10.4f}")
+        cum_raw = np.array([scenario[var].sum() for scenario in scenarios])
+        display_vals, unit = format_cumulative_impact(var, cum_raw)
+        display_vals = np.array(display_vals)
 
-    print(f"\n{'='*60}")
+        p5 = np.percentile(display_vals, 5)
+        p50 = np.percentile(display_vals, 50)
+        p95 = np.percentile(display_vals, 95)
+        mean = np.mean(display_vals)
+
+        if unit == "%":
+            print(f"  {var:<20} {p5:>+10.1f}% {p50:>+10.1f}% {p95:>+10.1f}% {mean:>+10.1f}%")
+        elif unit == "bps":
+            print(f"  {var:<20} {p5:>+9.0f}bps {p50:>+9.0f}bps {p95:>+9.0f}bps {mean:>+9.0f}bps")
+        elif unit == "pts":
+            print(f"  {var:<20} {p5:>+10.2f}pt {p50:>+10.2f}pt {p95:>+10.2f}pt {mean:>+10.2f}pt")
+        else:
+            print(f"  {var:<20} {p5:>+10.2f}   {p50:>+10.2f}   {p95:>+10.2f}   {mean:>+10.2f}")
+
+    print(f"\n{'='*70}")
 
 
 # ============================================
@@ -447,35 +514,24 @@ def summarize_scenarios(scenarios, scores, shock_variable, variables):
 # ============================================
 
 def main():
-    print("=" * 60)
+    print("=" * 70)
     print("CAUSALSTRESS - SCENARIO GENERATOR")
-    print("=" * 60)
+    print("=" * 70)
 
-    # Step 1: Load data with regimes
     print("\nLoading data and regime labels...")
     data = load_processed_data_with_regimes()
     print(f"  Loaded {len(data)} days x {len(data.columns)} columns")
 
-    # Step 2: Choose regime for generation (use "stressed" for crisis scenarios)
     target_regime = "stressed"
     print(f"\n  Target regime for generation: {target_regime}")
 
-    # Step 3: Load causal graph for this regime
     graph_id, causal_adj, graph_vars = load_regime_causal_graph(target_regime)
     if graph_id:
-        print(f"  Loaded causal graph: {graph_id}")
+        print(f"  Loaded causal graph: {graph_id} ({len(causal_adj)} edges)")
     else:
-        print(f"  WARNING: No causal graph found for {target_regime}, generating without constraints")
+        print(f"  WARNING: No causal graph found for {target_regime}")
         causal_adj = None
 
-    # Step 4: Fit regime-conditional VAR
-    print(f"\nFitting VAR model for {target_regime} regime...")
-    var_model = fit_regime_var(data, target_regime)
-    print(f"  Variables: {len(var_model['variables'])}")
-    print(f"  Observations: {var_model['n_obs']}")
-    print(f"  Lag order: {var_model['lag']}")
-
-    # Step 5: Define shocks to test
     shocks = [
         ("CL=F", 3.0, "Oil price spike (+3 sigma)"),
         ("^GSPC", -3.0, "Market crash (-3 sigma)"),
@@ -484,11 +540,15 @@ def main():
     ]
 
     for shock_var, shock_mag, shock_desc in shocks:
-        print(f"\n{'─'*60}")
+        print(f"\n{'─'*70}")
         print(f"  Generating scenarios: {shock_desc}")
-        print(f"{'─'*60}")
+        print(f"{'─'*70}")
 
-        # Generate scenarios
+        var_model = fit_regime_var(data, target_regime, shock_variable=shock_var)
+        print(f"  Variables: {len(var_model['variables'])}")
+        print(f"  Observations: {var_model['n_obs']}")
+        print(f"  Lag order: {var_model['lag']}")
+
         scenarios = generate_scenarios(
             var_model=var_model,
             shock_variable=shock_var,
@@ -498,21 +558,18 @@ def main():
             causal_adjacency=causal_adj,
         )
 
-        # Score plausibility
         scores = score_plausibility(scenarios, var_model, causal_adj)
 
-        # Summarize
         summarize_scenarios(scenarios, scores, shock_var, var_model["variables"])
 
-        # Store
-        scenario_id = store_scenarios(
+        store_scenarios(
             scenarios, scores, shock_var, shock_mag,
             target_regime, str(graph_id) if graph_id else None,
         )
 
-    print("\n✓ Scenario generation complete!")
-    print(f"  Generated 4 shock scenarios x 100 paths each = 400 total scenarios")
-    print("=" * 60)
+    print("\n" + chr(10003) + " Scenario generation complete!")
+    print(f"  Generated {len(shocks)} shock scenarios x 100 paths each = {len(shocks)*100} total scenarios")
+    print("=" * 70)
 
 
 if __name__ == "__main__":
