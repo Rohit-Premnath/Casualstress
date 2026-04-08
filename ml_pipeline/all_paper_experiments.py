@@ -39,6 +39,33 @@ from sklearn.linear_model import LassoCV
 import psycopg2
 from psycopg2.extras import Json
 from dotenv import load_dotenv
+try:
+    from ml_pipeline.canonical_best_model import (
+        CANONICAL_MODEL_NAME,
+        CANONICAL_PAPER_NAME,
+        CANONICAL_TRAIN_REGIMES,
+        get_canonical_candidate_count,
+        get_canonical_target_scenarios,
+        get_canonical_signature,
+        load_canonical_graph,
+        score_canonical_plausibility,
+        soft_filter_weights,
+        weighted_quantile,
+    )
+except ModuleNotFoundError:
+    sys.path.append(os.path.dirname(__file__))
+    from canonical_best_model import (
+        CANONICAL_MODEL_NAME,
+        CANONICAL_PAPER_NAME,
+        CANONICAL_TRAIN_REGIMES,
+        get_canonical_candidate_count,
+        get_canonical_target_scenarios,
+        get_canonical_signature,
+        load_canonical_graph,
+        score_canonical_plausibility,
+        soft_filter_weights,
+        weighted_quantile,
+    )
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -110,6 +137,22 @@ def load_all_data():
     return pivoted
 
 
+def load_regime_series():
+    conn = get_db()
+    df = pd.read_sql("""
+        SELECT date, regime_name
+        FROM models.regimes
+        ORDER BY date
+    """, conn)
+    conn.close()
+    if df.empty:
+        return pd.Series(dtype="object", name="regime_name")
+    df["date"] = pd.to_datetime(df["date"])
+    regime_series = df.drop_duplicates(subset=["date"]).set_index("date")["regime_name"]
+    regime_series.name = "regime_name"
+    return regime_series
+
+
 def load_causal_graph_from_db():
     conn = get_db()
     cursor = conn.cursor()
@@ -122,6 +165,16 @@ def load_causal_graph_from_db():
     cursor.close()
     conn.close()
     return row[0] if row else None
+
+
+def select_training_window(train_full, train_regimes=None, min_rows=500):
+    if not train_regimes or "regime_name" not in train_full.columns:
+        return train_full.drop(columns=["regime_name"], errors="ignore")
+
+    regime_filtered = train_full[train_full["regime_name"].isin(train_regimes)]
+    if len(regime_filtered) >= min_rows:
+        return regime_filtered.drop(columns=["regime_name"], errors="ignore")
+    return train_full.drop(columns=["regime_name"], errors="ignore")
 
 
 LOG_RETURN_VARS = {
@@ -343,7 +396,7 @@ def gen_full_model(train, avail, n=200, horizon=60, **kw):
 
 
 def gen_full_model_filtered(train, avail, n=200, horizon=60, **kw):
-    """Full model + plausibility filtering (our best variant)."""
+    """Legacy hard-filter baseline kept for ablation only."""
     raw = gen_full_model(train, avail, n=int(n * 2), horizon=horizon, **kw)
     # Score and keep top n
     stds_arr = train[avail].std().values
@@ -362,6 +415,18 @@ def gen_full_model_filtered(train, avail, n=200, horizon=60, **kw):
     return [sc for _, sc in ranked[:n]]
 
 
+def gen_full_model_soft_filtered(train, avail, n=200, horizon=60, **kw):
+    """Canonical best model: regime-aware full model with soft plausibility weighting."""
+    raw = gen_full_model(train, avail, n=get_canonical_candidate_count(n), horizon=horizon, **kw)
+    stds = train[avail].std().to_numpy()
+    event_type = kw.get("event_type", "market_crash")
+    causal_adj = kw.get("causal_adj")
+    scores = score_canonical_plausibility(raw, avail, stds, event_type, causal_adj=causal_adj)
+    weights = soft_filter_weights(scores)
+    ranked = sorted(zip(scores, weights, raw), key=lambda item: (item[0], item[1]), reverse=True)
+    return [scenario for _, _, scenario in ranked[:n]]
+
+
 # ============================================================
 # EVALUATION
 # ============================================================
@@ -372,6 +437,8 @@ def evaluate_scenarios(scenarios, actual, avail, window):
     days = min(window, len(actual), 60)
     matches = dir_matches = total = 0
     details = {}
+    median_abs_errors = []
+    tail_miss_penalties = []
 
     for var in key:
         actual_cum = actual[var].iloc[:days].sum()
@@ -384,6 +451,15 @@ def evaluate_scenarios(scenarios, actual, avail, window):
         total += 1
         if in_range: matches += 1
         if same_dir: dir_matches += 1
+        denom = max(abs(actual_cum), 1e-6)
+        median_abs_errors.append(min((abs(actual_cum - p50) / denom) * 100, 500))
+        if actual_cum < p5:
+            tail_gap = p5 - actual_cum
+        elif actual_cum > p95:
+            tail_gap = actual_cum - p95
+        else:
+            tail_gap = 0.0
+        tail_miss_penalties.append(min((tail_gap / denom) * 100, 500))
 
         if var in LOG_RETURN_VARS:
             a_d = (np.exp(actual_cum) - 1) * 100
@@ -403,7 +479,10 @@ def evaluate_scenarios(scenarios, actual, avail, window):
 
     cov = matches / total * 100 if total > 0 else 0
     dir_acc = dir_matches / total * 100 if total > 0 else 0
-    return cov, dir_acc, details
+    return cov, dir_acc, details, {
+        "median_abs_error": float(np.mean(median_abs_errors)) if median_abs_errors else 0.0,
+        "tail_miss_penalty": float(np.mean(tail_miss_penalties)) if tail_miss_penalties else 0.0,
+    }
 
 
 def print_event_details(details):
@@ -604,49 +683,89 @@ def experiment_4():
     print("=" * 90)
 
     all_data = load_all_data()
-    causal_adj = load_causal_graph_from_db()
-    print(f"  Data: {len(all_data)} days | Causal edges: {len(causal_adj) if causal_adj else 0}")
+    regime_series = load_regime_series()
+    all_data = all_data.join(regime_series, how="left")
+    discovery_adj = load_causal_graph_from_db()
+    canonical_adj = load_canonical_graph(os.path.dirname(__file__))
+    causal_adj = canonical_adj or discovery_adj
+    print(f"  Data: {len(all_data)} days | Canonical signature: {get_canonical_signature()}")
+    print(f"  Canonical graph edges: {len(causal_adj) if causal_adj else 0}")
 
-    # 6 methods: 2 non-VAR baselines + 4 VAR variants
     METHODS = [
-        ("Historical Replay",      gen_historical_replay,    {}),
-        ("Gaussian MC",             gen_gaussian_mc,          {}),
-        ("Unconditional VAR",       gen_unconditional_var,    {}),
-        ("Regime VAR (no graph)",   gen_regime_var_no_graph,  {}),
-        ("Full Model",              gen_full_model,           {"causal_adj": causal_adj}),
-        ("Full Model + Filter",     gen_full_model_filtered,  {"causal_adj": causal_adj}),
+        ("Historical Replay", gen_historical_replay, {"train_source": "full"}),
+        ("Gaussian MC", gen_gaussian_mc, {"train_source": "full"}),
+        ("Unconditional VAR", gen_unconditional_var, {"train_source": "full"}),
+        ("Regime VAR (no graph)", gen_regime_var_no_graph, {"train_source": "regime"}),
+        ("Full Model (Discovery)", gen_full_model, {"train_source": "regime", "causal_adj": discovery_adj}),
+        ("Full Model + Filter (Legacy Hard)", gen_full_model_filtered, {"train_source": "regime", "causal_adj": discovery_adj}),
+        (CANONICAL_PAPER_NAME, gen_full_model_soft_filtered, {"train_source": "regime", "causal_adj": causal_adj}),
     ]
 
-    results = {m[0]: {"coverages": [], "directions": []} for m in METHODS}
+    results = {
+        m[0]: {
+            "coverages": [],
+            "directions": [],
+            "pairwise": [],
+            "medae": [],
+            "tailmiss": [],
+            "plausibility": [],
+        }
+        for m in METHODS
+    }
 
     for i, event in enumerate(CANONICAL_EVENTS):
         cutoff = pd.to_datetime(event["cutoff"])
         ev_start = pd.to_datetime(event["start"])
         ev_end = pd.to_datetime(event["end"])
 
-        train = all_data[all_data.index < cutoff]
+        train_full = all_data[all_data.index < cutoff]
+        train_regime = select_training_window(train_full, train_regimes=CANONICAL_TRAIN_REGIMES)
         actual = all_data[(all_data.index >= ev_start) & (all_data.index <= ev_end)]
-        avail = [v for v in CORE_VARS if v in train.columns]
+        train_plain = train_full.drop(columns=["regime_name"], errors="ignore")
+        avail = [v for v in CORE_VARS if v in train_plain.columns]
 
-        print(f"\n  [{i+1}/11] {event['name']} (train: {len(train)} days)")
+        print(f"\n  [{i+1}/11] {event['name']} (train full={len(train_plain)} | regime={len(train_regime)})")
 
-        if len(train) < 500:
+        if len(train_plain) < 500:
             print(f"    SKIP: insufficient data")
             for m in METHODS:
                 results[m[0]]["coverages"].append(0)
                 results[m[0]]["directions"].append(0)
+                results[m[0]]["pairwise"].append(0)
+                results[m[0]]["medae"].append(0)
+                results[m[0]]["tailmiss"].append(0)
+                results[m[0]]["plausibility"].append(0)
             continue
 
         template = {v: s for v, s in EVENT_SHOCK_TEMPLATES.get(event["type"], {"^GSPC": -3.0}).items() if v in avail}
 
-        for method_name, gen_func, extra_kw in METHODS:
-            kw = {**extra_kw, "shock_template": template}
-            scenarios = gen_func(train, avail, 200, 60, **kw)
-            cov, dir_acc, details = evaluate_scenarios(scenarios, actual, avail, event["window"])
+        for method_name, gen_func, method_kw in METHODS:
+            train_input = train_regime if method_kw.get("train_source") == "regime" else train_plain
+            kw = {k: v for k, v in method_kw.items() if k != "train_source"}
+            kw.update({"shock_template": template, "event_type": event["type"]})
+            scenarios = gen_func(train_input, avail, get_canonical_target_scenarios(), 60, **kw)
+            cov, dir_acc, details, error_stats = evaluate_scenarios(scenarios, actual, avail, event["window"])
             results[method_name]["coverages"].append(cov)
             results[method_name]["directions"].append(dir_acc)
+            pairwise_scores = []
+            for var, direction in EVENT_SHOCK_TEMPLATES.get(event["type"], {}).items():
+                if var in details:
+                    if direction >= 0:
+                        pairwise_scores.append(100.0 if details[var]["median"] >= 0 else 0.0)
+                    else:
+                        pairwise_scores.append(100.0 if details[var]["median"] < 0 else 0.0)
+            results[method_name]["pairwise"].append(float(np.mean(pairwise_scores)) if pairwise_scores else 0.0)
+            results[method_name]["medae"].append(error_stats["median_abs_error"])
+            results[method_name]["tailmiss"].append(error_stats["tail_miss_penalty"])
+            plausibility_scores = score_canonical_plausibility(
+                scenarios,
+                avail,
+                train_input[avail].std().to_numpy(),
+                event["type"],
+                causal_adj=kw.get("causal_adj"),
+            )
+            results[method_name]["plausibility"].append(float(np.mean(plausibility_scores)))
 
-        # Print compact row
         line = f"    "
         for m in METHODS:
             line += f"{results[m[0]]['coverages'][-1]:>5.0f}% "
@@ -682,18 +801,29 @@ def experiment_4():
         dir_line += f" {avg:>12.1f}%"
     print(dir_line)
 
+    pair_line = f"  {'AVG PAIRWISE':<25}"
+    for m in METHODS:
+        avg = np.mean(results[m[0]]["pairwise"])
+        pair_line += f" {avg:>12.1f}%"
+    print(pair_line)
+
     # Store for significance tests
     ablation = {}
     for m in METHODS:
         ablation[m[0]] = {
             "avg_coverage": round(float(np.mean(results[m[0]]["coverages"])), 1),
             "avg_direction": round(float(np.mean(results[m[0]]["directions"])), 1),
+            "avg_pairwise": round(float(np.mean(results[m[0]]["pairwise"])), 1),
+            "avg_medae": round(float(np.mean(results[m[0]]["medae"])), 1),
+            "avg_tailmiss": round(float(np.mean(results[m[0]]["tailmiss"])), 1),
+            "avg_plausibility": round(float(np.mean(results[m[0]]["plausibility"])), 4),
             "per_event": [round(float(x), 1) for x in results[m[0]]["coverages"]],
         }
 
     store_experiment("Exp4_Canonical_Ablation", {
         "n_events": len(CANONICAL_EVENTS),
         "metric": COVERAGE_METRIC,
+        "canonical_signature": get_canonical_signature(),
         "ablation": ablation,
     })
     return results
@@ -877,12 +1007,12 @@ def experiment_8(exp4_results):
         print("  Skipping — Experiment 4 not run")
         return None
 
-    our_key = "Full Model + Filter"
+    our_key = CANONICAL_PAPER_NAME
     our_coverages = exp4_results[our_key]["coverages"]
 
     print(f"\n  Our method ({our_key}): avg={np.mean(our_coverages):.1f}%")
     print(f"\n  Paired Wilcoxon tests (one-sided: ours > baseline):")
-    print(f"  {'Baseline':<25} {'Baseline Avg':>12} {'Ours Avg':>10} {'Δ':>8} {'p-value':>10} {'Sig':>5}")
+    print("  Baseline                    Baseline Avg   Ours Avg     diff    p-value   Sig")
     print(f"  {'-'*73}")
 
     sig_results = {}
@@ -935,6 +1065,7 @@ def main():
     print("  CAUSALSTRESS — ALL PAPER EXPERIMENTS")
     print("  Unified script addressing all reviewer feedback")
     print("=" * 90)
+    print(f"  Canonical winner signature: {get_canonical_signature()}")
 
     results = {}
 
@@ -977,9 +1108,9 @@ def main():
         e = results["exp3"]
         print(f"  3.   {'Scenario Quality':<40} {'Mean plausibility='+str(e.get('plausibility_mean','')):>35}")
     if exp4_results:
-        our = exp4_results.get("Full Model + Filter", {})
+        our = exp4_results.get(CANONICAL_PAPER_NAME, {})
         avg = np.mean(our.get("coverages", [0]))
-        print(f"  4.   {'Backtest + Ablation (11 events)':<40} {'Coverage='+str(round(avg,1))+'%':>35}")
+        print(f"  4.   {'Backtest + Ablation (11 events)':<40} {(CANONICAL_PAPER_NAME+': '+str(round(avg,1))+'%'):>35}")
     if "exp5" in results and results["exp5"]:
         print(f"  5.   {'VaR Comparison':<40} {'Best: Historical Sim (Kupiec)':>35}")
     if "exp6" in results and results["exp6"]:

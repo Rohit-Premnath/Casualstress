@@ -24,6 +24,41 @@ from scipy import stats
 import psycopg2
 from psycopg2.extras import Json
 from dotenv import load_dotenv
+try:
+    from ml_pipeline.canonical_best_model import (
+        CANONICAL_GRAPH_FILE,
+        CANONICAL_GRAPH_MODE,
+        CANONICAL_GRAPH_REGIME,
+        CANONICAL_MODEL_NAME,
+        CANONICAL_PAPER_NAME,
+        CANONICAL_SCENARIO_FILTER,
+        CANONICAL_TRAIN_REGIMES,
+        get_canonical_candidate_count,
+        get_canonical_signature,
+        get_canonical_target_scenarios,
+        load_canonical_graph,
+        score_canonical_plausibility,
+        soft_filter_weights,
+        weighted_quantile,
+    )
+except ModuleNotFoundError:
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    from canonical_best_model import (
+        CANONICAL_GRAPH_FILE,
+        CANONICAL_GRAPH_MODE,
+        CANONICAL_GRAPH_REGIME,
+        CANONICAL_MODEL_NAME,
+        CANONICAL_PAPER_NAME,
+        CANONICAL_SCENARIO_FILTER,
+        CANONICAL_TRAIN_REGIMES,
+        get_canonical_candidate_count,
+        get_canonical_signature,
+        get_canonical_target_scenarios,
+        load_canonical_graph,
+        score_canonical_plausibility,
+        soft_filter_weights,
+        weighted_quantile,
+    )
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -35,10 +70,9 @@ load_dotenv()
 # ============================================
 
 SCENARIO_HORIZON = 60
-N_SCENARIOS_DEFAULT = 100
+N_SCENARIOS_DEFAULT = get_canonical_target_scenarios()
 MAX_VAR_VARIABLES = 25
-FILTERED_SELECTION_ENABLED = True
-FILTERED_CANDIDATE_MULTIPLIER = 2
+FILTERED_SELECTION_ENABLED = CANONICAL_SCENARIO_FILTER == "soft_plausibility"
 
 # Multi-shock distribution: generates scenarios at different severity levels
 # This creates fat tails naturally
@@ -62,7 +96,7 @@ SHOCK_PERSISTENCE_DAYS = 5
 SHOCK_PERSISTENCE_DECAY = 0.72
 VIX_TEMPLATE_CAP = 3.5
 VIX_PROPAGATION_SCALE = 0.65
-DEFAULT_TRAINING_REGIMES = ["elevated", "stressed", "high_stress", "crisis"]
+DEFAULT_TRAINING_REGIMES = CANONICAL_TRAIN_REGIMES
 
 CORE_VARIABLES = [
     "^GSPC", "^VIX", "^NDX", "^RUT", "DGS10", "DGS2", "T10Y2Y",
@@ -185,6 +219,11 @@ def get_db_connection():
 
 def load_regime_causal_graph(regime_name):
     """Load the causal graph for a specific regime."""
+    if regime_name == CANONICAL_GRAPH_REGIME:
+        canonical_graph = load_canonical_graph(os.path.dirname(os.path.dirname(__file__)))
+        if canonical_graph:
+            return f"local::{CANONICAL_GRAPH_FILE}::{CANONICAL_GRAPH_REGIME}::{CANONICAL_GRAPH_MODE}", canonical_graph, None
+
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -618,73 +657,25 @@ def generate_scenarios(
 # SCORE PLAUSIBILITY
 # ============================================
 
-def score_plausibility(scenarios, var_model, causal_adjacency=None):
+def score_plausibility(scenarios, var_model, causal_adjacency=None, event_type="market_crash"):
     """Score plausibility with financial consistency checks."""
-    variables = var_model["variables"]
-    stds = var_model["stds"]
-    scores = []
+    return score_canonical_plausibility(
+        scenarios,
+        var_model["variables"],
+        var_model["stds"],
+        event_type,
+        causal_adj=causal_adjacency,
+    )
 
-    for scenario in scenarios:
-        score = 1.0
 
-        # Daily extreme ratio
-        daily_sigma = np.abs(scenario.values) / stds
-        extreme_ratio = (daily_sigma > 3).sum() / daily_sigma.size
-        if extreme_ratio > 0.15:
-            score *= 0.80
-        elif extreme_ratio > 0.08:
-            score *= 0.90
-
-        # Cumulative bounds
-        for j, var in enumerate(variables):
-            cum_move = abs(scenario[var].sum())
-            daily_std = stds[j] if stds[j] > 0 else 1
-            cum_sigma = cum_move / (daily_std * np.sqrt(len(scenario)))
-            if cum_sigma > 8:
-                score *= 0.95
-
-        # S&P / VIX consistency
-        if "^GSPC" in variables and "^VIX" in variables:
-            spx = scenario["^GSPC"].sum()
-            vix = scenario["^VIX"].sum()
-            if spx < 0 and vix < 0:
-                score *= 0.85
-            elif spx > 0 and vix > 0:
-                score *= 0.90
-
-        # Credit / Equity consistency
-        if "^GSPC" in variables and "BAMLH0A0HYM2" in variables:
-            spx = scenario["^GSPC"].sum()
-            hy = scenario["BAMLH0A0HYM2"].sum()
-            if spx < -0.5 and hy < -0.5:
-                score *= 0.85
-
-        # Causal consistency
-        if causal_adjacency is not None:
-            violations = 0
-            total_checks = 0
-            for edge_key, edge_data in causal_adjacency.items():
-                cause, effect = edge_key.split("->")
-                if cause in variables and effect in variables:
-                    total_checks += 1
-                    c_chg = scenario[cause].sum()
-                    e_chg = scenario[effect].sum()
-                    w = edge_data.get("raw_weight", edge_data.get("weight", 0))
-                    if w > 0 and c_chg * e_chg < 0:
-                        violations += 1
-                    elif w < 0 and c_chg * e_chg > 0:
-                        violations += 1
-            if total_checks > 0:
-                consistency = 1 - (violations / total_checks)
-                score *= (0.7 + 0.3 * consistency)
-
-        scores.append(round(min(score, 1.0), 4))
-
-    return scores
+def apply_canonical_soft_filter(scenarios, scores):
+    """Canonical soft-filtered selection used by the shared best model."""
+    weights = soft_filter_weights(scores)
+    return scenarios, scores, list(weights)
 
 
 def select_top_scenarios(scenarios, scores, keep_n):
-    """Keep the most plausible scenarios for user-facing output."""
+    """Legacy hard-filter helper kept for backwards compatibility."""
     ranked = sorted(zip(scores, scenarios), key=lambda item: item[0], reverse=True)
     selected = ranked[:keep_n]
     kept_scores = [score for score, _ in selected]
@@ -698,7 +689,7 @@ def select_top_scenarios(scenarios, scores, keep_n):
 
 def store_scenarios(scenarios, scores, shock_variable, shock_magnitude,
                     regime_name, graph_id, regime_condition_label=None,
-                    event_type=None):
+                    event_type=None, scenario_weights=None):
     """Store generated scenarios in the database."""
     print("\nStoring scenarios in database...")
 
@@ -712,8 +703,17 @@ def store_scenarios(scenarios, scores, shock_variable, shock_magnitude,
         paths.append({
             "scenario_idx": i,
             "plausibility_score": scores[i],
+            "soft_filter_weight": None if scenario_weights is None else float(scenario_weights[i]),
+            "model_signature": get_canonical_signature(),
             "data": {col: scenario[col].tolist() for col in scenario.columns},
         })
+
+    graph_uuid = None
+    if graph_id:
+        try:
+            graph_uuid = str(uuid.UUID(str(graph_id)))
+        except (ValueError, TypeError, AttributeError):
+            graph_uuid = None
 
     cursor.execute("""
         INSERT INTO models.scenarios
@@ -725,7 +725,7 @@ def store_scenarios(scenarios, scores, shock_variable, shock_magnitude,
         event_type or shock_variable,
         shock_magnitude,
         regime_condition_label if regime_condition_label is not None else 0,
-        graph_id if graph_id else None,
+        graph_uuid,
         Json(paths),
         Json(scores),
         len(scenarios),
@@ -759,7 +759,7 @@ def format_cumulative_impact(var_name, cum_values):
         return list(cum_values), ""
 
 
-def summarize_scenarios(scenarios, scores, shock_variable, variables):
+def summarize_scenarios(scenarios, scores, shock_variable, variables, scenario_weights=None):
     """Print summary with proper units."""
     print(f"\n{'='*70}")
     print("  SCENARIO GENERATION SUMMARY")
@@ -772,6 +772,8 @@ def summarize_scenarios(scenarios, scores, shock_variable, variables):
     print(f"  Scenarios: {n}")
     print(f"  Horizon: {horizon} days")
     print(f"  Plausibility: min={min(scores):.2f}, mean={np.mean(scores):.2f}, max={max(scores):.2f}")
+    if scenario_weights is not None:
+        print(f"  Soft filter: weighted quantiles from canonical best model")
 
     key_vars = ["^GSPC", "^VIX", "DGS10", "CL=F", "XLF", "BAMLH0A0HYM2"]
     key_vars = [v for v in key_vars if v in variables]
@@ -785,9 +787,14 @@ def summarize_scenarios(scenarios, scores, shock_variable, variables):
         display_vals, unit = format_cumulative_impact(var, cum_raw)
         display_vals = np.array(display_vals)
 
-        p5 = np.percentile(display_vals, 5)
-        p50 = np.percentile(display_vals, 50)
-        p95 = np.percentile(display_vals, 95)
+        if scenario_weights is not None:
+            p5 = weighted_quantile(display_vals, 0.05, scenario_weights)
+            p50 = weighted_quantile(display_vals, 0.50, scenario_weights)
+            p95 = weighted_quantile(display_vals, 0.95, scenario_weights)
+        else:
+            p5 = np.percentile(display_vals, 5)
+            p50 = np.percentile(display_vals, 50)
+            p95 = np.percentile(display_vals, 95)
         mean = np.mean(display_vals)
 
         if unit == "%":
@@ -811,14 +818,18 @@ def main():
     print("CAUSALSTRESS - SCENARIO GENERATOR v2")
     print("  (Multi-shock, causal propagation, crisis covariance)")
     print("=" * 70)
+    print(f"  Canonical winner: {CANONICAL_PAPER_NAME}")
+    print(f"  Model signature: {get_canonical_signature()}")
 
     print("\nLoading data and regime labels...")
     data = load_processed_data_with_regimes()
     print(f"  Loaded {len(data)} days x {len(data.columns)} columns")
 
-    target_regime = "stressed"
+    target_regime = CANONICAL_GRAPH_REGIME
     print(f"\n  Target graph regime: {target_regime}")
     print(f"  Training regimes: {', '.join(DEFAULT_TRAINING_REGIMES)}")
+    print(f"  Graph mode: {CANONICAL_GRAPH_MODE}")
+    print(f"  Filter mode: {CANONICAL_SCENARIO_FILTER}")
 
     graph_id, causal_adj, graph_vars = load_regime_causal_graph(target_regime)
     if graph_id:
@@ -851,9 +862,9 @@ def main():
         print(f"  Event family: {event_type}")
         print(f"  Multi-root template: {get_shock_template(event_type, shock_var, shock_mag, var_model['variables'])}")
 
-        target_scenarios = 100
+        target_scenarios = get_canonical_target_scenarios()
         candidate_scenarios = (
-            target_scenarios * FILTERED_CANDIDATE_MULTIPLIER
+            get_canonical_candidate_count(target_scenarios)
             if FILTERED_SELECTION_ENABLED else target_scenarios
         )
 
@@ -867,15 +878,16 @@ def main():
             event_type=event_type,
         )
 
-        scores = score_plausibility(scenarios, var_model, causal_adj)
+        scores = score_plausibility(scenarios, var_model, causal_adj, event_type=event_type)
+        scenario_weights = None
         if FILTERED_SELECTION_ENABLED:
-            scenarios, scores = select_top_scenarios(scenarios, scores, target_scenarios)
+            scenarios, scores, scenario_weights = apply_canonical_soft_filter(scenarios, scores)
             print(
-                f"  Filtered selection: generated {candidate_scenarios}, "
-                f"kept {len(scenarios)}, mean score {np.mean(scores):.2f}"
+                f"  Soft-filtered weighting: generated {candidate_scenarios}, "
+                f"weighted over {len(scenarios)} scenarios, mean score {np.mean(scores):.2f}"
             )
 
-        summarize_scenarios(scenarios, scores, shock_var, var_model["variables"])
+        summarize_scenarios(scenarios, scores, shock_var, var_model["variables"], scenario_weights=scenario_weights)
 
         store_scenarios(
             scenarios, scores, shock_var, shock_mag,
@@ -883,10 +895,11 @@ def main():
             str(graph_id) if graph_id else None,
             regime_condition_label=target_regime,
             event_type=event_type,
+            scenario_weights=scenario_weights,
         )
 
     print("\nScenario generation complete!")
-    print(f"  Generated {len(shocks)} shock scenarios x 100 paths each = {len(shocks)*100} total scenarios")
+    print(f"  Generated {len(shocks)} shock scenarios x {get_canonical_candidate_count(get_canonical_target_scenarios())} weighted paths each = {len(shocks)*get_canonical_candidate_count(get_canonical_target_scenarios())} total scenarios")
     print("=" * 70)
 
 
