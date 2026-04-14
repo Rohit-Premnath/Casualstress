@@ -49,6 +49,7 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       FRED_API_KEY: ${FRED_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
       ENV: ${ENV}
     ports:
       - "8000:8000"

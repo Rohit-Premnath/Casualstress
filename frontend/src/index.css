@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 6% 4%;
+    --foreground: 0 0% 95%;
+    --card: 240 5% 7%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 5% 7%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 12%;
+    --secondary-foreground: 240 5% 65%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 40%;
+    --accent: 187 92% 41%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 0 0% 100% / 0.06;
+    --input: 0 0% 100% / 0.06;
+    --ring: 217 91% 60%;
+    --radius: 0.75rem;
+
+    --regime-calm: 160 60% 45%;
+    --regime-normal: 187 80% 55%;
+    --regime-elevated: 38 92% 50%;
+    --regime-stressed: 0 84% 60%;
+    --regime-crisis: 0 73% 35%;
+
+    --chart-1: 217 91% 60%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 280 60% 55%;
+    --chart-5: 0 72% 55%;
+
+    --sidebar-background: 240 6% 4%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 100% / 0.06;
+    --sidebar-ring: 217 91% 60%;
+
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 -1px 0 rgba(0, 0, 0, 0.2) inset;
+    --glass-hover-bg: rgba(255, 255, 255, 0.05);
+    --glass-hover-border: rgba(255, 255, 255, 0.1);
+    --glass-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 -1px 0 rgba(0, 0, 0, 0.2) inset;
+    --glass-strong-bg: rgba(255, 255, 255, 0.06);
+    --glass-strong-border: rgba(255, 255, 255, 0.08);
+    --glass-strong-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+
+    --sidebar-bg-raw: #09090b;
+    --sidebar-border-raw: rgba(255, 255, 255, 0.06);
+    --sidebar-active-accent: #3b82f6;
+    --logo-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);
+    --btn-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);
+  }
+
+  [data-theme="light"] {
+    --background: 36 33% 97%;
+    --foreground: 25 15% 12%;
+    --card: 38 30% 95%;
+    --card-foreground: 25 15% 12%;
+    --popover: 38 30% 95%;
+    --popover-foreground: 25 15% 12%;
+    --primary: 24 65% 38%;
+    --primary-foreground: 36 33% 97%;
+    --secondary: 34 22% 90%;
+    --secondary-foreground: 30 10% 35%;
+    --muted: 34 18% 86%;
+    --muted-foreground: 28 10% 42%;
+    --accent: 160 45% 32%;
+    --accent-foreground: 36 33% 97%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 36 33% 97%;
+    --border: 30 18% 82%;
+    --input: 30 18% 82%;
+    --ring: 24 65% 38%;
+
+    --sidebar-background: 30 22% 14%;
+    --sidebar-foreground: 36 20% 90%;
+    --sidebar-primary: 24 65% 45%;
+    --sidebar-primary-foreground: 36 33% 97%;
+    --sidebar-accent: 30 18% 20%;
+    --sidebar-accent-foreground: 36 20% 90%;
+    --sidebar-border: 30 12% 22%;
+    --sidebar-ring: 24 65% 45%;
+
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(140, 110, 80, 0.12);
+    --glass-shadow: 0 4px 24px rgba(120, 80, 40, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    --glass-hover-bg: rgba(255, 255, 255, 0.85);
+    --glass-hover-border: rgba(140, 110, 80, 0.18);
+    --glass-hover-shadow: 0 8px 32px rgba(120, 80, 40, 0.1), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    --glass-strong-bg: rgba(255, 255, 255, 0.85);
+    --glass-strong-border: rgba(140, 110, 80, 0.14);
+    --glass-strong-shadow: 0 8px 32px rgba(120, 80, 40, 0.08), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+
+    --sidebar-bg-raw: hsl(30, 22%, 14%);
+    --sidebar-border-raw: hsl(30, 12%, 22%);
+    --sidebar-active-accent: hsl(24, 65%, 45%);
+    --logo-gradient: linear-gradient(135deg, hsl(24, 65%, 38%), hsl(30, 55%, 48%));
+    --btn-gradient: linear-gradient(135deg, hsl(24, 65%, 38%), hsl(30, 55%, 48%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-hover {
+    @apply glass transition-all duration-300 ease-out;
+  }
+  .glass-hover:hover {
+    background: var(--glass-hover-bg);
+    border-color: var(--glass-hover-border);
+    box-shadow: var(--glass-hover-shadow);
+    transform: translateY(-1px);
+  }
+
+  .glass-subtle {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    background: var(--glass-strong-bg);
+    backdrop-filter: blur(32px) saturate(1.4);
+    -webkit-backdrop-filter: blur(32px) saturate(1.4);
+    border: 1px solid var(--glass-strong-border);
+    box-shadow: var(--glass-strong-shadow);
+  }
+
+  .text-glow-amber {
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+  }
+  .text-glow-red {
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  }
+  .text-glow-blue {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  .text-glow-emerald {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.3);
+  }
+  .glow-red {
+    box-shadow: 0 0 20px -5px rgba(239, 68, 68, 0.3);
+  }
+  .glow-amber {
+    box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.3);
+  }
+
+  .btn-gradient-blue {
+    background: var(--btn-gradient);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+  }
+  .btn-gradient-blue:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+  }
+
+  .btn-gradient-red {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25);
+  }
+  .btn-gradient-red:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+  }
+
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+
+  .graph-edge {
+    transition: stroke 0.2s, stroke-width 0.2s;
+  }
+}
