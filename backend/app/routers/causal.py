@@ -23,6 +23,44 @@ def get_conn():
     )
 
 
+def _load_preferred_global_graph(cursor):
+    cursor.execute(
+        """
+        SELECT adjacency_matrix, variables, method FROM models.causal_graphs
+        ORDER BY
+            CASE
+                WHEN method = 'ensemble_dynotears_pcmci' THEN 0
+                WHEN method LIKE '%%ensemble%%' THEN 1
+                WHEN method LIKE '%%dynotears%%' THEN 2
+                ELSE 3
+            END,
+            created_at DESC
+        LIMIT 1
+        """
+    )
+    return cursor.fetchone()
+
+
+def _load_preferred_regime_graph(cursor, regime_lower: str):
+    cursor.execute(
+        """
+        SELECT adjacency_matrix, variables, method
+        FROM models.causal_graphs
+        WHERE method LIKE %s
+        ORDER BY
+            CASE
+                WHEN lower(method) = %s THEN 0
+                WHEN lower(method) LIKE %s THEN 1
+                ELSE 2
+            END,
+            created_at DESC
+        LIMIT 1
+        """,
+        (f"%regime%{regime_lower}%", f"regime_{regime_lower}", f"%regime%{regime_lower}%"),
+    )
+    return cursor.fetchone()
+
+
 # Variable metadata for display
 VARIABLE_META = {
     "^GSPC": {"label": "S&P 500", "category": "equity"},
@@ -88,7 +126,7 @@ MAJOR_NODES = {"^GSPC", "^VIX", "DGS10", "BAMLH0A0HYM2", "CL=F", "FEDFUNDS", "UN
 
 @router.get("/graph")
 async def get_causal_graph(
-    regime: Optional[str] = Query(None, description="Filter edges by regime: Calm, Normal, Elevated, Stressed, Crisis, or ALL"),
+    regime: Optional[str] = Query(None, description="Filter edges by regime: Calm, Normal, Elevated, Stressed, High Stress, Crisis, or ALL"),
     min_weight: float = Query(0.0, description="Minimum absolute edge weight to include"),
     limit: int = Query(200, description="Maximum number of edges to return"),
 ):
@@ -99,24 +137,14 @@ async def get_causal_graph(
     # Try regime-specific graph first
     graph_method = None
     if regime and regime.lower() not in ("all", "none"):
-        regime_lower = regime.lower()
-        cursor.execute("""
-            SELECT adjacency_matrix, variables FROM models.causal_graphs
-            WHERE method LIKE %s
-            ORDER BY created_at DESC LIMIT 1
-        """, (f"%regime%{regime_lower}%",))
-        row = cursor.fetchone()
+        regime_lower = regime.lower().replace(" ", "_")
+        row = _load_preferred_regime_graph(cursor, regime_lower)
         if row:
-            graph_method = f"regime_{regime_lower}"
+            graph_method = row["method"]
     
     if not graph_method:
-        cursor.execute("""
-            SELECT adjacency_matrix, variables FROM models.causal_graphs
-            WHERE method LIKE '%%ensemble%%' OR method LIKE '%%dynotears%%'
-            ORDER BY created_at DESC LIMIT 1
-        """)
-        row = cursor.fetchone()
-        graph_method = "ensemble"
+        row = _load_preferred_global_graph(cursor)
+        graph_method = row["method"] if row else "ensemble"
 
     cursor.close()
     conn.close()
@@ -183,12 +211,7 @@ async def get_regime_comparison():
     comparison = {}
 
     for regime in regimes:
-        cursor.execute("""
-            SELECT adjacency_matrix FROM models.causal_graphs
-            WHERE method LIKE %s
-            ORDER BY created_at DESC LIMIT 1
-        """, (f"%regime%{regime}%",))
-        row = cursor.fetchone()
+        row = _load_preferred_regime_graph(cursor, regime)
         if row:
             n_edges = len(row["adjacency_matrix"])
             comparison[regime] = {"edges": n_edges}

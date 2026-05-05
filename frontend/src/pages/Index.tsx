@@ -4,7 +4,6 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceL
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/services/api";
-import { regimeColors } from "@/data/mockData";
 
 const container = {
   hidden: { opacity: 0 },
@@ -67,7 +66,7 @@ const RegimeChartTooltip = ({ active, payload }: any) => {
       <div className="glass px-3 py-2 text-xs rounded-lg">
         <p className="text-muted-foreground">{dataPoint?.month}</p>
         <div className="flex items-center gap-1.5 mt-1">
-          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: regimeColors[dataPoint?.regime] }} />
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: regimeStepColors[dataPoint?.regime] || "#94a3b8" }} />
           <span className="font-semibold text-foreground">{dataPoint?.regime}</span>
         </div>
       </div>
@@ -131,6 +130,9 @@ const Index = () => {
   const regimeColor = regime ? (regimeNameColor[regime.name] ?? "text-amber-400") : "text-muted-foreground";
   const regimeDotColor = regime ? (regimeStepColors[regime.name] ?? "#f59e0b") : "#94a3b8";
   const regimeGlow = regime ? (regimeGlowClass[regime.name] ?? "") : "";
+  const tradingDayRangeLabel = system?.startDate && system?.endDate
+    ? `${new Date(system.startDate).getFullYear()} – ${new Date(system.endDate).getFullYear()}`
+    : "Date range unavailable";
 
   return (
     <div className="p-6 md:p-8 max-w-[1440px] mx-auto space-y-6">
@@ -201,7 +203,7 @@ const Index = () => {
           {system ? (
             <>
               <span className="text-4xl font-mono font-light text-foreground">{system.tradingDays.toLocaleString()}</span>
-              <span className="text-[11px] text-muted-foreground">2005 – 2026</span>
+              <span className="text-[11px] text-muted-foreground">{tradingDayRangeLabel}</span>
             </>
           ) : (
             <SectionUnavailable compact message="Trading-day coverage unavailable." />

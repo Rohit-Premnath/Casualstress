@@ -13,7 +13,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     staleTime: 30_000,
   });
   const apiReachable = !!apiHealth && !isError;
-  const apiHealthy = apiHealth?.status === "alive";
+  const apiHealthy = apiHealth?.status === "healthy";
   const statusClass = apiHealthy
     ? "text-emerald-400"
     : apiReachable
@@ -25,9 +25,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       ? "bg-amber-400"
       : "bg-muted-foreground";
   const statusText = apiHealthy
-    ? "LIVE API"
+    ? "DATA LIVE"
     : apiReachable
-      ? "API REACHABLE"
+      ? "API DEGRADED"
       : "API OFFLINE";
 
   return (

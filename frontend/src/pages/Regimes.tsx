@@ -2,7 +2,14 @@ import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { useQueries } from "@tanstack/react-query";
 import { api } from "@/services/api";
-import { regimeColors, crisisAnnotations } from "@/data/mockData";
+import { regimeColors } from "@/data/mockData";
+
+const parseYearMonthStart = (value: string) => new Date(`${value}-01T00:00:00`);
+
+const parseYearMonthEnd = (value: string) => {
+  const [year, month] = value.split("-").map(Number);
+  return new Date(year, month, 0);
+};
 
 const Regimes = () => {
   const [hoveredSeg, setHoveredSeg] = useState<number | null>(null);
@@ -42,32 +49,52 @@ const Regimes = () => {
   const currentRegime = currentQuery.data;
   const timeline = timelineQuery.data;
   const transitionMatrix = transitionQuery.data;
+  const displayLabels = useMemo(
+    () => (transitionMatrix?.labels ?? []).filter((label) => label !== "High Stress"),
+    [transitionMatrix],
+  );
   const characteristics = useMemo(() => {
     if (!characteristicsQuery.data || !transitionMatrix?.labels?.length) return characteristicsQuery.data;
-    const order = transitionMatrix.labels;
+    const order = displayLabels;
     return [...characteristicsQuery.data].sort(
       (a, b) => order.indexOf(a.regime) - order.indexOf(b.regime),
-    );
-  }, [characteristicsQuery.data, transitionMatrix]);
-
-  const probabilities = useMemo(() => {
-    if (!currentRegime) return {};
-    const allLabels = transitionMatrix?.labels?.length
-      ? transitionMatrix.labels
-      : ["Calm", "Normal", "Elevated", "Stressed", "High Stress", "Crisis"];
-    return Object.fromEntries(
-      allLabels.map((label) => [label, label === currentRegime.name ? currentRegime.confidence : 0]),
-    );
-  }, [currentRegime, transitionMatrix]);
+    ).filter((row) => row.regime !== "High Stress");
+  }, [characteristicsQuery.data, transitionMatrix, displayLabels]);
 
   const totalMonths = timeline?.reduce((a, s) => a + s.months, 0) ?? 0;
   const hoveredSegment = hoveredSeg !== null ? timeline?.[hoveredSeg] : null;
+
   const hoveredSegmentLeft = useMemo(() => {
     if (hoveredSeg === null || !timeline?.length || totalMonths === 0) return 0;
     const monthsBefore = timeline.slice(0, hoveredSeg).reduce((sum, seg) => sum + seg.months, 0);
     const currentWidth = timeline[hoveredSeg].months;
     return ((monthsBefore + currentWidth / 2) / totalMonths) * 100;
   }, [hoveredSeg, timeline, totalMonths]);
+
+  const historyRange = useMemo(() => {
+    if (!timeline?.length) {
+      return { label: "Regime History", years: [] as number[] };
+    }
+
+    const startDate = parseYearMonthStart(timeline[0].start);
+    const endDate = parseYearMonthEnd(timeline[timeline.length - 1].end);
+    const startYear = startDate.getFullYear();
+    const endYear = endDate.getFullYear();
+    const step = Math.max(1, Math.ceil((endYear - startYear) / 6));
+    const years: number[] = [];
+
+    for (let year = startYear; year <= endYear; year += step) {
+      years.push(year);
+    }
+    if (years[years.length - 1] !== endYear) {
+      years.push(endYear);
+    }
+
+    return {
+      label: `Regime History ${startYear}\u2013${endYear}`,
+      years,
+    };
+  }, [timeline]);
 
   if (isLoading) {
     return (
@@ -82,7 +109,7 @@ const Regimes = () => {
     !currentRegime ||
     !timeline?.length ||
     !characteristics?.length ||
-    !transitionMatrix?.labels?.length ||
+    !displayLabels.length ||
     !transitionMatrix?.data?.length
   ) {
     return (
@@ -90,7 +117,7 @@ const Regimes = () => {
         <div className="glass rounded-2xl p-8">
           <h2 className="text-lg font-semibold text-foreground mb-2">Live regime data unavailable</h2>
           <p className="text-sm text-muted-foreground">
-            This page does not use mock data. If you see this state, one or more live regime endpoints failed or returned empty results.
+            This page does not use mock data for its live regime outputs. If you see this state, one or more live regime endpoints failed or returned empty results.
           </p>
         </div>
       </div>
@@ -117,22 +144,14 @@ const Regimes = () => {
           {currentRegime.confidence}% confidence • {currentRegime.streak} day streak
         </p>
 
-        <div className="max-w-lg mx-auto mt-8 space-y-2">
-          {Object.entries(probabilities).map(([regime, pct]) => (
-            <div key={regime} className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground w-20 text-right">{regime}</span>
-              <div className="flex-1 h-5 rounded-full bg-secondary overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all duration-700"
-                  style={{
-                    width: `${Math.max(pct, 0.5)}%`,
-                    backgroundColor: regimeColors[regime] || "#666",
-                  }}
-                />
-              </div>
-              <span className="font-mono text-xs text-muted-foreground w-12">{pct.toFixed(1)}%</span>
-            </div>
-          ))}
+        <div className="max-w-lg mx-auto mt-8 rounded-2xl border border-border bg-secondary/30 px-4 py-4 text-left">
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Live Confidence</p>
+          <p className="text-sm text-foreground font-medium">
+            The backend currently returns the live confidence for the current regime only.
+          </p>
+          <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
+            This page no longer fabricates a full regime probability distribution. The history, transition matrix, and regime characteristics below are live-backed.
+          </p>
         </div>
       </motion.div>
 
@@ -142,7 +161,7 @@ const Regimes = () => {
         transition={{ delay: 0.2 }}
         className="glass rounded-2xl p-6"
       >
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-5">Regime History 2005–2026</h2>
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-5">{historyRange.label}</h2>
         <div className="relative">
           {hoveredSegment && (
             <div
@@ -180,20 +199,11 @@ const Regimes = () => {
               />
             ))}
           </div>
-
-          {crisisAnnotations.map((ann) => {
-            const yearStart = 2005;
-            const pos = ((ann.year - yearStart) / (2026 - yearStart)) * 100;
-            return (
-              <div key={ann.year} className="absolute" style={{ left: `${pos}%`, top: "84px" }}>
-                <div className="w-[1px] h-4 bg-border mx-auto" />
-                <span className="text-[8px] text-muted-foreground whitespace-nowrap block -translate-x-1/2">{ann.label}</span>
-              </div>
-            );
-          })}
         </div>
         <div className="flex justify-between mt-10 text-[10px] text-muted-foreground font-mono">
-          <span>2005</span><span>2008</span><span>2011</span><span>2014</span><span>2017</span><span>2020</span><span>2023</span><span>2026</span>
+          {historyRange.years.map((year) => (
+            <span key={year}>{year}</span>
+          ))}
         </div>
       </motion.div>
 
@@ -210,19 +220,23 @@ const Regimes = () => {
               <thead>
                 <tr>
                   <th className="pb-2 text-muted-foreground font-medium"></th>
-                  {transitionMatrix.labels.map((l) => (
-                    <th key={l} className="pb-2 text-muted-foreground font-medium text-center px-1">{l}</th>
+                  {displayLabels.map((label) => (
+                    <th key={label} className="pb-2 text-muted-foreground font-medium text-center px-1">{label}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {transitionMatrix.labels.map((row, ri) => (
+                {displayLabels.map((row) => {
+                  const rowIndex = transitionMatrix.labels.indexOf(row);
+                  return (
                   <tr key={row}>
                     <td className="py-1 pr-2 text-muted-foreground font-medium">{row}</td>
-                    {transitionMatrix.data[ri].map((val, ci) => {
+                    {displayLabels.map((column) => {
+                      const colIndex = transitionMatrix.labels.indexOf(column);
+                      const val = transitionMatrix.data[rowIndex][colIndex];
                       const intensity = val / 100;
                       return (
-                        <td key={ci} className="py-1 text-center px-1">
+                        <td key={colIndex} className="py-1 text-center px-1">
                           <div
                             className="rounded-md px-1 py-1.5 font-mono text-[10px]"
                             style={{
@@ -236,7 +250,7 @@ const Regimes = () => {
                       );
                     })}
                   </tr>
-                ))}
+                )})}
               </tbody>
             </table>
           </div>
@@ -253,23 +267,28 @@ const Regimes = () => {
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-border">
-                  {["Regime", "Days", "%", "VIX Mean", "SPX Return", "HY Spread", "Yield Curve"].map((h) => (
-                    <th key={h} className="text-left text-[10px] uppercase tracking-wider text-muted-foreground pb-2 font-medium pr-3">{h}</th>
+                  {["Regime", "Days", "%", "VIX Mean", "SPX Return", "HY Spread", "Yield Curve"].map((heading) => (
+                    <th key={heading} className="text-left text-[10px] uppercase tracking-wider text-muted-foreground pb-2 font-medium pr-3">{heading}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {characteristics.map((r) => (
-                  <tr key={`${r.regime}-${r.days}`} className="border-b border-border/50" style={{ borderLeftWidth: 2, borderLeftColor: regimeColors[r.regime] }}>
-                    <td className="py-2.5 text-foreground font-medium">{r.regime}</td>
-                    <td className="py-2.5 font-mono text-muted-foreground">{r.days.toLocaleString()}</td>
-                    <td className="py-2.5 font-mono text-muted-foreground">{r.pct}%</td>
-                    <td className="py-2.5 font-mono text-muted-foreground">{r.vixMean.toFixed(2)}</td>
-                    <td className={`py-2.5 font-mono ${r.spxReturn >= 0 ? "text-emerald-400" : "text-red-400"}`}>
-                      {r.spxReturn >= 0 ? "+" : ""}{(r.spxReturn * 100).toFixed(1)}%
+                {characteristics.map((row) => (
+                  <tr
+                    key={`${row.regime}-${row.days}`}
+                    className="border-b border-border/50"
+                    style={{ borderLeftWidth: 2, borderLeftColor: regimeColors[row.regime] }}
+                  >
+                    <td className="py-2.5 text-foreground font-medium">{row.regime}</td>
+                    <td className="py-2.5 font-mono text-muted-foreground">{row.days.toLocaleString()}</td>
+                    <td className="py-2.5 font-mono text-muted-foreground">{row.pct}%</td>
+                    <td className="py-2.5 font-mono text-muted-foreground">{row.vixMean.toFixed(2)}</td>
+                    <td className={`py-2.5 font-mono ${row.spxReturn >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      {row.spxReturn >= 0 ? "+" : ""}
+                      {(row.spxReturn * 100).toFixed(1)}%
                     </td>
-                    <td className="py-2.5 font-mono text-muted-foreground">{r.hySpread.toFixed(2)}</td>
-                    <td className="py-2.5 font-mono text-muted-foreground">{r.yieldCurve.toFixed(2)}</td>
+                    <td className="py-2.5 font-mono text-muted-foreground">{row.hySpread.toFixed(2)}</td>
+                    <td className="py-2.5 font-mono text-muted-foreground">{row.yieldCurve.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>

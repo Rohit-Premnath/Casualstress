@@ -214,13 +214,14 @@ export const regimeTimeline: RegimeSegment[] = [
 ];
 
 export const crisisAnnotations = [
-  { year: 2008, label: 'GFC' },
-  { year: 2010, label: 'Flash Crash' },
-  { year: 2011, label: 'Euro Debt' },
-  { year: 2015, label: 'China/Oil' },
-  { year: 2018, label: 'Volmageddon' },
-  { year: 2020, label: 'COVID' },
-  { year: 2022, label: 'Rate Hikes' },
+  { label: 'GFC', startDate: '2008-09-14', endDate: '2008-10-28' },
+  { label: 'Flash Crash', startDate: '2010-05-05', endDate: '2010-05-24' },
+  { label: 'US Downgrade', startDate: '2011-07-28', endDate: '2011-08-24' },
+  { label: 'China/Oil', startDate: '2015-08-17', endDate: '2015-09-03' },
+  { label: 'Volmageddon', startDate: '2018-02-02', endDate: '2018-02-16' },
+  { label: 'COVID', startDate: '2020-02-19', endDate: '2020-03-23' },
+  { label: 'Rate Hikes', startDate: '2022-01-03', endDate: '2022-06-17' },
+  { label: 'SVB', startDate: '2023-03-08', endDate: '2023-03-17' },
 ];
 
 export const transitionMatrix = {

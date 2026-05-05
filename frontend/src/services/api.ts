@@ -23,8 +23,8 @@ async function fetchJSON<T>(path: string, options?: RequestInit): Promise<T> {
   return res.json();
 }
 
-export async function checkApiHealth(): Promise<{ status: string; service?: string; environment?: string }> {
-  return fetchJSON('/live');
+export async function checkApiHealth(): Promise<{ status: string; database?: string; host?: string; port?: number }> {
+  return fetchJSON('/health');
 }
 
 // ==================== TYPES ====================
@@ -43,6 +43,8 @@ export interface DashboardSummary {
     tradingDays: number;
     causalEdges: number;
     scenarios: number;
+    startDate: string | null;
+    endDate: string | null;
   };
 }
 
@@ -170,6 +172,24 @@ export interface ScenarioResponse {
   keyVariableStressRange: ScenarioStressRangeRow[];
 }
 
+export interface ScenarioFamilyDefinition {
+  id: string;
+  label: string;
+  eventType: string;
+  defaultAnchor: string;
+  defaultMagnitude: number;
+}
+
+export interface ScenarioMetadataResponse {
+  families: ScenarioFamilyDefinition[];
+  severityLevels: string[];
+  severityMultipliers: Record<string, number>;
+  horizonOptions: number[];
+  displayedPaths: number;
+  candidateCount: number;
+  focusVariables: ScenarioFocusVariable[];
+}
+
 export interface ScenarioGenerateRequest {
   family_id: string;
   severity: string;
@@ -268,6 +288,9 @@ export const api = {
   },
 
   scenarios: {
+    getMetadata: (): Promise<ScenarioMetadataResponse> =>
+      fetchJSON('/api/v1/scenarios/metadata'),
+
     getLatest: (eventType?: string): Promise<ScenarioResponse> => {
       const params = eventType ? `?event_type=${eventType}` : '';
       return fetchJSON(`/api/v1/scenarios/latest${params}`);

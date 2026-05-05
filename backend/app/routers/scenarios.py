@@ -140,6 +140,28 @@ class GenerateScenarioRequest(BaseModel):
     random_seed: Optional[int] = None
 
 
+@router.get("/metadata")
+async def get_scenario_metadata():
+    return {
+        "families": [
+            {
+                "id": family_id,
+                "label": meta["label"],
+                "eventType": meta["event_type"],
+                "defaultAnchor": meta["default_anchor"],
+                "defaultMagnitude": meta["default_magnitude"],
+            }
+            for family_id, meta in SCENARIO_FAMILY_META.items()
+        ],
+        "severityLevels": list(SEVERITY_MULTIPLIER.keys()),
+        "severityMultipliers": SEVERITY_MULTIPLIER,
+        "horizonOptions": [10, 30, 60],
+        "displayedPaths": get_canonical_target_scenarios(),
+        "candidateCount": get_canonical_candidate_count(get_canonical_target_scenarios()),
+        "focusVariables": FOCUS_VARIABLES,
+    }
+
+
 def _infer_event_type(row: dict) -> str:
     raw_value = row.get("event_type") or row.get("shock_variable") or "market_crash"
     if raw_value in EVENT_TYPE_TO_FAMILY_ID:

@@ -3,12 +3,11 @@ Regime Detection API Router
 Serves regime timeline, current regime, transition matrix, and characteristics.
 """
 
-from fastapi import APIRouter, Query
-from typing import Optional
-import psycopg2
-from psycopg2.extras import RealDictCursor
 from collections import Counter, defaultdict
-from datetime import datetime
+
+import psycopg2
+from fastapi import APIRouter
+from psycopg2.extras import RealDictCursor
 
 from app.config import settings
 
@@ -30,6 +29,23 @@ NAME_MAP = {
     "stressed": "Stressed", "high_stress": "High Stress", "crisis": "Crisis",
 }
 REGIME_LABELS = ["Calm", "Normal", "Elevated", "Stressed", "High Stress", "Crisis"]
+
+
+def pick_monthly_dominant_regime(counts, probability_sums, last_regime):
+    """
+    Choose the dominant regime for a month by:
+    1. most trading days in that month
+    2. highest average confidence as a tiebreaker
+    3. the month's last observed regime as a final tiebreaker
+    """
+    return max(
+        counts,
+        key=lambda regime_name: (
+            counts[regime_name],
+            probability_sums[regime_name] / counts[regime_name],
+            regime_name == last_regime,
+        ),
+    )
 
 
 @router.get("/current")
@@ -76,12 +92,12 @@ async def get_current_regime():
 
 @router.get("/timeline")
 async def get_regime_timeline():
-    """Regime segments for the timeline chart."""
+    """Monthly dominant regime segments for the long-history timeline chart."""
     conn = get_conn()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     cursor.execute("""
-        SELECT date, regime_name FROM models.regimes ORDER BY date
+        SELECT date, regime_name, probability FROM models.regimes ORDER BY date
     """)
     rows = cursor.fetchall()
     cursor.close()
@@ -90,31 +106,69 @@ async def get_regime_timeline():
     if not rows:
         return []
 
-    # Build segments
-    segments = []
-    current_regime = NAME_MAP.get(rows[0]["regime_name"], rows[0]["regime_name"].capitalize())
-    segment_start = rows[0]["date"]
+    monthly_regimes = []
+    current_month = rows[0]["date"].strftime("%Y-%m")
+    month_counts = Counter()
+    month_probability_sums = defaultdict(float)
+    month_last_regime = rows[0]["regime_name"]
 
-    for i in range(1, len(rows)):
-        regime = NAME_MAP.get(rows[i]["regime_name"], rows[i]["regime_name"].capitalize())
+    for row in rows:
+        row_month = row["date"].strftime("%Y-%m")
+        if row_month != current_month:
+            dominant_regime = pick_monthly_dominant_regime(
+                month_counts,
+                month_probability_sums,
+                month_last_regime,
+            )
+            monthly_regimes.append({
+                "month": current_month,
+                "regime": NAME_MAP.get(dominant_regime, dominant_regime.capitalize()),
+            })
+
+            current_month = row_month
+            month_counts = Counter()
+            month_probability_sums = defaultdict(float)
+
+        month_counts[row["regime_name"]] += 1
+        month_probability_sums[row["regime_name"]] += row["probability"] or 0
+        month_last_regime = row["regime_name"]
+
+    dominant_regime = pick_monthly_dominant_regime(
+        month_counts,
+        month_probability_sums,
+        month_last_regime,
+    )
+    monthly_regimes.append({
+        "month": current_month,
+        "regime": NAME_MAP.get(dominant_regime, dominant_regime.capitalize()),
+    })
+
+    # Compress consecutive months with the same dominant regime.
+    segments = []
+    current_regime = monthly_regimes[0]["regime"]
+    segment_start = monthly_regimes[0]["month"]
+    segment_months = 1
+
+    for i in range(1, len(monthly_regimes)):
+        regime = monthly_regimes[i]["regime"]
         if regime != current_regime:
-            months = max(1, (rows[i]["date"] - segment_start).days // 30)
             segments.append({
                 "regime": current_regime,
-                "start": segment_start.strftime("%Y-%m"),
-                "end": rows[i - 1]["date"].strftime("%Y-%m"),
-                "months": months,
+                "start": segment_start,
+                "end": monthly_regimes[i - 1]["month"],
+                "months": segment_months,
             })
             current_regime = regime
-            segment_start = rows[i]["date"]
+            segment_start = monthly_regimes[i]["month"]
+            segment_months = 1
+        else:
+            segment_months += 1
 
-    # Final segment
-    months = max(1, (rows[-1]["date"] - segment_start).days // 30)
     segments.append({
         "regime": current_regime,
-        "start": segment_start.strftime("%Y-%m"),
-        "end": rows[-1]["date"].strftime("%Y-%m"),
-        "months": months,
+        "start": segment_start,
+        "end": monthly_regimes[-1]["month"],
+        "months": segment_months,
     })
 
     return segments

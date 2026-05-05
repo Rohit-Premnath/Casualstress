@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap, ChevronDown, ChevronUp, Info } from "lucide-react";
 import {
@@ -8,80 +8,16 @@ import {
 
 import { api, type ScenarioStressRangeRow } from "@/services/api";
 
-const scenarioFamilies = [
-  { id: "market-crash", label: "Market Crash", icon: "📉" },
-  { id: "credit-crisis", label: "Credit Crisis", icon: "💳" },
-  { id: "rate-shock", label: "Rate Shock", icon: "📈" },
-  { id: "global-shock", label: "Global Shock", icon: "🌍" },
-  { id: "vol-shock", label: "Volatility Shock", icon: "⚡" },
-  { id: "pandemic", label: "Pandemic / Exogenous", icon: "🦠" },
-] as const;
-
 type SeverityLevel = "Mild" | "Severe" | "Extreme";
-const severityLevels: SeverityLevel[] = ["Mild", "Severe", "Extreme"];
-const horizonOptions = [10, 30, 60];
 
-const severityMultiplier: Record<SeverityLevel, number> = { Mild: 0.5, Severe: 1.0, Extreme: 1.6 };
-
-const shockTemplates: Record<string, { variable: string; label: string; base: number }[]> = {
-  "market-crash": [
-    { variable: "^GSPC", label: "S&P 500", base: -3.0 },
-    { variable: "^VIX", label: "VIX", base: 3.5 },
-    { variable: "XLF", label: "Financials", base: -3.5 },
-    { variable: "BAMLH0A0HYM2", label: "HY Spread", base: 3.0 },
-    { variable: "DGS10", label: "10Y Yield", base: -1.5 },
-    { variable: "CL=F", label: "Crude Oil", base: -2.0 },
-  ],
-  "credit-crisis": [
-    { variable: "BAMLH0A0HYM2", label: "HY Spread", base: 4.0 },
-    { variable: "XLF", label: "Financials", base: -3.0 },
-    { variable: "^GSPC", label: "S&P 500", base: -2.0 },
-    { variable: "^VIX", label: "VIX", base: 2.5 },
-    { variable: "DGS10", label: "10Y Yield", base: -1.0 },
-    { variable: "CL=F", label: "Crude Oil", base: -1.5 },
-  ],
-  "rate-shock": [
-    { variable: "DGS10", label: "10Y Yield", base: 3.5 },
-    { variable: "^GSPC", label: "S&P 500", base: -2.0 },
-    { variable: "BAMLH0A0HYM2", label: "HY Spread", base: 2.0 },
-    { variable: "XLF", label: "Financials", base: -1.5 },
-    { variable: "^VIX", label: "VIX", base: 1.5 },
-    { variable: "CL=F", label: "Crude Oil", base: -1.0 },
-  ],
-  "global-shock": [
-    { variable: "^GSPC", label: "S&P 500", base: -2.5 },
-    { variable: "CL=F", label: "Crude Oil", base: -3.0 },
-    { variable: "^VIX", label: "VIX", base: 3.0 },
-    { variable: "DGS10", label: "10Y Yield", base: -1.0 },
-    { variable: "XLF", label: "Financials", base: -2.0 },
-    { variable: "BAMLH0A0HYM2", label: "HY Spread", base: 2.5 },
-  ],
-  "vol-shock": [
-    { variable: "^VIX", label: "VIX", base: 4.5 },
-    { variable: "^GSPC", label: "S&P 500", base: -3.0 },
-    { variable: "XLF", label: "Financials", base: -2.0 },
-    { variable: "CL=F", label: "Crude Oil", base: -1.5 },
-    { variable: "BAMLH0A0HYM2", label: "HY Spread", base: 2.0 },
-    { variable: "DGS10", label: "10Y Yield", base: -0.8 },
-  ],
-  "pandemic": [
-    { variable: "^GSPC", label: "S&P 500", base: -4.0 },
-    { variable: "^VIX", label: "VIX", base: 5.0 },
-    { variable: "CL=F", label: "Crude Oil", base: -4.5 },
-    { variable: "BAMLH0A0HYM2", label: "HY Spread", base: 3.5 },
-    { variable: "XLF", label: "Financials", base: -3.0 },
-    { variable: "DGS10", label: "10Y Yield", base: -2.0 },
-  ],
+const familyIcons: Record<string, string> = {
+  "market-crash": "📉",
+  "credit-crisis": "💳",
+  "rate-shock": "📈",
+  "global-shock": "🌍",
+  "vol-shock": "⚡",
+  pandemic: "🦠",
 };
-
-const focusVariables = [
-  { id: "spx", label: "S&P 500", ticker: "^GSPC" },
-  { id: "vix", label: "VIX", ticker: "^VIX" },
-  { id: "yield", label: "10Y Yield", ticker: "DGS10" },
-  { id: "oil", label: "Crude Oil", ticker: "CL=F" },
-  { id: "xlf", label: "Financials", ticker: "XLF" },
-  { id: "hy", label: "HY Spread", ticker: "BAMLH0A0HYM2" },
-] as const;
 
 function formatMove(valueType: "return" | "level", val: number | null): string {
   if (val === null || val === undefined || Number.isNaN(val)) return "—";
@@ -100,10 +36,24 @@ function formatImpliedRange(row: ScenarioStressRangeRow): string {
 }
 
 const ScenarioLab = () => {
+  const metadataQuery = useQuery({
+    queryKey: ["scenario-metadata"],
+    queryFn: api.scenarios.getMetadata,
+    retry: 1,
+    staleTime: 60_000,
+  });
+
+  const metadata = metadataQuery.data;
+  const familyOptions = metadata?.families ?? [];
+  const focusOptions = metadata?.focusVariables ?? [];
+  const severityLevels = (metadata?.severityLevels as SeverityLevel[] | undefined) ?? ["Mild", "Severe", "Extreme"];
+  const horizonOptions = metadata?.horizonOptions ?? [10, 30, 60];
+  const displayedPaths = metadata?.displayedPaths ?? 200;
+  const candidateCount = metadata?.candidateCount ?? 400;
+
   const [family, setFamily] = useState("market-crash");
   const [severity, setSeverity] = useState<SeverityLevel>("Severe");
   const [horizon, setHorizon] = useState(60);
-  const [displayedPaths] = useState(200);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [focusVar, setFocusVar] = useState<string>("spx");
   const [anchorVar, setAnchorVar] = useState("");
@@ -122,21 +72,17 @@ const ScenarioLab = () => {
     }),
   });
 
-  const previewTemplate = useMemo(
-    () => shockTemplates[family].map((t) => ({
-      label: t.label,
-      ticker: t.variable,
-      shock: +(t.base * severityMultiplier[severity]).toFixed(1),
-    })),
-    [family, severity],
-  );
-
-  const selectedFocus = focusVariables.find((f) => f.id === focusVar)!;
   const result = scenarioMutation.data;
-  const hasResults = !!result;
-  const focusSeries = result?.variables[selectedFocus.ticker];
+  const effectiveFocusOptions = result?.focusVariables.length ? result.focusVariables : focusOptions;
+
+  const selectedFocus = useMemo(() => {
+    return effectiveFocusOptions.find((item) => item.id === focusVar) ?? effectiveFocusOptions[0] ?? null;
+  }, [effectiveFocusOptions, focusVar]);
+
+  const hasResults = !!result && !!selectedFocus;
+  const focusSeries = selectedFocus ? result?.variables[selectedFocus.ticker] : undefined;
   const stressRows = result?.keyVariableStressRange ?? [];
-  const displayedTemplate = result?.shockTemplate ?? previewTemplate;
+  const displayedTemplate = result?.shockTemplate ?? [];
 
   return (
     <div className="p-6 md:p-8 max-w-[1440px] mx-auto">
@@ -147,37 +93,38 @@ const ScenarioLab = () => {
           <div>
             <label className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 block">Scenario Family</label>
             <div className="grid grid-cols-2 gap-2">
-              {scenarioFamilies.map((f) => (
+              {familyOptions.map((option) => (
                 <button
-                  key={f.id}
-                  onClick={() => setFamily(f.id)}
+                  key={option.id}
+                  onClick={() => setFamily(option.id)}
                   className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 border ${
-                    family === f.id
+                    family === option.id
                       ? "bg-primary/10 border-primary text-foreground"
                       : "bg-secondary border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
                   }`}
                 >
-                  <span className="text-sm">{f.icon}</span>
-                  {f.label}
+                  <span className="text-sm">{familyIcons[option.id] ?? "•"}</span>
+                  {option.label}
                 </button>
               ))}
             </div>
+            {metadataQuery.isLoading && <p className="text-[10px] text-muted-foreground mt-2">Loading live scenario families...</p>}
           </div>
 
           <div>
             <label className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 block">Severity</label>
             <div className="flex gap-2">
-              {severityLevels.map((s) => (
+              {severityLevels.map((level) => (
                 <button
-                  key={s}
-                  onClick={() => setSeverity(s)}
+                  key={level}
+                  onClick={() => setSeverity(level)}
                   className={`flex-1 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 border ${
-                    severity === s
+                    severity === level
                       ? "bg-primary/10 border-primary text-foreground"
                       : "bg-secondary border-border text-muted-foreground hover:border-primary/30"
                   }`}
                 >
-                  {s}
+                  {level}
                 </button>
               ))}
             </div>
@@ -188,17 +135,17 @@ const ScenarioLab = () => {
             <div>
               <label className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 block">Horizon</label>
               <div className="flex gap-1.5">
-                {horizonOptions.map((h) => (
+                {horizonOptions.map((option) => (
                   <button
-                    key={h}
-                    onClick={() => setHorizon(h)}
+                    key={option}
+                    onClick={() => setHorizon(option)}
                     className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all border ${
-                      horizon === h
+                      horizon === option
                         ? "bg-primary/10 border-primary text-foreground"
                         : "bg-secondary border-border text-muted-foreground hover:border-primary/30"
                     }`}
                   >
-                    {h}d
+                    {option}d
                   </button>
                 ))}
               </div>
@@ -208,7 +155,9 @@ const ScenarioLab = () => {
               <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary border border-border">
                 <span className="text-xs font-mono text-foreground">{displayedPaths}</span>
               </div>
-              <p className="text-[10px] text-muted-foreground mt-1">Engine generates 400 candidates internally and soft-weights the final 200 scenarios.</p>
+              <p className="text-[10px] text-muted-foreground mt-1">
+                Engine generates {candidateCount} candidates internally and soft-weights the final {displayedPaths} scenarios.
+              </p>
             </div>
           </div>
 
@@ -262,7 +211,7 @@ const ScenarioLab = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Canonical model only</span>
-                      <span className="text-[10px] text-muted-foreground/70">Raw toggle not enabled</span>
+                      <span className="text-[10px] text-muted-foreground/70">Live metadata-backed</span>
                     </div>
                   </div>
                 </motion.div>
@@ -272,7 +221,7 @@ const ScenarioLab = () => {
 
           <button
             onClick={() => scenarioMutation.mutate()}
-            disabled={scenarioMutation.isPending}
+            disabled={scenarioMutation.isPending || metadataQuery.isLoading || !familyOptions.length}
             className="w-full py-4 rounded-xl text-sm font-semibold text-primary-foreground btn-gradient-blue transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2 mt-auto disabled:opacity-60"
           >
             {scenarioMutation.isPending ? (
@@ -288,11 +237,16 @@ const ScenarioLab = () => {
               Could not generate a live scenario set. Check that the backend API and database are running.
             </p>
           )}
+          {metadataQuery.isError && (
+            <p className="text-[11px] text-destructive">
+              Could not load live scenario metadata. The scenario page is intentionally not falling back to hardcoded family definitions.
+            </p>
+          )}
         </motion.div>
 
         <div className="lg:col-span-3 space-y-6">
           <AnimatePresence>
-            {hasResults && (
+            {hasResults && selectedFocus && (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-6">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <h2 className="text-lg font-medium text-foreground">Scenario Results</h2>
@@ -321,17 +275,17 @@ const ScenarioLab = () => {
                 <div>
                   <label className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 block">Focus Variable</label>
                   <div className="flex flex-wrap gap-1.5">
-                    {(result.focusVariables.length ? result.focusVariables : focusVariables).map((fv) => (
+                    {effectiveFocusOptions.map((option) => (
                       <button
-                        key={fv.id}
-                        onClick={() => setFocusVar(fv.id)}
+                        key={option.id}
+                        onClick={() => setFocusVar(option.id)}
                         className={`px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all border ${
-                          focusVar === fv.id
+                          focusVar === option.id
                             ? "bg-primary/10 text-foreground border-primary/40"
                             : "text-muted-foreground border-transparent hover:text-foreground hover:bg-secondary"
                         }`}
                       >
-                        {fv.label}
+                        {option.label}
                       </button>
                     ))}
                   </div>
@@ -341,16 +295,17 @@ const ScenarioLab = () => {
                 <div className="glass rounded-2xl p-5">
                   <h3 className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Shock Template Used</h3>
                   <div className="space-y-1">
-                    {displayedTemplate.map((t) => {
-                      const isHighlighted = t.ticker === selectedFocus.ticker;
+                    {displayedTemplate.map((item) => {
+                      const isHighlighted = item.ticker === selectedFocus.ticker;
                       return (
-                        <div key={t.ticker} className={`flex items-center justify-between py-2 px-3 rounded-lg border-b border-border/30 last:border-0 transition-colors ${isHighlighted ? "bg-primary/5" : ""}`}>
+                        <div key={item.ticker} className={`flex items-center justify-between py-2 px-3 rounded-lg border-b border-border/30 last:border-0 transition-colors ${isHighlighted ? "bg-primary/5" : ""}`}>
                           <div className="flex items-center gap-3">
-                            <span className={`font-mono text-xs w-28 ${isHighlighted ? "text-foreground font-semibold" : "text-foreground"}`}>{t.label}</span>
-                            <span className="font-mono text-[10px] text-muted-foreground">{t.ticker}</span>
+                            <span className={`font-mono text-xs w-28 ${isHighlighted ? "text-foreground font-semibold" : "text-foreground"}`}>{item.label}</span>
+                            <span className="font-mono text-[10px] text-muted-foreground">{item.ticker}</span>
                           </div>
-                          <span className={`font-mono text-sm font-semibold ${t.shock < 0 ? "text-destructive" : "text-accent"}`}>
-                            {t.shock > 0 ? "+" : ""}{t.shock}σ
+                          <span className={`font-mono text-sm font-semibold ${item.shock < 0 ? "text-destructive" : "text-accent"}`}>
+                            {item.shock > 0 ? "+" : ""}
+                            {item.shock}σ
                           </span>
                         </div>
                       );
@@ -371,8 +326,8 @@ const ScenarioLab = () => {
                         <ReferenceLine x={0} stroke="currentColor" strokeOpacity={0.2} strokeDasharray="4 4" />
                         <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 11, color: "hsl(var(--foreground))" }} />
                         <Bar dataKey="freq" radius={[4, 4, 0, 0]}>
-                          {(focusSeries?.distribution ?? []).map((entry, i) => (
-                            <Cell key={i} fill={entry.bucket < 0 ? "hsl(var(--destructive))" : "hsl(var(--primary))"} fillOpacity={0.7} />
+                          {(focusSeries?.distribution ?? []).map((entry, index) => (
+                            <Cell key={index} fill={entry.bucket < 0 ? "hsl(var(--destructive))" : "hsl(var(--primary))"} fillOpacity={0.7} />
                           ))}
                         </Bar>
                       </BarChart>
@@ -418,8 +373,8 @@ const ScenarioLab = () => {
                     <table className="w-full text-xs">
                       <thead>
                         <tr className="border-b border-border">
-                          {["Variable", "Current", "5th Pctl Move", "Median Move", "95th Pctl Move", "Implied Median", "Implied Range"].map((h) => (
-                            <th key={h} className="text-left text-[10px] uppercase tracking-wider text-muted-foreground pb-2 font-medium pr-3 whitespace-nowrap">{h}</th>
+                          {["Variable", "Current", "5th Pctl Move", "Median Move", "95th Pctl Move", "Implied Median", "Implied Range"].map((heading) => (
+                            <th key={heading} className="text-left text-[10px] uppercase tracking-wider text-muted-foreground pb-2 font-medium pr-3 whitespace-nowrap">{heading}</th>
                           ))}
                         </tr>
                       </thead>
@@ -448,16 +403,10 @@ const ScenarioLab = () => {
                   <div>
                     <h4 className="text-xs font-medium text-foreground mb-1">Why This Scenario Looks Like This</h4>
                     <p className="text-[11px] text-muted-foreground leading-relaxed">
-                      This scenario uses stress-regime training, multi-root crisis templates ({result.family.label}), and causal propagation through market linkages. Outputs are soft-filtered by plausibility rather than hard-ranked. The engine generates {result.candidateCount} candidate paths and retains {result.scenarioCount} weighted scenarios based on structural coherence.{result.severity === "Extreme" ? " Extreme severity amplifies the shock template materially, pushing tail outcomes further." : ""}
+                      This scenario uses stress-regime training, multi-root crisis templates ({result.family.label}), and causal propagation through market linkages. Outputs are soft-filtered by plausibility rather than hard-ranked. The engine generates {result.candidateCount} candidate paths and retains {result.scenarioCount} weighted scenarios based on structural coherence.
+                      {result.severity === "Extreme" ? " Extreme severity amplifies the shock template materially, pushing tail outcomes further." : ""}
                     </p>
                   </div>
-                </div>
-
-                <div className="border border-border/50 rounded-2xl overflow-hidden">
-                  <button className="w-full flex items-center justify-between px-5 py-3 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
-                    Compare to Baseline
-                    <ChevronDown className="w-3.5 h-3.5" />
-                  </button>
                 </div>
               </motion.div>
             )}

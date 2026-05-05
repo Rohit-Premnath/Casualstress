@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Download, Info, TrendingDown, TrendingUp, ChevronDown, ChevronRight, ExternalLink, Plus, Trash2, Pencil, Check } from "lucide-react";
+import { Shield, Info, TrendingDown, TrendingUp, ExternalLink, Plus, Trash2, Pencil, Check } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
 import { portfolioPresets, categoryColors } from "@/data/mockData";
 import { api, type ScenarioListItem, type StressTestResult } from "@/services/api";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type ScenarioSource = "latest" | "saved";
 type TemplateName = "Conservative" | "Balanced" | "Aggressive";
 
 const templateNames: TemplateName[] = ["Conservative", "Balanced", "Aggressive"];
+const CANONICAL_MODEL_LABEL = "Canonical Soft Filtered (Student-t, data-fit df)";
 
 const riskTooltips: Record<string, string> = {
   "VaR (95%)": "Loss threshold exceeded in about 5% of stressed outcomes.",
@@ -51,7 +51,6 @@ const StressTest = () => {
   const [results, setResults] = useState<StressTestResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
-  const [comparisonOpen, setComparisonOpen] = useState(false);
 
   useEffect(() => {
     const loadScenarios = async () => {
@@ -208,7 +207,7 @@ const StressTest = () => {
           {[
             { label: "Family", value: activeScenario?.family ?? "-" },
             { label: "Severity", value: activeScenario?.severity ?? "Severe" },
-            { label: "Model", value: results?.scenario.model ?? "Full Model (Soft Filtered)" },
+            { label: "Model", value: results?.scenario.model ?? CANONICAL_MODEL_LABEL },
             { label: "ID", value: activeScenario?.id ?? "-" },
             { label: "Generated", value: formatScenarioDate(activeScenario?.createdAt) },
             { label: "Paths", value: String(activeScenario?.nScenarios ?? 0) },
@@ -588,35 +587,17 @@ const StressTest = () => {
               </p>
             </div>
 
-            <Collapsible open={comparisonOpen} onOpenChange={setComparisonOpen}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:bg-secondary/30 transition-all">
-                  <div className="flex items-center gap-2">
-                    {comparisonOpen ? <ChevronDown className="w-4 h-4 text-muted-foreground" /> : <ChevronRight className="w-4 h-4 text-muted-foreground" />}
-                    <span className="text-sm text-foreground font-medium">Compare to Baseline Portfolio</span>
-                  </div>
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Placeholder</span>
+            <div className="glass rounded-2xl p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm text-foreground font-medium">Additional analysis</p>
+                  <p className="text-[11px] text-muted-foreground mt-1">
+                    Baseline-to-baseline comparison and export are not yet provided by the live backend, so they are intentionally hidden until those endpoints are implemented.
+                  </p>
                 </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="glass rounded-2xl rounded-t-none p-6 border-t-0 -mt-3">
-                  <p className="text-sm text-muted-foreground mb-4">Compare the current portfolio against a different preset to see how risk shifts.</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    {[{ label: "VaR Difference", value: "-" }, { label: "CVaR Difference", value: "-" }, { label: "Sector Exposure Delta", value: "-" }, { label: "Diversification", value: "-" }].map((stat) => (
-                      <div key={stat.label} className="bg-muted/30 rounded-xl p-4 text-center">
-                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground block mb-1">{stat.label}</span>
-                        <span className="font-mono text-lg text-foreground">{stat.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-
-            <button className="w-full py-3 rounded-xl text-sm text-muted-foreground border border-border bg-secondary/30 hover:bg-secondary/60 transition-all flex items-center justify-center gap-2">
-              <Download className="w-4 h-4" /> Export Report
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 ml-1">(Coming Soon)</span>
-            </button>
+                <Info className="w-4 h-4 text-muted-foreground shrink-0" />
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -25,6 +25,25 @@ def get_conn():
     )
 
 
+def _load_preferred_global_graph(cursor):
+    cursor.execute(
+        """
+        SELECT adjacency_matrix, method
+        FROM models.causal_graphs
+        ORDER BY
+            CASE
+                WHEN method = 'ensemble_dynotears_pcmci' THEN 0
+                WHEN method LIKE '%%ensemble%%' THEN 1
+                WHEN method LIKE '%%dynotears%%' THEN 2
+                ELSE 3
+            END,
+            created_at DESC
+        LIMIT 1
+        """
+    )
+    return cursor.fetchone()
+
+
 @router.get("/summary")
 async def get_dashboard_summary():
     """Main dashboard summary: current regime, key metrics, system health."""
@@ -79,18 +98,17 @@ async def get_dashboard_summary():
     cursor.execute("SELECT COUNT(DISTINCT variable_code) as n_vars FROM processed.time_series_data")
     n_vars = cursor.fetchone()["n_vars"]
 
-    cursor.execute("SELECT COUNT(DISTINCT date) as n_days FROM processed.time_series_data")
-    n_days = cursor.fetchone()["n_days"]
-
-    cursor.execute("SELECT COUNT(*) as n_edges FROM (SELECT 1 FROM models.causal_graphs ORDER BY created_at DESC LIMIT 1) g")
+    cursor.execute(
+        """
+        SELECT COUNT(DISTINCT date) as n_days, MIN(date) as start_date, MAX(date) as end_date
+        FROM processed.time_series_data
+        """
+    )
+    date_row = cursor.fetchone()
+    n_days = date_row["n_days"]
 
     # Causal graph edges
-    cursor.execute("""
-        SELECT adjacency_matrix FROM models.causal_graphs
-        WHERE method LIKE '%%ensemble%%' OR method LIKE '%%dynotears%%'
-        ORDER BY created_at DESC LIMIT 1
-    """)
-    graph_row = cursor.fetchone()
+    graph_row = _load_preferred_global_graph(cursor)
     n_edges = len(graph_row["adjacency_matrix"]) if graph_row else 0
 
     # Scenarios count
@@ -117,6 +135,8 @@ async def get_dashboard_summary():
             "tradingDays": n_days,
             "causalEdges": n_edges,
             "scenarios": n_scenarios,
+            "startDate": str(date_row["start_date"]) if date_row and date_row["start_date"] else None,
+            "endDate": str(date_row["end_date"]) if date_row and date_row["end_date"] else None,
         },
     }
 
@@ -203,12 +223,7 @@ async def get_top_causal_links(limit: int = 10):
     conn = get_conn()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-    cursor.execute("""
-        SELECT adjacency_matrix FROM models.causal_graphs
-        WHERE method LIKE '%%ensemble%%' OR method LIKE '%%dynotears%%'
-        ORDER BY created_at DESC LIMIT 1
-    """)
-    row = cursor.fetchone()
+    row = _load_preferred_global_graph(cursor)
     cursor.close()
     conn.close()
 

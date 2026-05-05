@@ -23,8 +23,8 @@ interface SimLink extends d3.SimulationLinkDatum<SimNode> {
 }
 
 // ── Constants ──
-const regimeFilters = ['All', 'Calm', 'Normal', 'Elevated', 'Stressed', 'Crisis'];
-const compareOptions = ['None', 'Calm', 'Normal', 'Elevated', 'Stressed', 'Crisis'];
+const regimeFilters = ['All', 'Calm', 'Normal', 'Elevated', 'Stressed', 'High Stress', 'Crisis'];
+const compareOptions = ['None', 'Calm', 'Normal', 'Elevated', 'Stressed', 'High Stress', 'Crisis'];
 const graphViews = [
   { id: 'discovery', label: 'Discovery Graph', icon: Network },
   { id: 'strong', label: 'Strong Links', icon: Zap },
@@ -505,7 +505,7 @@ const CausalGraph = () => {
       weakened: weakened.sort((a, b) => a.delta - b.delta),
       primaryEdgeCount: filteredEdges.length,
       compareEdgeCount: compareEdges.length,
-      avgConfidenceShift: compareAvg - primaryAvg,
+      avgEdgeWeightShift: compareAvg - primaryAvg,
     };
   }, [filteredEdges, compareEdges, compareRegime]);
 
@@ -595,7 +595,7 @@ const CausalGraph = () => {
     return {
       nodes: nodeIds.size,
       edges: filteredEdges.length,
-      avgConfidence: avgConf,
+      avgEdgeWeight: avgConf,
       strongestHub: strongestHub ? strongestHub[0] : '—',
       topCluster: topCluster ? topCluster[0] : '—',
       mostStressSensitive: topSensitive?.id || '—',
@@ -1138,9 +1138,9 @@ const CausalGraph = () => {
             </div>
           </div>
 
-          {/* Min Edge Confidence */}
+          {/* Min Relative Edge Weight */}
           <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] text-muted-foreground uppercase tracking-widest">Min Edge Confidence</span>
+            <span className="text-[9px] text-muted-foreground uppercase tracking-widest">Min Relative Edge Weight</span>
             <div className="flex items-center gap-1.5">
               <input type="range" min="0" max="100" value={confidence} onChange={e => setConfidence(+e.target.value)}
                 className="w-16 accent-primary" />
@@ -1184,7 +1184,7 @@ const CausalGraph = () => {
         {[
           { label: 'Nodes', value: summaryStats.nodes },
           { label: 'Edges', value: summaryStats.edges },
-          { label: 'Avg Confidence', value: summaryStats.avgConfidence.toFixed(2) },
+          { label: 'Avg Edge Weight', value: summaryStats.avgEdgeWeight.toFixed(2) },
           { label: 'Strongest Hub', value: summaryStats.strongestHub },
           { label: 'Top Cluster', value: summaryStats.topCluster.replace('-', ' ') },
           { label: 'Stress-Sensitive', value: summaryStats.mostStressSensitive },
@@ -1682,9 +1682,9 @@ const CausalGraph = () => {
                           <span className="font-mono text-destructive">{compareAnalysis.removed.length}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Avg confidence shift</span>
-                          <span className={`font-mono ${compareAnalysis.avgConfidenceShift > 0 ? 'text-accent' : 'text-destructive'}`}>
-                            {compareAnalysis.avgConfidenceShift > 0 ? '+' : ''}{compareAnalysis.avgConfidenceShift.toFixed(2)}
+                          <span className="text-muted-foreground">Avg edge weight shift</span>
+                          <span className={`font-mono ${compareAnalysis.avgEdgeWeightShift > 0 ? 'text-accent' : 'text-destructive'}`}>
+                            {compareAnalysis.avgEdgeWeightShift > 0 ? '+' : ''}{compareAnalysis.avgEdgeWeightShift.toFixed(2)}
                           </span>
                         </div>
                         <div className="flex justify-between">
@@ -1718,7 +1718,7 @@ const CausalGraph = () => {
                           </div>
                           <div>
                             <span className="text-foreground/70 font-medium">Strong Links</span>
-                            <p>Cleaner filtered subset showing only high-confidence relationships (≥{(STRONG_LINK_MIN_WEIGHT * 100).toFixed(0)}% weight).</p>
+                            <p>Cleaner filtered subset showing only stronger relationships (≥{(STRONG_LINK_MIN_WEIGHT * 100).toFixed(0)}% absolute weight).</p>
                           </div>
                           <div>
                             <span className="text-foreground/70 font-medium">Transmission Paths</span>

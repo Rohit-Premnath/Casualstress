@@ -12,6 +12,7 @@ import numpy as np
 import uuid
 
 from app.config import settings
+from ml_pipeline.canonical_best_model import CANONICAL_PAPER_NAME
 
 router = APIRouter(prefix="/api/v1/stress-test", tags=["stress-test"])
 
@@ -387,7 +388,7 @@ async def run_stress_test(request: StressTestRequest):
             "family": scenario_meta["family"],
             "eventType": event_type,
             "severity": _infer_severity(row),
-            "model": "Full Model (Soft Filtered)",
+            "model": CANONICAL_PAPER_NAME,
             "generatedAt": str(row["created_at"]) if row.get("created_at") else None,
             "pathsUsed": int(row["n_scenarios"] or len(paths) or 0),
             "horizon": horizon,
