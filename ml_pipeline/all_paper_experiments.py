@@ -1,23 +1,32 @@
 """
-CausalStress — All Paper Experiments
-=======================================
-Single unified script that produces EVERY experiment result for the paper.
-Addresses ALL reviewer feedback.
+CausalStress — All Paper Experiments (Patched for ICAIF)
+==========================================================
+Unified script that produces EVERY experiment result for the paper.
+
+CHANGES FROM PREVIOUS VERSION (Apr 2026 reconciliation):
+  - df values now DATA-FITTED from pre-2020 VAR residuals (not Codex-chosen)
+    Source: calibrate_df_from_residuals.py output
+    df_normal = 5.97, df_crisis = 3.84, mid_df = 4.79
+  - Fixed multivariate-t draw (proper chi-squared denominator)
+  - Added time-split: validation (pre-2016) vs test (2016+)
+  - Canonical chosen by validation coverage, headline reported on test
+  - Main ablation (6 methods) separated from appendix ablation (all methods)
+  - Seeds locked to canonical [20260407..20260411]
 
 Experiments:
   1. Causal Graph Validation (precision + recall + F1 + confounder robustness)
   2. Regime Detection (precision + recall + F1 + detection lag + confusion matrix)
   3. Scenario Quality (plausibility + KS tests + kurtosis)
-  4. Canonical Backtest + Full Ablation (11 events × 10 variants + 2 non-VAR baselines)
+  4. Canonical Backtest + Ablation (11 events, time-split validation/test)
   5. VaR Comparison (Historical Sim vs Parametric vs MC vs Student-t + Kupiec test)
   6. VECM Cointegration (equilibrium relationships + error correction speeds)
   7. Copula Tail Dependence (Student-t vs Gaussian + regime-conditional)
-  8. Statistical Significance (Wilcoxon paired tests + Bootstrap CI)
+  8. Statistical Significance (Wilcoxon paired tests + Bootstrap CI) on test events only
 
 Usage:
-  python all_paper_experiments.py               # Run all experiments
-  python all_paper_experiments.py --exp 1       # Run only experiment 1
-  python all_paper_experiments.py --exp 4       # Run only experiment 4 (backtest)
+  python all_paper_experiments.py               # Run all experiments, 5 seeds
+  python all_paper_experiments.py --exp 4       # Run only experiment 4
+  python all_paper_experiments.py --seed-runs 1 # Faster single-seed (dev mode)
 """
 
 import os
@@ -42,12 +51,13 @@ from dotenv import load_dotenv
 try:
     from ml_pipeline.canonical_best_model import (
         CANONICAL_MODEL_NAME,
-        CANONICAL_PAPER_NAME,
+        CANONICAL_PAPER_NAME as LEGACY_CANONICAL_PAPER_NAME,
         CANONICAL_TRAIN_REGIMES,
         get_canonical_candidate_count,
         get_canonical_target_scenarios,
         get_canonical_signature,
         load_canonical_graph,
+        prune_causal_graph,
         score_canonical_plausibility,
         soft_filter_weights,
         weighted_quantile,
@@ -56,12 +66,13 @@ except ModuleNotFoundError:
     sys.path.append(os.path.dirname(__file__))
     from canonical_best_model import (
         CANONICAL_MODEL_NAME,
-        CANONICAL_PAPER_NAME,
+        CANONICAL_PAPER_NAME as LEGACY_CANONICAL_PAPER_NAME,
         CANONICAL_TRAIN_REGIMES,
         get_canonical_candidate_count,
         get_canonical_target_scenarios,
         get_canonical_signature,
         load_canonical_graph,
+        prune_causal_graph,
         score_canonical_plausibility,
         soft_filter_weights,
         weighted_quantile,
@@ -70,6 +81,30 @@ import warnings
 warnings.filterwarnings("ignore")
 
 load_dotenv()
+
+
+# ============================================================
+# LOCKED PAPER CONSTANTS (paste-point from calibration script)
+# ============================================================
+
+# Fitted via Student-t MLE on VAR residuals from 2005-2019 training window.
+# See calibrate_df_from_residuals.py and models.residual_distributions for details.
+# Student-t beats Gaussian KS test for 20/20 variables in BOTH regimes.
+PAPER_DF_NORMAL = 5.97   # median df on calm+normal VAR residuals
+PAPER_DF_CRISIS = 3.84   # median df on stress+crisis VAR residuals
+PAPER_MID_DF    = 4.79   # geometric mean of calm and stress df
+
+PAPER_EXTREME_SCALE = 1.2  # noise amplification for >=5-sigma shocks
+PAPER_MID_SCALE     = 1.1  # noise amplification for 4-5-sigma shocks
+
+# Canonical seeds for reproducibility (5-seed averaging throughout)
+PAPER_SEEDS = [20260407, 20260408, 20260409, 20260410, 20260411]
+
+# Candidate canonicals for time-split selection
+CANDIDATE_A_NAME = "Canonical Soft Filtered (Gaussian)"
+CANDIDATE_B_NAME = "Canonical Soft Filtered (Student-t, data-fit df)"
+
+PAPER_CANONICAL_SIGNATURE_BASE = get_canonical_signature()
 
 
 # ============================================================
@@ -206,6 +241,11 @@ CANONICAL_EVENTS = [
     {"name": "2023 SVB Crisis",         "cutoff": "2023-02-01", "start": "2023-03-08", "end": "2023-03-20", "window": 10, "type": "credit_crisis"},
 ]
 
+# Time-split for canonical selection: validation used for model choice,
+# test held out for headline coverage claim
+VALIDATION_INDICES = [0, 1, 2, 3]   # 2008 GFC, 2010 Flash Crash, 2011 Debt Downgrade, 2015 China/Oil
+TEST_INDICES       = [4, 5, 6, 7, 8, 9, 10]  # 2016 Brexit through 2023 SVB
+
 COVERAGE_METRIC = ("% of 6 key variables where actual cumulative outcome "
                    "falls within 5th-95th percentile of 200 generated scenarios")
 
@@ -262,7 +302,7 @@ def _fit_var(data, avail, lag=5):
 
 def _simulate(B, cov_n, cov_c, means, stds, lag, d, avail, n, horizon,
               shock_template=None, causal_adj=None, clip=4.0, multi_shock=False):
-    """Shared simulation logic."""
+    """Shared simulation logic (Gaussian innovations)."""
     L_n = np.linalg.cholesky(cov_n)
     L_c = np.linalg.cholesky(cov_c)
     spx_idx = avail.index("^GSPC") if "^GSPC" in avail else 0
@@ -343,6 +383,96 @@ def _simulate(B, cov_n, cov_c, means, stds, lag, d, avail, n, horizon,
     return scenarios
 
 
+def _multivariate_t_draw(cholesky, df):
+    """
+    Proper multivariate Student-t draw via the chi-squared normal-mixture representation:
+      z ~ N(0, Sigma)  via  z = cholesky @ standard_normal
+      u ~ chi2(df) / df  (shared scalar denominator)
+      x = z / sqrt(u)   ~ multivariate t(df, 0, Sigma)
+    """
+    d = cholesky.shape[0]
+    z = cholesky @ np.random.randn(d)
+    u = np.random.chisquare(df) / df
+    return z / np.sqrt(u)
+
+
+def _simulate_tail_aware(B, cov_n, cov_c, means, stds, lag, d, avail, n, horizon,
+                         shock_template=None, causal_adj=None, clip=6.0,
+                         df_normal=PAPER_DF_NORMAL, df_crisis=PAPER_DF_CRISIS,
+                         mid_df=PAPER_MID_DF,
+                         extreme_scale=PAPER_EXTREME_SCALE, mid_scale=PAPER_MID_SCALE):
+    """Tail-aware simulation: canonical VAR structure + proper multivariate Student-t innovations."""
+    L_n = np.linalg.cholesky(cov_n)
+    L_c = np.linalg.cholesky(cov_c)
+    template = shock_template or {"^GSPC": -3.0}
+    anchor_var = "^GSPC" if "^GSPC" in template else next(iter(template))
+    anchor_sigma = template.get(anchor_var, -3.0)
+
+    sign = 1.0 if anchor_sigma >= 0 else -1.0
+    shock_levels = []
+    for sigma, pct in [(3.0, 0.35), (4.0, 0.25), (5.0, 0.20), (6.0, 0.12), (7.0, 0.08)]:
+        shock_levels.extend([sign * sigma] * max(1, int(n * pct)))
+    while len(shock_levels) < n:
+        shock_levels.append(anchor_sigma)
+    shock_levels = shock_levels[:n]
+    np.random.shuffle(shock_levels)
+
+    adj = {}
+    if causal_adj:
+        for edge_key, edge_data in causal_adj.items():
+            cause, effect = edge_key.split("->")
+            adj.setdefault(cause, []).append((effect, edge_data.get("weight", 0.0)))
+
+    scenarios = []
+    for s in range(n):
+        current_shock = shock_levels[s]
+        scale = current_shock / anchor_sigma if anchor_sigma != 0 else 1.0
+
+        initial = np.zeros(d)
+        for var, sigma in template.items():
+            if var in avail:
+                initial[avail.index(var)] += sigma * scale
+
+        if adj:
+            visited = {v for v in template if v in avail}
+            layer = [(v, template[v] * scale) for v in template if v in avail]
+            for depth in range(3):
+                nxt = []
+                decay = 0.4 ** (depth + 1)
+                for src, src_shock in layer:
+                    for tgt, w in adj.get(src, []):
+                        if tgt in avail and tgt not in visited:
+                            prop = float(np.clip(src_shock * w * decay, -2.5, 2.5))
+                            if abs(prop) > 0.12:
+                                initial[avail.index(tgt)] += prop
+                                visited.add(tgt)
+                                nxt.append((tgt, prop))
+                layer = nxt
+
+        path = np.zeros((horizon + lag, d))
+        path[lag, :] = initial
+
+        for t in range(lag + 1, horizon + lag):
+            x = [1.0]
+            for l_idx in range(1, lag + 1):
+                x.extend(path[t - l_idx])
+            x = np.array(x)
+
+            if abs(current_shock) >= 5.0:
+                noise = _multivariate_t_draw(L_c, df_crisis) * extreme_scale
+            elif abs(current_shock) >= 4.0:
+                blend = ensure_pd(0.5 * cov_c + 0.5 * cov_n, d)
+                noise = _multivariate_t_draw(np.linalg.cholesky(blend), mid_df) * mid_scale
+            else:
+                noise = _multivariate_t_draw(L_n, df_normal)
+
+            path[t] = np.clip(x @ B + noise, -clip, clip)
+
+        real = path[lag:] * stds + means
+        scenarios.append(pd.DataFrame(real, columns=avail, index=range(horizon)))
+    return scenarios
+
+
 def gen_historical_replay(train, avail, n=200, horizon=60, **kw):
     """Baseline 1: Random block bootstrap."""
     data = train[avail].values
@@ -387,7 +517,7 @@ def gen_regime_var_no_graph(train, avail, n=200, horizon=60, **kw):
 
 
 def gen_full_model(train, avail, n=200, horizon=60, **kw):
-    """Our full model: regime + multi-shock + causal propagation + crisis cov."""
+    """Regime + multi-shock + causal propagation + crisis cov (Gaussian)."""
     B, cov_n, cov_c, means, stds, lag, d = _fit_var(train, avail)
     template = kw.get("shock_template", {"^GSPC": -3.0})
     causal = kw.get("causal_adj", None)
@@ -396,9 +526,8 @@ def gen_full_model(train, avail, n=200, horizon=60, **kw):
 
 
 def gen_full_model_filtered(train, avail, n=200, horizon=60, **kw):
-    """Legacy hard-filter baseline kept for ablation only."""
+    """Legacy hard-filter baseline (appendix only)."""
     raw = gen_full_model(train, avail, n=int(n * 2), horizon=horizon, **kw)
-    # Score and keep top n
     stds_arr = train[avail].std().values
     scores = []
     for sc in raw:
@@ -416,7 +545,7 @@ def gen_full_model_filtered(train, avail, n=200, horizon=60, **kw):
 
 
 def gen_full_model_soft_filtered(train, avail, n=200, horizon=60, **kw):
-    """Canonical best model: regime-aware full model with soft plausibility weighting."""
+    """Candidate A: Regime-aware full model with soft plausibility weighting (Gaussian innovations)."""
     raw = gen_full_model(train, avail, n=get_canonical_candidate_count(n), horizon=horizon, **kw)
     stds = train[avail].std().to_numpy()
     event_type = kw.get("event_type", "market_crash")
@@ -425,6 +554,33 @@ def gen_full_model_soft_filtered(train, avail, n=200, horizon=60, **kw):
     weights = soft_filter_weights(scores)
     ranked = sorted(zip(scores, weights, raw), key=lambda item: (item[0], item[1]), reverse=True)
     return [scenario for _, _, scenario in ranked[:n]]
+
+
+def gen_full_model_soft_filtered_tails(train, avail, n=200, horizon=60, **kw):
+    """Candidate B: Regime-aware full model with soft filtering + data-fit Student-t innovations."""
+    B, cov_n, cov_c, means, stds, lag, d = _fit_var(train, avail)
+    raw = _simulate_tail_aware(
+        B, cov_n, cov_c, means, stds, lag, d, avail,
+        n=get_canonical_candidate_count(n), horizon=horizon,
+        shock_template=kw.get("shock_template", {"^GSPC": -3.0}),
+        causal_adj=kw.get("causal_adj"),
+        clip=6.0,
+        df_normal=PAPER_DF_NORMAL,
+        df_crisis=PAPER_DF_CRISIS,
+        mid_df=PAPER_MID_DF,
+        extreme_scale=PAPER_EXTREME_SCALE,
+        mid_scale=PAPER_MID_SCALE,
+    )
+    event_type = kw.get("event_type", "market_crash")
+    scores = score_canonical_plausibility(raw, avail, train[avail].std().to_numpy(), event_type, causal_adj=kw.get("causal_adj"))
+    weights = soft_filter_weights(scores)
+    ranked = sorted(zip(scores, weights, raw), key=lambda item: (item[0], item[1]), reverse=True)
+    return [scenario for _, _, scenario in ranked[:n]]
+
+
+def gen_pruned_graph_soft_filtered_tails(train, avail, n=200, horizon=60, **kw):
+    """Appendix variant: pruned-graph Student-t (wired via causal_adj in METHODS dict)."""
+    return gen_full_model_soft_filtered_tails(train, avail, n=n, horizon=horizon, **kw)
 
 
 # ============================================================
@@ -571,7 +727,6 @@ def experiment_2():
     CRISIS_PERIODS = [(e["start"], e["end"]) for e in CANONICAL_EVENTS]
     stress_set = {"stressed", "high_stress", "crisis"}
 
-    # Day-level binary classification
     rdf["gt"] = 0
     for s, e in CRISIS_PERIODS:
         mask = (rdf["date"] >= pd.to_datetime(s)) & (rdf["date"] <= pd.to_datetime(e))
@@ -589,7 +744,6 @@ def experiment_2():
     print(f"  F1:        {f:.4f}")
     print(f"  Confusion: TN={cm[0,0]} FP={cm[0,1]} FN={cm[1,0]} TP={cm[1,1]}")
 
-    # Event-level accuracy
     print(f"\n  Per-event detection:")
     ev_match = 0
     for event in CANONICAL_EVENTS:
@@ -604,7 +758,6 @@ def experiment_2():
     ev_acc = ev_match / len(CANONICAL_EVENTS) * 100
     print(f"\n  Event accuracy: {ev_match}/{len(CANONICAL_EVENTS)} = {ev_acc:.1f}%")
 
-    # Detection lag
     print(f"\n  Detection lag (days from crisis start to stress regime):")
     for event in CANONICAL_EVENTS[:6]:
         s_dt = pd.to_datetime(event["start"])
@@ -616,7 +769,6 @@ def experiment_2():
         else:
             print(f"    {event['name']:<30} not detected within 30 days")
 
-    # Regime distribution
     dist = rdf["regime"].value_counts()
     print(f"\n  Regime distribution (proves non-trivial prediction):")
     for regime, count in dist.items():
@@ -673,13 +825,17 @@ def experiment_3():
 
 
 # ============================================================
-# EXPERIMENT 4: CANONICAL BACKTEST + FULL ABLATION
+# EXPERIMENT 4: CANONICAL BACKTEST + ABLATION (TIME-SPLIT)
 # ============================================================
 
-def experiment_4():
+def experiment_4(seed_runs: int = 5):
     print("\n" + "=" * 90)
-    print("  EXPERIMENT 4: CANONICAL 11-EVENT BACKTEST + FULL ABLATION")
+    print("  EXPERIMENT 4: CANONICAL 11-EVENT BACKTEST + ABLATION (TIME-SPLIT)")
     print(f"  Metric: {COVERAGE_METRIC}")
+    print(f"  Seed runs per method/event: {seed_runs}")
+    print(f"  Seeds: {PAPER_SEEDS[:seed_runs]}")
+    print(f"  Validation events: {[CANONICAL_EVENTS[i]['name'] for i in VALIDATION_INDICES]}")
+    print(f"  Test events:       {[CANONICAL_EVENTS[i]['name'] for i in TEST_INDICES]}")
     print("=" * 90)
 
     all_data = load_all_data()
@@ -688,27 +844,39 @@ def experiment_4():
     discovery_adj = load_causal_graph_from_db()
     canonical_adj = load_canonical_graph(os.path.dirname(__file__))
     causal_adj = canonical_adj or discovery_adj
-    print(f"  Data: {len(all_data)} days | Canonical signature: {get_canonical_signature()}")
+    pruned_causal_adj = prune_causal_graph(dict(causal_adj or {}), mode="pruned") if causal_adj else None
+    print(f"  Data: {len(all_data)} days")
     print(f"  Canonical graph edges: {len(causal_adj) if causal_adj else 0}")
+    print(f"  Pruned graph edges:    {len(pruned_causal_adj) if pruned_causal_adj else 0}")
+    print(f"  Student-t df (data-fit): normal={PAPER_DF_NORMAL}, crisis={PAPER_DF_CRISIS}, mid={PAPER_MID_DF}")
 
+    # METHODS list — "role" tags determine where each method appears in reports
+    #   main      = goes in paper Table 7
+    #   candidate = competes to become canonical (also in main)
+    #   appendix  = runs but only appears in appendix ablation
     METHODS = [
-        ("Historical Replay", gen_historical_replay, {"train_source": "full"}),
-        ("Gaussian MC", gen_gaussian_mc, {"train_source": "full"}),
-        ("Unconditional VAR", gen_unconditional_var, {"train_source": "full"}),
-        ("Regime VAR (no graph)", gen_regime_var_no_graph, {"train_source": "regime"}),
-        ("Full Model (Discovery)", gen_full_model, {"train_source": "regime", "causal_adj": discovery_adj}),
-        ("Full Model + Filter (Legacy Hard)", gen_full_model_filtered, {"train_source": "regime", "causal_adj": discovery_adj}),
-        (CANONICAL_PAPER_NAME, gen_full_model_soft_filtered, {"train_source": "regime", "causal_adj": causal_adj}),
+        ("Historical Replay",           gen_historical_replay,           {"train_source": "full",   "role": "main_baseline"}),
+        ("Gaussian MC",                 gen_gaussian_mc,                 {"train_source": "full",   "role": "main_baseline"}),
+        ("Unconditional VAR",           gen_unconditional_var,           {"train_source": "full",   "role": "main_baseline"}),
+        ("Regime VAR (no graph)",       gen_regime_var_no_graph,         {"train_source": "regime", "role": "main_baseline"}),
+        (CANDIDATE_A_NAME,              gen_full_model_soft_filtered,    {"train_source": "regime", "role": "candidate", "causal_adj": causal_adj}),
+        (CANDIDATE_B_NAME,              gen_full_model_soft_filtered_tails, {"train_source": "regime", "role": "candidate", "causal_adj": causal_adj}),
+        # Appendix-only variants (for Appendix C full ablation)
+        ("Full Model Discovery Graph",  gen_full_model,                  {"train_source": "regime", "role": "appendix", "causal_adj": discovery_adj}),
+        ("Full Model + Legacy Hard Filter", gen_full_model_filtered,     {"train_source": "regime", "role": "appendix", "causal_adj": discovery_adj}),
+        ("Pruned Graph + Student-t",    gen_pruned_graph_soft_filtered_tails, {"train_source": "regime", "role": "appendix", "causal_adj": pruned_causal_adj}),
     ]
 
     results = {
         m[0]: {
+            "role": m[2]["role"],
             "coverages": [],
             "directions": [],
             "pairwise": [],
             "medae": [],
             "tailmiss": [],
             "plausibility": [],
+            "coverages_by_seed": [],
         }
         for m in METHODS
     }
@@ -724,7 +892,8 @@ def experiment_4():
         train_plain = train_full.drop(columns=["regime_name"], errors="ignore")
         avail = [v for v in CORE_VARS if v in train_plain.columns]
 
-        print(f"\n  [{i+1}/11] {event['name']} (train full={len(train_plain)} | regime={len(train_regime)})")
+        split_tag = "VAL" if i in VALIDATION_INDICES else "TEST"
+        print(f"\n  [{i+1}/11] [{split_tag}] {event['name']} (train full={len(train_plain)} | regime={len(train_regime)})")
 
         if len(train_plain) < 500:
             print(f"    SKIP: insufficient data")
@@ -741,92 +910,199 @@ def experiment_4():
 
         for method_name, gen_func, method_kw in METHODS:
             train_input = train_regime if method_kw.get("train_source") == "regime" else train_plain
-            kw = {k: v for k, v in method_kw.items() if k != "train_source"}
+            kw = {k: v for k, v in method_kw.items() if k not in ("train_source", "role")}
             kw.update({"shock_template": template, "event_type": event["type"]})
-            scenarios = gen_func(train_input, avail, get_canonical_target_scenarios(), 60, **kw)
-            cov, dir_acc, details, error_stats = evaluate_scenarios(scenarios, actual, avail, event["window"])
-            results[method_name]["coverages"].append(cov)
-            results[method_name]["directions"].append(dir_acc)
-            pairwise_scores = []
-            for var, direction in EVENT_SHOCK_TEMPLATES.get(event["type"], {}).items():
-                if var in details:
-                    if direction >= 0:
-                        pairwise_scores.append(100.0 if details[var]["median"] >= 0 else 0.0)
-                    else:
-                        pairwise_scores.append(100.0 if details[var]["median"] < 0 else 0.0)
-            results[method_name]["pairwise"].append(float(np.mean(pairwise_scores)) if pairwise_scores else 0.0)
-            results[method_name]["medae"].append(error_stats["median_abs_error"])
-            results[method_name]["tailmiss"].append(error_stats["tail_miss_penalty"])
-            plausibility_scores = score_canonical_plausibility(
-                scenarios,
-                avail,
-                train_input[avail].std().to_numpy(),
-                event["type"],
-                causal_adj=kw.get("causal_adj"),
-            )
-            results[method_name]["plausibility"].append(float(np.mean(plausibility_scores)))
 
-        line = f"    "
+            seed_coverages = []
+            seed_directions = []
+            seed_pairwise = []
+            seed_medae = []
+            seed_tailmiss = []
+            seed_plausibility = []
+
+            for seed in PAPER_SEEDS[:seed_runs]:
+                np.random.seed(seed)
+                scenarios = gen_func(train_input, avail, get_canonical_target_scenarios(), 60, **kw)
+                cov, dir_acc, details, error_stats = evaluate_scenarios(scenarios, actual, avail, event["window"])
+                seed_coverages.append(cov)
+                seed_directions.append(dir_acc)
+                pairwise_scores = []
+                for var, direction in EVENT_SHOCK_TEMPLATES.get(event["type"], {}).items():
+                    if var in details:
+                        if direction >= 0:
+                            pairwise_scores.append(100.0 if details[var]["median"] >= 0 else 0.0)
+                        else:
+                            pairwise_scores.append(100.0 if details[var]["median"] < 0 else 0.0)
+                seed_pairwise.append(float(np.mean(pairwise_scores)) if pairwise_scores else 0.0)
+                seed_medae.append(error_stats["median_abs_error"])
+                seed_tailmiss.append(error_stats["tail_miss_penalty"])
+                plausibility_scores = score_canonical_plausibility(
+                    scenarios,
+                    avail,
+                    train_input[avail].std().to_numpy(),
+                    event["type"],
+                    causal_adj=kw.get("causal_adj"),
+                )
+                seed_plausibility.append(float(np.mean(plausibility_scores)))
+
+            results[method_name]["coverages"].append(float(np.mean(seed_coverages)))
+            results[method_name]["directions"].append(float(np.mean(seed_directions)))
+            results[method_name]["pairwise"].append(float(np.mean(seed_pairwise)))
+            results[method_name]["medae"].append(float(np.mean(seed_medae)))
+            results[method_name]["tailmiss"].append(float(np.mean(seed_tailmiss)))
+            results[method_name]["plausibility"].append(float(np.mean(seed_plausibility)))
+            results[method_name]["coverages_by_seed"].append([round(float(x), 1) for x in seed_coverages])
+
+        # one-line per-event summary across methods
+        line = "    "
         for m in METHODS:
             line += f"{results[m[0]]['coverages'][-1]:>5.0f}% "
         print(line)
 
-    # Print ablation table
-    print(f"\n  {'='*90}")
-    print(f"  ABLATION TABLE")
-    print(f"  {'='*90}")
-
-    header = f"  {'Event':<25}"
-    for m in METHODS:
-        header += f" {m[0][:13]:>13}"
-    print(header)
-    print(f"  {'-'*90}")
-
-    for i, event in enumerate(CANONICAL_EVENTS):
-        line = f"  {event['name'][:25]:<25}"
-        for m in METHODS:
-            line += f" {results[m[0]]['coverages'][i]:>12.0f}%"
-        print(line)
-
-    print(f"  {'-'*90}")
-    avg_line = f"  {'AVERAGE':<25}"
-    for m in METHODS:
-        avg = np.mean(results[m[0]]["coverages"])
-        avg_line += f" {avg:>12.1f}%"
-    print(avg_line)
-
-    dir_line = f"  {'AVG DIRECTION':<25}"
-    for m in METHODS:
-        avg = np.mean(results[m[0]]["directions"])
-        dir_line += f" {avg:>12.1f}%"
-    print(dir_line)
-
-    pair_line = f"  {'AVG PAIRWISE':<25}"
-    for m in METHODS:
-        avg = np.mean(results[m[0]]["pairwise"])
-        pair_line += f" {avg:>12.1f}%"
-    print(pair_line)
-
-    # Store for significance tests
-    ablation = {}
-    for m in METHODS:
-        ablation[m[0]] = {
-            "avg_coverage": round(float(np.mean(results[m[0]]["coverages"])), 1),
-            "avg_direction": round(float(np.mean(results[m[0]]["directions"])), 1),
-            "avg_pairwise": round(float(np.mean(results[m[0]]["pairwise"])), 1),
-            "avg_medae": round(float(np.mean(results[m[0]]["medae"])), 1),
-            "avg_tailmiss": round(float(np.mean(results[m[0]]["tailmiss"])), 1),
-            "avg_plausibility": round(float(np.mean(results[m[0]]["plausibility"])), 4),
-            "per_event": [round(float(x), 1) for x in results[m[0]]["coverages"]],
+    # -------------------------------------------------------------
+    # Split results into validation/test averages
+    # -------------------------------------------------------------
+    def split_avg(values):
+        val = [values[i] for i in VALIDATION_INDICES]
+        test = [values[i] for i in TEST_INDICES]
+        return {
+            "val_mean": float(np.mean(val)) if val else 0.0,
+            "test_mean": float(np.mean(test)) if test else 0.0,
+            "overall_mean": float(np.mean(values)) if values else 0.0,
         }
 
-    store_experiment("Exp4_Canonical_Ablation", {
+    summary = {}
+    for method_name, data in results.items():
+        summary[method_name] = {
+            "role": data["role"],
+            "coverage": split_avg(data["coverages"]),
+            "direction": split_avg(data["directions"]),
+            "pairwise": split_avg(data["pairwise"]),
+            "medae": split_avg(data["medae"]),
+            "tailmiss": split_avg(data["tailmiss"]),
+            "plausibility": split_avg(data["plausibility"]),
+            "per_event_coverage": [round(float(x), 1) for x in data["coverages"]],
+        }
+
+    # -------------------------------------------------------------
+    # CANONICAL SELECTION: pick candidate with higher validation coverage
+    # -------------------------------------------------------------
+    val_a = summary[CANDIDATE_A_NAME]["coverage"]["val_mean"]
+    val_b = summary[CANDIDATE_B_NAME]["coverage"]["val_mean"]
+    canonical_name = CANDIDATE_B_NAME if val_b >= val_a else CANDIDATE_A_NAME
+    canonical_summary = summary[canonical_name]
+
+    # -------------------------------------------------------------
+    # PRINT: MAIN ABLATION (Paper Table 7)
+    # -------------------------------------------------------------
+    main_methods = [m[0] for m in METHODS if results[m[0]]["role"] in ("main_baseline", "candidate")]
+
+    def print_ablation_table(title, method_names, split="both"):
+        print(f"\n  {'='*90}")
+        print(f"  {title}")
+        print(f"  {'='*90}")
+        header = f"  {'Method':<45}"
+        if split in ("both", "val"): header += f" {'Val Cov':>9} {'Val Dir':>9}"
+        if split in ("both", "test"): header += f" {'Test Cov':>9} {'Test Dir':>9}"
+        header += f" {'Pairwise':>10} {'Plaus':>8}"
+        print(header)
+        print(f"  {'-'*min(len(header)-2, 115)}")
+        for mn in method_names:
+            s = summary[mn]
+            line = f"  {mn[:45]:<45}"
+            if split in ("both", "val"):
+                line += f" {s['coverage']['val_mean']:>8.1f}% {s['direction']['val_mean']:>8.1f}%"
+            if split in ("both", "test"):
+                line += f" {s['coverage']['test_mean']:>8.1f}% {s['direction']['test_mean']:>8.1f}%"
+            line += f" {s['pairwise']['test_mean']:>9.1f}% {s['plausibility']['test_mean']:>8.4f}"
+            print(line)
+
+    print_ablation_table("MAIN ABLATION (Paper Table 7) — 6 methods", main_methods, split="both")
+
+    # -------------------------------------------------------------
+    # CANONICAL DECLARATION
+    # -------------------------------------------------------------
+    print(f"\n  {'='*90}")
+    print(f"  CANONICAL MODEL SELECTION (by validation coverage)")
+    print(f"  {'='*90}")
+    print(f"    Candidate A: {CANDIDATE_A_NAME}")
+    print(f"      Validation coverage: {val_a:.1f}%")
+    print(f"    Candidate B: {CANDIDATE_B_NAME}")
+    print(f"      Validation coverage: {val_b:.1f}%")
+    print(f"\n  >>> CANONICAL = {canonical_name}")
+    print(f"  >>> Headline TEST coverage     = {canonical_summary['coverage']['test_mean']:.1f}%")
+    print(f"  >>> Headline TEST direction    = {canonical_summary['direction']['test_mean']:.1f}%")
+    print(f"  >>> Headline TEST pairwise     = {canonical_summary['pairwise']['test_mean']:.1f}%")
+    print(f"  >>> Headline TEST plausibility = {canonical_summary['plausibility']['test_mean']:.4f}")
+
+    # -------------------------------------------------------------
+    # PER-EVENT TABLE (for the paper's per-event detail)
+    # -------------------------------------------------------------
+    print(f"\n  {'='*90}")
+    print(f"  PER-EVENT COVERAGE (canonical = {canonical_name})")
+    print(f"  {'='*90}")
+    print(f"  {'Event':<30} {'Split':>5} {'Coverage':>10} {'Direction':>10} {'Pairwise':>10}")
+    print(f"  {'-'*72}")
+    for i, event in enumerate(CANONICAL_EVENTS):
+        split_tag = "VAL" if i in VALIDATION_INDICES else "TEST"
+        cov_i = canonical_summary["per_event_coverage"][i]
+        dir_i = round(float(results[canonical_name]["directions"][i]), 1)
+        pair_i = round(float(results[canonical_name]["pairwise"][i]), 1)
+        print(f"  {event['name']:<30} {split_tag:>5} {cov_i:>9.1f}% {dir_i:>9.1f}% {pair_i:>9.1f}%")
+
+    # -------------------------------------------------------------
+    # APPENDIX ABLATION (Appendix C — all methods)
+    # -------------------------------------------------------------
+    appendix_methods = [m[0] for m in METHODS if results[m[0]]["role"] == "appendix"]
+    if appendix_methods:
+        all_methods_ordered = main_methods + appendix_methods
+        print_ablation_table(f"APPENDIX C ABLATION — {len(all_methods_ordered)} methods (full transparency)",
+                             all_methods_ordered, split="both")
+
+    # -------------------------------------------------------------
+    # STORE: full data for Experiment 8 + figure generation
+    # -------------------------------------------------------------
+    ablation_payload = {
         "n_events": len(CANONICAL_EVENTS),
+        "validation_indices": VALIDATION_INDICES,
+        "test_indices": TEST_INDICES,
         "metric": COVERAGE_METRIC,
-        "canonical_signature": get_canonical_signature(),
-        "ablation": ablation,
-    })
-    return results
+        "seed_runs": seed_runs,
+        "seeds": PAPER_SEEDS[:seed_runs],
+        "df_values": {"normal": PAPER_DF_NORMAL, "crisis": PAPER_DF_CRISIS, "mid": PAPER_MID_DF},
+        "candidate_a_name": CANDIDATE_A_NAME,
+        "candidate_b_name": CANDIDATE_B_NAME,
+        "canonical_selected": canonical_name,
+        "canonical_val_coverage": canonical_summary["coverage"]["val_mean"],
+        "canonical_test_coverage": canonical_summary["coverage"]["test_mean"],
+        "canonical_test_direction": canonical_summary["direction"]["test_mean"],
+        "canonical_test_pairwise": canonical_summary["pairwise"]["test_mean"],
+        "canonical_test_plausibility": canonical_summary["plausibility"]["test_mean"],
+        "ablation": {
+            name: {
+                "role": data["role"],
+                "val_coverage": round(data["coverage"]["val_mean"], 2),
+                "test_coverage": round(data["coverage"]["test_mean"], 2),
+                "overall_coverage": round(data["coverage"]["overall_mean"], 2),
+                "val_direction": round(data["direction"]["val_mean"], 2),
+                "test_direction": round(data["direction"]["test_mean"], 2),
+                "val_pairwise": round(data["pairwise"]["val_mean"], 2),
+                "test_pairwise": round(data["pairwise"]["test_mean"], 2),
+                "test_plausibility": round(data["plausibility"]["test_mean"], 4),
+                "per_event_coverage": data["per_event_coverage"],
+            }
+            for name, data in summary.items()
+        },
+    }
+    store_experiment("Exp4_Canonical_Ablation", ablation_payload)
+
+    # Return the raw per-event results so Experiment 8 can run Wilcoxon on test events
+    return {
+        "results": results,
+        "summary": summary,
+        "canonical_name": canonical_name,
+        "main_methods": main_methods,
+    }
 
 
 # ============================================================
@@ -914,6 +1190,7 @@ def experiment_6():
     cursor.close()
     conn.close()
 
+    i1_count = None
     if adf_row:
         adf = adf_row[0]
         i1_count = sum(1 for v in adf.values() if v.get("is_i1", False))
@@ -931,8 +1208,7 @@ def experiment_6():
     print(f"\n  Total cointegrating vectors: {total_rank}")
     print(f"  These represent {total_rank} long-run equilibrium relationships")
 
-    res = {"n_groups": len(groups), "total_vectors": total_rank,
-           "i1_variables": i1_count if adf_row else None}
+    res = {"n_groups": len(groups), "total_vectors": total_rank, "i1_variables": i1_count}
     store_experiment("Exp6_VECM", res)
     return res
 
@@ -972,6 +1248,7 @@ def experiment_7():
         total_m = len(marg)
         print(f"  Student-t fits better: {t_better}/{total_m} variables")
 
+    corr_ratio = 1.0
     if reg and "calm" in reg and "stressed" in reg:
         calm_td = reg["calm"]["tail_dependence"]
         stress_td = reg["stressed"]["tail_dependence"]
@@ -994,60 +1271,76 @@ def experiment_7():
 
 
 # ============================================================
-# EXPERIMENT 8: STATISTICAL SIGNIFICANCE
+# EXPERIMENT 8: STATISTICAL SIGNIFICANCE (TEST EVENTS ONLY)
 # ============================================================
 
-def experiment_8(exp4_results):
+def experiment_8(exp4_bundle):
     print("\n" + "=" * 90)
-    print("  EXPERIMENT 8: STATISTICAL SIGNIFICANCE")
-    print("  Paired Wilcoxon tests + Bootstrap CI")
+    print("  EXPERIMENT 8: STATISTICAL SIGNIFICANCE (TEST EVENTS ONLY)")
+    print("  Paired Wilcoxon tests + Bootstrap CI on 7 held-out test events")
     print("=" * 90)
 
-    if exp4_results is None:
+    if exp4_bundle is None:
         print("  Skipping — Experiment 4 not run")
         return None
 
-    our_key = CANONICAL_PAPER_NAME
-    our_coverages = exp4_results[our_key]["coverages"]
+    results = exp4_bundle["results"]
+    canonical_name = exp4_bundle["canonical_name"]
+    main_methods = exp4_bundle["main_methods"]
 
-    print(f"\n  Our method ({our_key}): avg={np.mean(our_coverages):.1f}%")
-    print(f"\n  Paired Wilcoxon tests (one-sided: ours > baseline):")
-    print("  Baseline                    Baseline Avg   Ours Avg     diff    p-value   Sig")
-    print(f"  {'-'*73}")
+    # Test-event coverage only for the canonical
+    canonical_test_coverages = [results[canonical_name]["coverages"][i] for i in TEST_INDICES]
+    canonical_avg = float(np.mean(canonical_test_coverages))
+
+    print(f"\n  Canonical: {canonical_name}")
+    print(f"  Test-event avg coverage: {canonical_avg:.1f}%")
+    print(f"\n  Paired Wilcoxon tests on test events (one-sided: canonical > baseline):")
+    print(f"  {'Baseline':<45} {'Baseline':>10} {'Canonical':>10} {'Delta':>8} {'p-value':>10} {'Sig':>5}")
+    print(f"  {'-'*90}")
 
     sig_results = {}
-    for method_name in exp4_results:
-        if method_name == our_key:
+    for method_name in main_methods:
+        if method_name == canonical_name:
             continue
-        baseline = exp4_results[method_name]["coverages"]
-        diff = [o - b for o, b in zip(our_coverages, baseline)]
-        b_avg = np.mean(baseline)
-        o_avg = np.mean(our_coverages)
+        baseline_test = [results[method_name]["coverages"][i] for i in TEST_INDICES]
+        diff = [c - b for c, b in zip(canonical_test_coverages, baseline_test)]
+        b_avg = float(np.mean(baseline_test))
 
-        if len(set(diff)) > 1 and any(d != 0 for d in diff):
+        non_zero = [d for d in diff if d != 0]
+        if len(set(diff)) > 1 and non_zero:
             try:
-                stat, pv = wilcoxon([d for d in diff if d != 0], alternative='greater')
+                stat, pv = wilcoxon(non_zero, alternative="greater")
             except Exception:
                 stat, pv = 0, 1.0
         else:
             stat, pv = 0, 1.0
 
         sig = "YES" if pv < 0.05 else "NO"
-        print(f"  {method_name:<25} {b_avg:>10.1f}% {o_avg:>9.1f}% {o_avg-b_avg:>+7.1f} {pv:>9.4f} {sig:>5}")
-        sig_results[method_name] = {"baseline_avg": round(float(b_avg), 1),
-                                     "our_avg": round(float(o_avg), 1),
-                                     "p_value": round(float(pv), 4),
-                                     "significant": pv < 0.05}
+        print(f"  {method_name[:45]:<45} {b_avg:>9.1f}% {canonical_avg:>9.1f}% "
+              f"{canonical_avg-b_avg:>+7.1f} {pv:>9.4f} {sig:>5}")
+        sig_results[method_name] = {
+            "baseline_test_avg": round(b_avg, 1),
+            "canonical_test_avg": round(canonical_avg, 1),
+            "delta": round(canonical_avg - b_avg, 2),
+            "p_value": round(float(pv), 4),
+            "significant": pv < 0.05,
+        }
 
-    # Bootstrap CI
-    boot = [np.mean(np.random.choice(our_coverages, size=len(our_coverages), replace=True))
-            for _ in range(10000)]
-    ci_lo, ci_hi = np.percentile(boot, 2.5), np.percentile(boot, 97.5)
-    print(f"\n  Bootstrap 95% CI for our coverage: [{ci_lo:.1f}%, {ci_hi:.1f}%]")
+    # Bootstrap CI on canonical test coverage
+    rng = np.random.default_rng(20260407)
+    boot = [
+        float(np.mean(rng.choice(canonical_test_coverages, size=len(canonical_test_coverages), replace=True)))
+        for _ in range(10000)
+    ]
+    ci_lo, ci_hi = float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))
+    print(f"\n  Bootstrap 95% CI for canonical test coverage: [{ci_lo:.1f}%, {ci_hi:.1f}%]")
 
-    res = {"our_avg": round(float(np.mean(our_coverages)), 1),
-           "bootstrap_ci": [round(float(ci_lo), 1), round(float(ci_hi), 1)],
-           "paired_tests": sig_results}
+    res = {
+        "canonical_name": canonical_name,
+        "canonical_test_avg": round(canonical_avg, 1),
+        "bootstrap_ci": [round(ci_lo, 1), round(ci_hi, 1)],
+        "paired_tests_test_events": sig_results,
+    }
     store_experiment("Exp8_Significance", res)
     return res
 
@@ -1059,13 +1352,14 @@ def experiment_8(exp4_results):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp", type=int, help="Run only experiment N (1-8)")
+    parser.add_argument("--seed-runs", type=int, default=5, help="Number of random seeds to average for Experiment 4")
     args = parser.parse_args()
 
     print("=" * 90)
-    print("  CAUSALSTRESS — ALL PAPER EXPERIMENTS")
-    print("  Unified script addressing all reviewer feedback")
+    print("  CAUSALSTRESS — ALL PAPER EXPERIMENTS (ICAIF-READY)")
     print("=" * 90)
-    print(f"  Canonical winner signature: {get_canonical_signature()}")
+    print(f"  Data-fit Student-t df: normal={PAPER_DF_NORMAL}, crisis={PAPER_DF_CRISIS}, mid={PAPER_MID_DF}")
+    print(f"  Seeds: {PAPER_SEEDS[:args.seed_runs]}")
 
     results = {}
 
@@ -1076,10 +1370,10 @@ def main():
     if args.exp is None or args.exp == 3:
         results["exp3"] = experiment_3()
 
-    exp4_results = None
+    exp4_bundle = None
     if args.exp is None or args.exp == 4:
-        exp4_results = experiment_4()
-        results["exp4"] = exp4_results
+        exp4_bundle = experiment_4(seed_runs=max(1, args.seed_runs))
+        results["exp4"] = exp4_bundle
 
     if args.exp is None or args.exp == 5:
         results["exp5"] = experiment_5()
@@ -1088,42 +1382,43 @@ def main():
     if args.exp is None or args.exp == 7:
         results["exp7"] = experiment_7()
     if args.exp is None or args.exp == 8:
-        results["exp8"] = experiment_8(exp4_results)
+        results["exp8"] = experiment_8(exp4_bundle)
 
     # Final summary
     print(f"\n{'='*90}")
     print(f"  COMPLETE PAPER EXPERIMENT SUMMARY")
     print(f"{'='*90}")
 
-    print(f"\n  {'#':<4} {'Experiment':<40} {'Key Result':>35}")
-    print(f"  {'-'*82}")
+    print(f"\n  {'#':<4} {'Experiment':<40} {'Key Result':>42}")
+    print(f"  {'-'*88}")
 
     if "exp1" in results and results["exp1"]:
         e = results["exp1"]
-        print(f"  1.   {'Causal Graph Validation':<40} {'Recall='+str(e['recall'])+' P='+str(e['precision'])+' F1='+str(e['f1']):>35}")
+        print(f"  1.   {'Causal Graph Validation':<40} {'Recall='+str(e['recall'])+' P='+str(e['precision']):>42}")
     if "exp2" in results and results["exp2"]:
         e = results["exp2"]
-        print(f"  2.   {'Regime Detection':<40} {'P='+str(e['precision'])+' R='+str(e['recall'])+' F1='+str(e['f1']):>35}")
+        print(f"  2.   {'Regime Detection':<40} {'P='+str(e['precision'])+' R='+str(e['recall']):>42}")
     if "exp3" in results and results["exp3"]:
         e = results["exp3"]
-        print(f"  3.   {'Scenario Quality':<40} {'Mean plausibility='+str(e.get('plausibility_mean','')):>35}")
-    if exp4_results:
-        our = exp4_results.get(CANONICAL_PAPER_NAME, {})
-        avg = np.mean(our.get("coverages", [0]))
-        print(f"  4.   {'Backtest + Ablation (11 events)':<40} {(CANONICAL_PAPER_NAME+': '+str(round(avg,1))+'%'):>35}")
+        print(f"  3.   {'Scenario Quality':<40} {'Mean plausibility='+str(e.get('plausibility_mean','')):>42}")
+    if exp4_bundle:
+        canonical = exp4_bundle["canonical_name"]
+        summary = exp4_bundle["summary"][canonical]
+        headline = f"{canonical[:20]}: TEST={summary['coverage']['test_mean']:.1f}%"
+        print(f"  4.   {'Backtest + Ablation (time-split)':<40} {headline:>42}")
     if "exp5" in results and results["exp5"]:
-        print(f"  5.   {'VaR Comparison':<40} {'Best: Historical Sim (Kupiec)':>35}")
+        print(f"  5.   {'VaR Comparison':<40} {'Best: Historical Sim (Kupiec)':>42}")
     if "exp6" in results and results["exp6"]:
         e = results["exp6"]
-        print(f"  6.   {'VECM Cointegration':<40} {str(e.get('total_vectors',''))+' equilibrium vectors':>35}")
+        print(f"  6.   {'VECM Cointegration':<40} {str(e.get('total_vectors',''))+' equilibrium vectors':>42}")
     if "exp7" in results and results["exp7"]:
         e = results["exp7"]
         td = e.get('tail_dep', 0)
-        print(f"  7.   {'Copula Tail Dependence':<40} {str(round(td*100,1) if td else '?')+'% tail dependence':>35}")
+        print(f"  7.   {'Copula Tail Dependence':<40} {str(round(td*100,1) if td else '?')+'% tail dependence':>42}")
     if "exp8" in results and results["exp8"]:
         e = results["exp8"]
         ci = e.get("bootstrap_ci", [0, 0])
-        print(f"  8.   {'Statistical Significance':<40} {'CI=['+str(ci[0])+'%, '+str(ci[1])+'%]':>35}")
+        print(f"  8.   {'Statistical Significance':<40} {'Test CI=['+str(ci[0])+'%, '+str(ci[1])+'%]':>42}")
 
     print(f"\n  All results stored in models.paper_experiments")
     print(f"{'='*90}")

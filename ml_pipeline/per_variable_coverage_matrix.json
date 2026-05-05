@@ -1,0 +1,703 @@
+{
+  "canonical_signature": "causal_regime_multi_root_soft_filtered_ttails_datafit | graph=stressed_full | filter=soft | multi_root=yes | train_regimes=elevated,stressed,high_stress,crisis | innov=student_t_data_fit(df_n=5.97,df_c=3.84,df_mid=4.79)",
+  "seeds": [
+    20260407,
+    20260408,
+    20260409,
+    20260410,
+    20260411
+  ],
+  "n_events": 11,
+  "key_variables": [
+    "^GSPC",
+    "^VIX",
+    "DGS10",
+    "CL=F",
+    "XLF",
+    "BAMLH0A0HYM2"
+  ],
+  "matrix": {
+    "2008 GFC": {
+      "event": "2008 GFC",
+      "event_type": "credit_crisis",
+      "split": "VAL",
+      "window_days": 60,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -5.42,
+          "p5": -19.22,
+          "p50": -4.18,
+          "p95": 7.8,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 28.87,
+          "p5": -26.72,
+          "p50": 54.1,
+          "p95": 462.27,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -62.0,
+          "p5": -86.07,
+          "p50": -13.66,
+          "p95": 64.5,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": 21.46,
+          "p5": -31.47,
+          "p50": -4.59,
+          "p95": 29.37,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -17.53,
+          "p5": -23.19,
+          "p50": -5.73,
+          "p95": 8.71,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 0.2,
+          "direction_rate": 1.0,
+          "actual": 190.0,
+          "p5": -11.72,
+          "p50": 64.23,
+          "p95": 190.79,
+          "unit": "bps"
+        }
+      }
+    },
+    "2010 Flash Crash": {
+      "event": "2010 Flash Crash",
+      "event_type": "market_crash",
+      "split": "VAL",
+      "window_days": 40,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -11.59,
+          "p5": -52.87,
+          "p50": -19.67,
+          "p95": 1.99,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 38.66,
+          "p5": -3.92,
+          "p50": 122.23,
+          "p95": 946.94,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -61.0,
+          "p5": -159.64,
+          "p50": -27.94,
+          "p95": 94.94,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -5.43,
+          "p5": -61.09,
+          "p50": -16.53,
+          "p95": 42.2,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -13.13,
+          "p5": -72.42,
+          "p50": -33.28,
+          "p95": 2.97,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 122.0,
+          "p5": -84.48,
+          "p50": 460.18,
+          "p95": 1379.94,
+          "unit": "bps"
+        }
+      }
+    },
+    "2011 US Debt Downgrade": {
+      "event": "2011 US Debt Downgrade",
+      "event_type": "market_crash",
+      "split": "VAL",
+      "window_days": 60,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -14.05,
+          "p5": -57.28,
+          "p50": -25.72,
+          "p95": -1.82,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 151.41,
+          "p5": 6.82,
+          "p50": 160.25,
+          "p95": 1635.44,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -109.0,
+          "p5": -201.88,
+          "p50": -43.08,
+          "p95": 93.62,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -15.98,
+          "p5": -66.42,
+          "p50": -21.4,
+          "p95": 41.35,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -22.41,
+          "p5": -75.78,
+          "p50": -39.35,
+          "p95": -4.79,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 262.0,
+          "p5": 38.24,
+          "p50": 490.27,
+          "p95": 1499.11,
+          "unit": "bps"
+        }
+      }
+    },
+    "2015 China/Oil Crash": {
+      "event": "2015 China/Oil Crash",
+      "event_type": "global_shock",
+      "split": "VAL",
+      "window_days": 60,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": 0.09,
+          "p5": -48.63,
+          "p50": -18.2,
+          "p95": 6.55,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 12.55,
+          "p5": -13.12,
+          "p50": 108.46,
+          "p95": 1125.35,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -2.0,
+          "p5": -193.17,
+          "p50": -46.89,
+          "p95": 67.04,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 0.4,
+          "direction_rate": 0.0,
+          "actual": 6.2,
+          "p5": -65.55,
+          "p50": -26.81,
+          "p95": 7.02,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -3.98,
+          "p5": -68.28,
+          "p50": -29.26,
+          "p95": 4.17,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 36.0,
+          "p5": -158.19,
+          "p50": 313.33,
+          "p95": 1139.23,
+          "unit": "bps"
+        }
+      }
+    },
+    "2016 Brexit": {
+      "event": "2016 Brexit",
+      "event_type": "global_shock",
+      "split": "TEST",
+      "window_days": 12,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 0.8,
+          "direction_rate": 0.0,
+          "actual": 2.13,
+          "p5": -25.94,
+          "p50": -7.7,
+          "p95": 3.84,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 0.0,
+          "direction_rate": 0.0,
+          "actual": -37.65,
+          "p5": -8.83,
+          "p50": 51.88,
+          "p95": 260.99,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -32.0,
+          "p5": -69.68,
+          "p50": -12.07,
+          "p95": 36.49,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -7.57,
+          "p5": -39.84,
+          "p50": -15.35,
+          "p95": 3.81,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": 0.31,
+          "p5": -39.6,
+          "p50": -13.4,
+          "p95": 4.59,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": -8.0,
+          "p5": -92.62,
+          "p50": 96.13,
+          "p95": 385.84,
+          "unit": "bps"
+        }
+      }
+    },
+    "2018 Volmageddon": {
+      "event": "2018 Volmageddon",
+      "event_type": "market_crash",
+      "split": "TEST",
+      "window_days": 45,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -6.99,
+          "p5": -41.39,
+          "p50": -12.3,
+          "p95": 7.97,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 72.45,
+          "p5": -27.29,
+          "p50": 86.12,
+          "p95": 718.81,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": 11.0,
+          "p5": -144.12,
+          "p50": -24.56,
+          "p95": 72.02,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -0.87,
+          "p5": -50.18,
+          "p50": -10.15,
+          "p95": 40.36,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -7.61,
+          "p5": -58.8,
+          "p50": -19.88,
+          "p95": 10.8,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 51.0,
+          "p5": -187.21,
+          "p50": 214.98,
+          "p95": 846.28,
+          "unit": "bps"
+        }
+      }
+    },
+    "2018 Q4 Selloff": {
+      "event": "2018 Q4 Selloff",
+      "event_type": "rate_shock",
+      "split": "TEST",
+      "window_days": 60,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -8.83,
+          "p5": -44.63,
+          "p50": -13.71,
+          "p95": 11.57,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 82.64,
+          "p5": -34.04,
+          "p50": 94.43,
+          "p95": 1354.93,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": -17.0,
+          "p5": -75.67,
+          "p50": 29.89,
+          "p95": 130.7,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -28.08,
+          "p5": -51.82,
+          "p50": -8.73,
+          "p95": 43.73,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -13.79,
+          "p5": -64.9,
+          "p50": -23.11,
+          "p95": 12.35,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 116.0,
+          "p5": -287.81,
+          "p50": 186.24,
+          "p95": 921.01,
+          "unit": "bps"
+        }
+      }
+    },
+    "2020 COVID": {
+      "event": "2020 COVID",
+      "event_type": "pandemic",
+      "split": "TEST",
+      "window_days": 24,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 0.2,
+          "direction_rate": 1.0,
+          "actual": -33.61,
+          "p5": -32.58,
+          "p50": -9.91,
+          "p95": 4.6,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 315.31,
+          "p5": -22.34,
+          "p50": 64.5,
+          "p95": 462.57,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -79.0,
+          "p5": -120.38,
+          "p50": -34.07,
+          "p95": 31.43,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 0.0,
+          "direction_rate": 1.0,
+          "actual": -55.12,
+          "p5": -46.47,
+          "p50": -16.09,
+          "p95": 11.06,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -42.36,
+          "p5": -48.46,
+          "p50": -18.25,
+          "p95": 5.03,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 0.0,
+          "direction_rate": 1.0,
+          "actual": 726.0,
+          "p5": -130.33,
+          "p50": 148.34,
+          "p95": 580.34,
+          "unit": "bps"
+        }
+      }
+    },
+    "2020 Tech Selloff": {
+      "event": "2020 Tech Selloff",
+      "event_type": "market_crash",
+      "split": "TEST",
+      "window_days": 15,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -5.99,
+          "p5": -25.61,
+          "p50": -5.88,
+          "p95": 8.48,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 2.83,
+          "p5": -27.37,
+          "p50": 46.98,
+          "p95": 314.99,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": 0.0,
+          "p5": -75.49,
+          "p50": -11.91,
+          "p95": 42.3,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.8,
+          "actual": -7.39,
+          "p5": -34.12,
+          "p50": -0.74,
+          "p95": 34.8,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -5.05,
+          "p5": -39.85,
+          "p50": -11.21,
+          "p95": 10.32,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 48.0,
+          "p5": -195.82,
+          "p50": 58.73,
+          "p95": 402.03,
+          "unit": "bps"
+        }
+      }
+    },
+    "2022 Rate Hike": {
+      "event": "2022 Rate Hike",
+      "event_type": "rate_shock",
+      "split": "TEST",
+      "window_days": 60,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -4.68,
+          "p5": -45.74,
+          "p50": -12.48,
+          "p95": 15.79,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 20.85,
+          "p5": -43.8,
+          "p50": 94.01,
+          "p95": 1548.08,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 96.0,
+          "p5": -87.55,
+          "p50": 27.0,
+          "p95": 129.67,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 0.8,
+          "direction_rate": 0.0,
+          "actual": 51.44,
+          "p5": -59.33,
+          "p50": -8.91,
+          "p95": 61.49,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.0,
+          "actual": 1.6,
+          "p5": -62.79,
+          "p50": -20.6,
+          "p95": 19.74,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 41.0,
+          "p5": -322.56,
+          "p50": 164.28,
+          "p95": 936.66,
+          "unit": "bps"
+        }
+      }
+    },
+    "2023 SVB Crisis": {
+      "event": "2023 SVB Crisis",
+      "event_type": "credit_crisis",
+      "split": "TEST",
+      "window_days": 10,
+      "variables": {
+        "^GSPC": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -0.87,
+          "p5": -22.69,
+          "p50": -6.53,
+          "p95": 3.49,
+          "unit": "%"
+        },
+        "^VIX": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 23.28,
+          "p5": -7.5,
+          "p50": 45.67,
+          "p95": 245.88,
+          "unit": "%"
+        },
+        "DGS10": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -50.0,
+          "p5": -66.82,
+          "p50": -17.41,
+          "p95": 21.98,
+          "unit": "bps"
+        },
+        "CL=F": {
+          "in_range_rate": 1.0,
+          "direction_rate": 0.8,
+          "actual": -12.81,
+          "p5": -24.57,
+          "p50": -1.04,
+          "p95": 24.54,
+          "unit": "%"
+        },
+        "XLF": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": -10.73,
+          "p5": -35.89,
+          "p50": -13.11,
+          "p95": 2.63,
+          "unit": "%"
+        },
+        "BAMLH0A0HYM2": {
+          "in_range_rate": 1.0,
+          "direction_rate": 1.0,
+          "actual": 117.0,
+          "p5": -75.92,
+          "p50": 78.41,
+          "p95": 321.95,
+          "unit": "bps"
+        }
+      }
+    }
+  }
+}

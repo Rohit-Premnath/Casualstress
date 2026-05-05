@@ -10,9 +10,11 @@ Also includes COVID test with proper framing.
 
 import os
 import json
+import argparse
 import numpy as np
 import pandas as pd
 import psycopg2
+from scipy.stats import t as student_t
 from psycopg2.extras import Json
 from dotenv import load_dotenv
 import uuid
@@ -316,12 +318,34 @@ BACKTEST_VARIANTS = [
         "graph_mode": "pruned",
         "scenario_filter": "soft_plausibility",
     },
+    {
+        "name": "causal_regime_multi_root_soft_filtered_ttails_lighter",
+        "label": "Regime-conditioned VAR + stressed graph + multi-root shocks + soft filtering + lighter t-tails",
+        "graph_file": "regime_causal_graphs.json",
+        "regime": "stressed",
+        "train_regimes": CANONICAL_TRAIN_REGIMES,
+        "multi_root": True,
+        "graph_mode": "full",
+        "scenario_filter": "soft_plausibility",
+        "innovation_mode": "student_t",
+        "df_normal": 8.0,
+        "df_crisis": 4.5,
+        "mid_df": 5.5,
+        "extreme_scale": 1.2,
+        "mid_scale": 1.1,
+    },
 ]
 
 for _variant in BACKTEST_VARIANTS:
     _variant.setdefault("multi_root", False)
     _variant.setdefault("graph_mode", "full")
     _variant.setdefault("scenario_filter", None)
+    _variant.setdefault("innovation_mode", "gaussian")
+    _variant.setdefault("df_normal", 7.0)
+    _variant.setdefault("df_crisis", 4.0)
+    _variant.setdefault("mid_df", 5.0)
+    _variant.setdefault("extreme_scale", 1.2)
+    _variant.setdefault("mid_scale", 1.1)
 
 
 EVENT_SHOCK_TEMPLATES = {
@@ -565,6 +589,12 @@ def generate_scenarios(
     shock_sigma=-3.0,
     causal_adj=None,
     shock_template=None,
+    innovation_mode="gaussian",
+    df_normal=7.0,
+    df_crisis=4.0,
+    mid_df=5.0,
+    extreme_scale=1.2,
+    mid_scale=1.1,
 ):
     data = train_data[available_vars]
     values = data.values
@@ -620,6 +650,11 @@ def generate_scenarios(
 
     L_normal = np.linalg.cholesky(cov_normal)
     L_crisis = np.linalg.cholesky(cov_crisis)
+
+    def _student_t_noise(cholesky, df):
+        draws = student_t.rvs(df, size=cholesky.shape[0])
+        draws = draws * np.sqrt((df - 2.0) / df)
+        return cholesky @ draws
 
     horizon = 60
 
@@ -681,15 +716,18 @@ def generate_scenarios(
         # Choose covariance based on shock severity
         if abs(current_shock) >= 5.0:
             L = L_crisis
-            noise_scale = 1.2
+            noise_scale = extreme_scale
+            noise_df = df_crisis
         elif abs(current_shock) >= 4.0:
             blend_cov = 0.5 * cov_crisis + 0.5 * cov_normal
             blend_cov = ensure_positive_definite(blend_cov, d)
             L = np.linalg.cholesky(blend_cov)
-            noise_scale = 1.1
+            noise_scale = mid_scale
+            noise_df = mid_df
         else:
             L = L_normal
             noise_scale = 1.0
+            noise_df = df_normal
 
         for t in range(lag + 1, horizon + lag):
             x = [1.0]
@@ -697,7 +735,10 @@ def generate_scenarios(
                 x.extend(path[t - l_idx])
             x = np.array(x)
             predicted = x @ B
-            noise = L @ np.random.randn(d) * noise_scale
+            if innovation_mode == "student_t":
+                noise = _student_t_noise(L, noise_df) * noise_scale
+            else:
+                noise = L @ np.random.randn(d) * noise_scale
             path[t] = np.clip(predicted + noise, -6.0, 6.0)
 
         real_path = path[lag:] * stds + means
@@ -742,6 +783,12 @@ def run_backtest(
     train_regimes=None,
     multi_root=False,
     scenario_filter=None,
+    innovation_mode="gaussian",
+    df_normal=7.0,
+    df_crisis=4.0,
+    mid_df=5.0,
+    extreme_scale=1.2,
+    mid_scale=1.1,
 ):
     np.random.seed(seed)
     cutoff = pd.to_datetime(event["cutoff"])
@@ -768,6 +815,12 @@ def run_backtest(
         generated_scenarios,
         causal_adj=causal_adj,
         shock_template=shock_template,
+        innovation_mode=innovation_mode,
+        df_normal=df_normal,
+        df_crisis=df_crisis,
+        mid_df=mid_df,
+        extreme_scale=extreme_scale,
+        mid_scale=mid_scale,
     )
     scenario_scores = None
     if scenario_filter in {"plausibility", "soft_plausibility"}:
@@ -871,6 +924,7 @@ def run_backtest(
         "train_meta": train_meta,
         "shock_template": shock_template,
         "scenario_filter": scenario_filter,
+        "innovation_mode": innovation_mode,
         "filter_stats": {
             "generated": generated_scenarios,
             "kept": len(scenarios),
@@ -887,241 +941,266 @@ def run_backtest(
     }
 
 
-# ============ MAIN ============
-print("=" * 90)
-print("  CAUSALSTRESS - MULTI-EVENT BACKTEST v3")
-print("  (Focused family + repeated seeds + soft-filter variants)")
-print("=" * 90)
-print(f"  Canonical winner signature: {get_canonical_signature()}")
-print(f"  Repeated seeds: {REPEAT_SEEDS}")
+def main(selected_variant_names=None):
+    print("=" * 90)
+    print("  CAUSALSTRESS - MULTI-EVENT BACKTEST v3")
+    print("  (Focused family + repeated seeds + soft-filter variants)")
+    print("=" * 90)
+    print(f"  Canonical winner signature: {get_canonical_signature()}")
+    print(f"  Repeated seeds: {REPEAT_SEEDS}")
 
-all_data = load_all_data()
-regime_series = load_regime_series()
-all_data = all_data.join(regime_series, how="left")
-print(f"  Total data: {len(all_data)} days")
-if regime_series.empty:
-    print("  Regime labels: not found\n")
-else:
-    labeled_pct = all_data["regime_name"].notna().mean() * 100
-    print(f"  Regime labels joined: {labeled_pct:.1f}% coverage\n")
+    selected_variants = BACKTEST_VARIANTS
+    if selected_variant_names:
+        selected_set = set(selected_variant_names)
+        selected_variants = [variant for variant in BACKTEST_VARIANTS if variant["name"] in selected_set]
+        missing = selected_set - {variant["name"] for variant in selected_variants}
+        if missing:
+            raise ValueError(f"Unknown variant(s): {', '.join(sorted(missing))}")
 
-graphs = {}
-for variant in BACKTEST_VARIANTS:
-    graphs[variant["name"]] = load_causal_graph(
-        graph_file=variant["graph_file"],
-        regime=variant["regime"],
-        mode=variant["graph_mode"],
-    )
-    if variant["graph_file"]:
-        n_edges = len(graphs[variant["name"]]) if graphs[variant["name"]] else 0
-        print(f"  Loaded {variant['name']}: {n_edges} edges")
+    all_data = load_all_data()
+    regime_series = load_regime_series()
+    all_data = all_data.join(regime_series, how="left")
+    print(f"  Total data: {len(all_data)} days")
+    if regime_series.empty:
+        print("  Regime labels: not found\n")
+    else:
+        labeled_pct = all_data["regime_name"].notna().mean() * 100
+        print(f"  Regime labels joined: {labeled_pct:.1f}% coverage\n")
 
-summary = []
+    graphs = {}
+    for variant in selected_variants:
+        graphs[variant["name"]] = load_causal_graph(
+            graph_file=variant["graph_file"],
+            regime=variant["regime"],
+            mode=variant["graph_mode"],
+        )
+        if variant["graph_file"]:
+            n_edges = len(graphs[variant["name"]]) if graphs[variant["name"]] else 0
+            print(f"  Loaded {variant['name']}: {n_edges} edges")
 
-for variant in BACKTEST_VARIANTS:
-    print(f"\n\n{'='*90}")
-    print(f"  VARIANT: {variant['label']} [{variant['name']}]")
-    print(f"{'='*90}")
+    summary = []
 
-    variant_results = []
-    for event in EVENTS:
-        print(f"\n{'-'*90}")
-        print(f"  {event['name']} [{event['type']}]")
-        print(f"  Train: before {event['cutoff']} | Event: {event['event_start']} to {event['event_end']}")
-        print(f"{'-'*90}")
-        seed_rows = []
-        for seed in REPEAT_SEEDS:
-            result = run_backtest(
-                all_data,
-                event,
-                seed=seed,
-                causal_adj=graphs[variant["name"]],
-                variant_name=variant["name"],
-                train_regimes=variant["train_regimes"],
-                multi_root=variant["multi_root"],
-                scenario_filter=variant["scenario_filter"],
-            )
-            if result:
-                seed_rows.append(result)
+    for variant in selected_variants:
+        print(f"\n\n{'='*90}")
+        print(f"  VARIANT: {variant['label']} [{variant['name']}]")
+        print(f"{'='*90}")
 
-        if seed_rows:
-            aggregated_results = {}
-            first_results = seed_rows[0].get("results", {})
-            for var in first_results:
-                var_rows = [r["results"].get(var, {}) for r in seed_rows if var in r.get("results", {})]
-                if not var_rows:
-                    continue
-                aggregated_results[var] = {
-                    "actual": float(np.mean([row.get("actual", 0.0) for row in var_rows])),
-                    "p5": float(np.mean([row.get("p5", 0.0) for row in var_rows])),
-                    "median": float(np.mean([row.get("median", 0.0) for row in var_rows])),
-                    "p95": float(np.mean([row.get("p95", 0.0) for row in var_rows])),
-                    "in_range": bool(np.mean([1.0 if row.get("in_range") else 0.0 for row in var_rows]) >= 0.5),
-                    "direction_match": bool(np.mean([1.0 if row.get("direction_match") else 0.0 for row in var_rows]) >= 0.5),
-                    "median_abs_error_pct": float(np.mean([row.get("median_abs_error_pct", 0.0) for row in var_rows])),
-                    "tail_miss_penalty_pct": float(np.mean([row.get("tail_miss_penalty_pct", 0.0) for row in var_rows])),
-                }
-            event_summary = {
-                "event": event["name"],
-                "type": event["type"],
-                "variant": variant["name"],
-                "coverage": float(np.mean([r["coverage"] for r in seed_rows])),
-                "coverage_std": float(np.std([r["coverage"] for r in seed_rows])),
-                "direction": float(np.mean([r["direction"] for r in seed_rows])),
-                "direction_std": float(np.std([r["direction"] for r in seed_rows])),
-                "median_abs_error": float(np.mean([r["median_abs_error"] for r in seed_rows])),
-                "tail_miss_penalty": float(np.mean([r["tail_miss_penalty"] for r in seed_rows])),
-                "pairwise_consistency": float(np.mean([r["pairwise_consistency"] for r in seed_rows])),
-                "score_std": float(np.std([
-                    r["coverage"] * 0.35
-                    + r["direction"] * 0.25
-                    + r["pairwise_consistency"] * 0.20
-                    + max(0.0, 100.0 - r["median_abs_error"]) * 0.10
-                    + max(0.0, 100.0 - r["tail_miss_penalty"]) * 0.10
-                    for r in seed_rows
-                ])),
-                "train_meta": seed_rows[0].get("train_meta", {}),
-                "shock_template": seed_rows[0].get("shock_template"),
-                "scenario_filter": seed_rows[0].get("scenario_filter"),
-                "filter_stats": seed_rows[0].get("filter_stats", {}),
-                "results": aggregated_results,
-            }
-            variant_results.append(event_summary)
-            summary.append(event_summary)
-            train_meta = event_summary.get("train_meta", {})
-            shock_template = event_summary.get("shock_template") or {"^GSPC": -3.0}
-            filter_stats = event_summary.get("filter_stats", {})
-            print(f"\n  Shock Template: {shock_template}")
-            print(
-                f"\n  Train Mode: {train_meta.get('mode', 'unknown')} "
-                f"({train_meta.get('n_rows', 0)} rows)"
-            )
-            if event_summary.get("scenario_filter"):
-                print(
-                    f"  Filter: {event_summary['scenario_filter']} "
-                    f"(generated {filter_stats.get('generated')}, kept {filter_stats.get('kept')}, "
-                    f"mean score {filter_stats.get('score_mean')})"
+        variant_results = []
+        for event in EVENTS:
+            print(f"\n{'-'*90}")
+            print(f"  {event['name']} [{event['type']}]")
+            print(f"  Train: before {event['cutoff']} | Event: {event['event_start']} to {event['event_end']}")
+            print(f"{'-'*90}")
+            seed_rows = []
+            for seed in REPEAT_SEEDS:
+                result = run_backtest(
+                    all_data,
+                    event,
+                    seed=seed,
+                    causal_adj=graphs[variant["name"]],
+                    variant_name=variant["name"],
+                    train_regimes=variant["train_regimes"],
+                    multi_root=variant["multi_root"],
+                    scenario_filter=variant["scenario_filter"],
+                    innovation_mode=variant["innovation_mode"],
+                    df_normal=variant["df_normal"],
+                    df_crisis=variant["df_crisis"],
+                    mid_df=variant["mid_df"],
+                    extreme_scale=variant["extreme_scale"],
+                    mid_scale=variant["mid_scale"],
                 )
+                if result:
+                    seed_rows.append(result)
+
+            if seed_rows:
+                aggregated_results = {}
+                first_results = seed_rows[0].get("results", {})
+                for var in first_results:
+                    var_rows = [r["results"].get(var, {}) for r in seed_rows if var in r.get("results", {})]
+                    if not var_rows:
+                        continue
+                    aggregated_results[var] = {
+                        "actual": float(np.mean([row.get("actual", 0.0) for row in var_rows])),
+                        "p5": float(np.mean([row.get("p5", 0.0) for row in var_rows])),
+                        "median": float(np.mean([row.get("median", 0.0) for row in var_rows])),
+                        "p95": float(np.mean([row.get("p95", 0.0) for row in var_rows])),
+                        "in_range": bool(np.mean([1.0 if row.get("in_range") else 0.0 for row in var_rows]) >= 0.5),
+                        "direction_match": bool(np.mean([1.0 if row.get("direction_match") else 0.0 for row in var_rows]) >= 0.5),
+                        "median_abs_error_pct": float(np.mean([row.get("median_abs_error_pct", 0.0) for row in var_rows])),
+                        "tail_miss_penalty_pct": float(np.mean([row.get("tail_miss_penalty_pct", 0.0) for row in var_rows])),
+                    }
+                event_summary = {
+                    "event": event["name"],
+                    "type": event["type"],
+                    "variant": variant["name"],
+                    "coverage": float(np.mean([r["coverage"] for r in seed_rows])),
+                    "coverage_std": float(np.std([r["coverage"] for r in seed_rows])),
+                    "direction": float(np.mean([r["direction"] for r in seed_rows])),
+                    "direction_std": float(np.std([r["direction"] for r in seed_rows])),
+                    "median_abs_error": float(np.mean([r["median_abs_error"] for r in seed_rows])),
+                    "tail_miss_penalty": float(np.mean([r["tail_miss_penalty"] for r in seed_rows])),
+                    "pairwise_consistency": float(np.mean([r["pairwise_consistency"] for r in seed_rows])),
+                    "score_std": float(np.std([
+                        r["coverage"] * 0.35
+                        + r["direction"] * 0.25
+                        + r["pairwise_consistency"] * 0.20
+                        + max(0.0, 100.0 - r["median_abs_error"]) * 0.10
+                        + max(0.0, 100.0 - r["tail_miss_penalty"]) * 0.10
+                        for r in seed_rows
+                    ])),
+                    "train_meta": seed_rows[0].get("train_meta", {}),
+                    "shock_template": seed_rows[0].get("shock_template"),
+                    "scenario_filter": seed_rows[0].get("scenario_filter"),
+                    "filter_stats": seed_rows[0].get("filter_stats", {}),
+                    "results": aggregated_results,
+                }
+                variant_results.append(event_summary)
+                summary.append(event_summary)
+                train_meta = event_summary.get("train_meta", {})
+                shock_template = event_summary.get("shock_template") or {"^GSPC": -3.0}
+                filter_stats = event_summary.get("filter_stats", {})
+                print(f"\n  Shock Template: {shock_template}")
+                print(
+                    f"\n  Train Mode: {train_meta.get('mode', 'unknown')} "
+                    f"({train_meta.get('n_rows', 0)} rows)"
+                )
+                if event_summary.get("scenario_filter"):
+                    print(
+                        f"  Filter: {event_summary['scenario_filter']} "
+                        f"(generated {filter_stats.get('generated')}, kept {filter_stats.get('kept')}, "
+                        f"mean score {filter_stats.get('score_mean')})"
+                    )
+                print(
+                    f"\n  Range Coverage: {event_summary['coverage']:.1f}% +/- {event_summary['coverage_std']:.2f} | "
+                    f"Direction Accuracy: {event_summary['direction']:.1f}% +/- {event_summary['direction_std']:.2f}"
+                )
+
+        if not variant_results:
+            continue
+
+        print(
+            f"\n  {'Event':<40} {'Coverage':>10} {'Direction':>10} "
+            f"{'MedAE':>10} {'TailMiss':>10} {'Pairwise':>10}"
+        )
+        print(f"  {'-'*100}")
+        for s in variant_results:
             print(
-                f"\n  Range Coverage: {event_summary['coverage']:.1f}% +/- {event_summary['coverage_std']:.2f} | "
-                f"Direction Accuracy: {event_summary['direction']:.1f}% +/- {event_summary['direction_std']:.2f}"
+                f"  {s['event']:<40} {s['coverage']:>8.1f}% {s['direction']:>8.1f}% "
+                f"{s['median_abs_error']:>9.1f} {s['tail_miss_penalty']:>9.1f} "
+                f"{s['pairwise_consistency']:>9.1f}%"
             )
 
-    if not variant_results:
-        continue
+        financial = [s for s in variant_results if s["type"] != "pandemic_exogenous"]
+        exogenous = [s for s in variant_results if s["type"] == "pandemic_exogenous"]
+        overall_metrics = summarize_variant_metrics(variant_results)
 
+        if financial:
+            fin_metrics = summarize_variant_metrics(financial)
+            print(
+                f"\n  {'FINANCIAL CRISES AVG':<40} "
+                f"{fin_metrics['coverage']:>8.1f}% {fin_metrics['direction']:>8.1f}% "
+                f"{fin_metrics['median_abs_error']:>9.1f} {fin_metrics['tail_miss_penalty']:>9.1f} "
+                f"{fin_metrics['pairwise_consistency']:>9.1f}%"
+            )
+
+        if exogenous:
+            exo_metrics = summarize_variant_metrics(exogenous)
+            print(
+                f"  {'EXOGENOUS SHOCKS AVG':<40} "
+                f"{exo_metrics['coverage']:>8.1f}% {exo_metrics['direction']:>8.1f}% "
+                f"{exo_metrics['median_abs_error']:>9.1f} {exo_metrics['tail_miss_penalty']:>9.1f} "
+                f"{exo_metrics['pairwise_consistency']:>9.1f}%"
+            )
+
+        print(
+            f"  {'OVERALL AVERAGE':<40} "
+            f"{overall_metrics['coverage']:>8.1f}% {overall_metrics['direction']:>8.1f}% "
+            f"{overall_metrics['median_abs_error']:>9.1f} {overall_metrics['tail_miss_penalty']:>9.1f} "
+            f"{overall_metrics['pairwise_consistency']:>9.1f}%"
+        )
+        print(f"  {'BENCHMARK SCORE':<40} {overall_metrics['benchmark_score']:>8.1f}")
+
+    print(f"\n\n{'='*90}")
+    print("  VARIANT COMPARISON")
+    print(f"{'='*90}")
     print(
-        f"\n  {'Event':<40} {'Coverage':>10} {'Direction':>10} "
-        f"{'MedAE':>10} {'TailMiss':>10} {'Pairwise':>10}"
+        f"\n  {'Variant':<32} {'Coverage':>10} {'Direction':>10} "
+        f"{'MedAE':>10} {'TailMiss':>10} {'Pairwise':>10} {'Score':>10}"
     )
     print(f"  {'-'*100}")
-    for s in variant_results:
+    for variant in selected_variants:
+        rows = [s for s in summary if s["variant"] == variant["name"]]
+        if not rows:
+            continue
+        metrics = summarize_variant_metrics(rows)
         print(
-            f"  {s['event']:<40} {s['coverage']:>8.1f}% {s['direction']:>8.1f}% "
-            f"{s['median_abs_error']:>9.1f} {s['tail_miss_penalty']:>9.1f} "
-            f"{s['pairwise_consistency']:>9.1f}%"
+            f"  {variant['name']:<32} "
+            f"{metrics['coverage']:>8.1f}% "
+            f"{metrics['direction']:>8.1f}% "
+            f"{metrics['median_abs_error']:>9.1f} "
+            f"{metrics['tail_miss_penalty']:>9.1f} "
+            f"{metrics['pairwise_consistency']:>9.1f}% "
+            f"{metrics['benchmark_score']:>9.1f}"
         )
 
-    financial = [s for s in variant_results if s["type"] != "pandemic_exogenous"]
-    exogenous = [s for s in variant_results if s["type"] == "pandemic_exogenous"]
-    overall_metrics = summarize_variant_metrics(variant_results)
-
-    if financial:
-        fin_metrics = summarize_variant_metrics(financial)
-        print(
-            f"\n  {'FINANCIAL CRISES AVG':<40} "
-            f"{fin_metrics['coverage']:>8.1f}% {fin_metrics['direction']:>8.1f}% "
-            f"{fin_metrics['median_abs_error']:>9.1f} {fin_metrics['tail_miss_penalty']:>9.1f} "
-            f"{fin_metrics['pairwise_consistency']:>9.1f}%"
-        )
-
-    if exogenous:
-        exo_metrics = summarize_variant_metrics(exogenous)
-        print(
-            f"  {'EXOGENOUS SHOCKS AVG':<40} "
-            f"{exo_metrics['coverage']:>8.1f}% {exo_metrics['direction']:>8.1f}% "
-            f"{exo_metrics['median_abs_error']:>9.1f} {exo_metrics['tail_miss_penalty']:>9.1f} "
-            f"{exo_metrics['pairwise_consistency']:>9.1f}%"
-        )
-
-    print(
-        f"  {'OVERALL AVERAGE':<40} "
-        f"{overall_metrics['coverage']:>8.1f}% {overall_metrics['direction']:>8.1f}% "
-        f"{overall_metrics['median_abs_error']:>9.1f} {overall_metrics['tail_miss_penalty']:>9.1f} "
-        f"{overall_metrics['pairwise_consistency']:>9.1f}%"
-    )
-    print(f"  {'BENCHMARK SCORE':<40} {overall_metrics['benchmark_score']:>8.1f}")
-
-print(f"\n\n{'='*90}")
-print("  VARIANT COMPARISON")
-print(f"{'='*90}")
-print(
-    f"\n  {'Variant':<32} {'Coverage':>10} {'Direction':>10} "
-    f"{'MedAE':>10} {'TailMiss':>10} {'Pairwise':>10} {'Score':>10}"
-)
-print(f"  {'-'*100}")
-for variant in BACKTEST_VARIANTS:
-    rows = [s for s in summary if s["variant"] == variant["name"]]
-    if not rows:
-        continue
-    metrics = summarize_variant_metrics(rows)
-    print(
-        f"  {variant['name']:<32} "
-        f"{metrics['coverage']:>8.1f}% "
-        f"{metrics['direction']:>8.1f}% "
-        f"{metrics['median_abs_error']:>9.1f} "
-        f"{metrics['tail_miss_penalty']:>9.1f} "
-        f"{metrics['pairwise_consistency']:>9.1f}% "
-        f"{metrics['benchmark_score']:>9.1f}"
-    )
-
-# Store results
-try:
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS models.backtest_results (
-            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            experiment_name VARCHAR(200),
-            cutoff_date DATE,
-            target_event VARCHAR(200),
-            n_scenarios INTEGER,
-            coverage_pct DOUBLE PRECISION,
-            results JSONB,
-            created_at TIMESTAMP DEFAULT NOW()
-        )
-    """)
-    for s in summary:
-        result_payload = {
-            "canonical_signature": get_canonical_signature(),
-            "event_type": s["type"],
-            "coverage": s["coverage"],
-            "direction": s["direction"],
-            "median_abs_error": s["median_abs_error"],
-            "tail_miss_penalty": s["tail_miss_penalty"],
-            "pairwise_consistency": s["pairwise_consistency"],
-            "train_meta": s.get("train_meta", {}),
-            "shock_template": s.get("shock_template", {}),
-            "variables": s["results"],
-        }
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
         cursor.execute("""
-            INSERT INTO models.backtest_results
-                (id, experiment_name, cutoff_date, target_event, n_scenarios, coverage_pct, results)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """, (
-            str(uuid.uuid4()),
-            f"Multi-Event Backtest v2::{s['variant']}",
-            None,
-            s["event"],
-            get_canonical_target_scenarios(),
-            s["coverage"],
-            Json(result_payload),
-        ))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    print(f"\n  Results stored in database!")
-except Exception as e:
-    print(f"\n  Warning: Could not store results: {e}")
+            CREATE TABLE IF NOT EXISTS models.backtest_results (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                experiment_name VARCHAR(200),
+                cutoff_date DATE,
+                target_event VARCHAR(200),
+                n_scenarios INTEGER,
+                coverage_pct DOUBLE PRECISION,
+                results JSONB,
+                created_at TIMESTAMP DEFAULT NOW()
+            )
+        """)
+        for s in summary:
+            result_payload = {
+                "canonical_signature": get_canonical_signature(),
+                "event_type": s["type"],
+                "coverage": s["coverage"],
+                "direction": s["direction"],
+                "median_abs_error": s["median_abs_error"],
+                "tail_miss_penalty": s["tail_miss_penalty"],
+                "pairwise_consistency": s["pairwise_consistency"],
+                "train_meta": s.get("train_meta", {}),
+                "shock_template": s.get("shock_template", {}),
+                "variables": s["results"],
+            }
+            cursor.execute("""
+                INSERT INTO models.backtest_results
+                    (id, experiment_name, cutoff_date, target_event, n_scenarios, coverage_pct, results)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, (
+                str(uuid.uuid4()),
+                f"Multi-Event Backtest v2::{s['variant']}",
+                None,
+                s["event"],
+                get_canonical_target_scenarios(),
+                s["coverage"],
+                Json(result_payload),
+            ))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print(f"\n  Results stored in database!")
+    except Exception as e:
+        print(f"\n  Warning: Could not store results: {e}")
 
-print(f"\n{'='*90}")
+    print(f"\n{'='*90}")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--variant",
+        action="append",
+        dest="variants",
+        help="Run only the specified variant name. Repeat for multiple variants.",
+    )
+    args = parser.parse_args()
+    main(selected_variant_names=args.variants)

@@ -11,8 +11,8 @@ from typing import Dict, Iterable, List
 import numpy as np
 
 
-CANONICAL_MODEL_NAME = "causal_regime_multi_root_soft_filtered"
-CANONICAL_PAPER_NAME = "Full Model (Soft Filtered)"
+CANONICAL_MODEL_NAME = "causal_regime_multi_root_soft_filtered_ttails_datafit"
+CANONICAL_PAPER_NAME = "Canonical Soft Filtered (Student-t, data-fit df)"
 CANONICAL_GRAPH_FILE = "regime_causal_graphs.json"
 CANONICAL_GRAPH_REGIME = "stressed"
 CANONICAL_GRAPH_MODE = "full"
@@ -22,6 +22,15 @@ CANONICAL_TARGET_SCENARIOS = 200
 CANONICAL_CANDIDATE_MULTIPLIER = 2
 CANONICAL_SOFT_FILTER_POWER = 6.0
 CANONICAL_SOFT_FILTER_MIN_WEIGHT = 1e-6
+CANONICAL_INNOVATION_MODE = "student_t_data_fit"
+
+# Fitted via Student-t MLE on VAR residuals from the pre-2020 calibration window.
+# These are the locked paper-winning tail parameters used by all_paper_experiments.py.
+CANONICAL_DF_NORMAL = 5.97
+CANONICAL_DF_CRISIS = 3.84
+CANONICAL_DF_MID = 4.79
+CANONICAL_EXTREME_NOISE_SCALE = 1.2
+CANONICAL_MID_NOISE_SCALE = 1.1
 
 CANONICAL_PAIRWISE_RULES = {
     "credit_crisis": [
@@ -80,7 +89,8 @@ CANONICAL_PAIRWISE_RULES = {
 
 CANONICAL_SIGNATURE = (
     f"{CANONICAL_MODEL_NAME} | graph={CANONICAL_GRAPH_REGIME}_{CANONICAL_GRAPH_MODE} "
-    f"| filter=soft | multi_root=yes | train_regimes={','.join(CANONICAL_TRAIN_REGIMES)}"
+    f"| filter=soft | multi_root=yes | train_regimes={','.join(CANONICAL_TRAIN_REGIMES)} "
+    f"| innov=student_t_data_fit(df_n={CANONICAL_DF_NORMAL},df_c={CANONICAL_DF_CRISIS},df_mid={CANONICAL_DF_MID})"
 )
 
 
@@ -110,6 +120,12 @@ def canonical_best_model_config() -> Dict[str, object]:
         "candidate_multiplier": CANONICAL_CANDIDATE_MULTIPLIER,
         "soft_filter_power": CANONICAL_SOFT_FILTER_POWER,
         "soft_filter_min_weight": CANONICAL_SOFT_FILTER_MIN_WEIGHT,
+        "innovation_mode": CANONICAL_INNOVATION_MODE,
+        "df_normal": CANONICAL_DF_NORMAL,
+        "df_crisis": CANONICAL_DF_CRISIS,
+        "df_mid": CANONICAL_DF_MID,
+        "extreme_noise_scale": CANONICAL_EXTREME_NOISE_SCALE,
+        "mid_noise_scale": CANONICAL_MID_NOISE_SCALE,
         "signature": CANONICAL_SIGNATURE,
     }
 

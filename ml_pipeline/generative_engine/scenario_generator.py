@@ -21,6 +21,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 from scipy import stats
+from scipy.stats import t as student_t
 import psycopg2
 from psycopg2.extras import Json
 from dotenv import load_dotenv
@@ -29,6 +30,12 @@ try:
         CANONICAL_GRAPH_FILE,
         CANONICAL_GRAPH_MODE,
         CANONICAL_GRAPH_REGIME,
+        CANONICAL_DF_CRISIS,
+        CANONICAL_DF_MID,
+        CANONICAL_DF_NORMAL,
+        CANONICAL_EXTREME_NOISE_SCALE,
+        CANONICAL_INNOVATION_MODE,
+        CANONICAL_MID_NOISE_SCALE,
         CANONICAL_MODEL_NAME,
         CANONICAL_PAPER_NAME,
         CANONICAL_SCENARIO_FILTER,
@@ -47,6 +54,12 @@ except ModuleNotFoundError:
         CANONICAL_GRAPH_FILE,
         CANONICAL_GRAPH_MODE,
         CANONICAL_GRAPH_REGIME,
+        CANONICAL_DF_CRISIS,
+        CANONICAL_DF_MID,
+        CANONICAL_DF_NORMAL,
+        CANONICAL_EXTREME_NOISE_SCALE,
+        CANONICAL_INNOVATION_MODE,
+        CANONICAL_MID_NOISE_SCALE,
         CANONICAL_MODEL_NAME,
         CANONICAL_PAPER_NAME,
         CANONICAL_SCENARIO_FILTER,
@@ -469,6 +482,18 @@ def apply_event_guardrails(scenario_df, event_type):
     return scenario_df
 
 
+def draw_canonical_innovation(cholesky, df=None):
+    """Draw one canonical innovation vector using the locked paper-winning tail model."""
+    d = cholesky.shape[0]
+    if CANONICAL_INNOVATION_MODE == "student_t_data_fit":
+        tail_df = float(df or CANONICAL_DF_NORMAL)
+        draws = student_t.rvs(tail_df, size=d)
+        if tail_df > 2:
+            draws = draws * np.sqrt((tail_df - 2.0) / tail_df)
+        return cholesky @ draws
+    return cholesky @ np.random.randn(d)
+
+
 def compute_causal_initial_shock(shock_template, variables, causal_adjacency):
     """
     IMPROVEMENT 2: Propagate initial shock through multiple layers of causal graph.
@@ -609,7 +634,8 @@ def generate_scenarios(
         # IMPROVEMENT 4: Use crisis covariance for extreme shocks
         if abs(current_shock) >= 5.0:
             L = L_crisis
-            noise_scale = 1.2  # Slightly amplified noise for extreme scenarios
+            noise_scale = CANONICAL_EXTREME_NOISE_SCALE
+            noise_df = CANONICAL_DF_CRISIS
         elif abs(current_shock) >= 4.0:
             # Blend normal and crisis covariance
             blend = 0.5
@@ -618,10 +644,12 @@ def generate_scenarios(
             if eigvals.min() < 0:
                 L_blend_cov += np.eye(d) * (abs(eigvals.min()) + 0.001)
             L = np.linalg.cholesky(L_blend_cov)
-            noise_scale = 1.1
+            noise_scale = CANONICAL_MID_NOISE_SCALE
+            noise_df = CANONICAL_DF_MID
         else:
             L = L_normal
             noise_scale = 1.0
+            noise_df = CANONICAL_DF_NORMAL
 
         # Simulate forward
         for t in range(lag + 1, horizon + lag):
@@ -631,7 +659,7 @@ def generate_scenarios(
             x = np.array(x)
 
             predicted = x @ B
-            noise = L @ np.random.randn(d) * noise_scale
+            noise = draw_canonical_innovation(L, noise_df) * noise_scale
 
             path[t] = predicted + noise
 

@@ -1,0 +1,770 @@
+{
+  "n_ground_truth": 25,
+  "n_discovered_total": 1249,
+  "n_consensus_edges": 253,
+  "strategies": {
+    "consensus_product": {
+      "per_k": [
+        {
+          "k": 10,
+          "tp": 3,
+          "precision": 0.3,
+          "recall": 0.12,
+          "f1": 0.1714
+        },
+        {
+          "k": 25,
+          "tp": 5,
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.2
+        },
+        {
+          "k": 50,
+          "tp": 7,
+          "precision": 0.14,
+          "recall": 0.28,
+          "f1": 0.1867
+        },
+        {
+          "k": 100,
+          "tp": 11,
+          "precision": 0.11,
+          "recall": 0.44,
+          "f1": 0.176
+        },
+        {
+          "k": 200,
+          "tp": 22,
+          "precision": 0.11,
+          "recall": 0.88,
+          "f1": 0.1956
+        },
+        {
+          "k": 500,
+          "tp": 24,
+          "precision": 0.048,
+          "recall": 0.96,
+          "f1": 0.0914
+        }
+      ],
+      "k_full_recovery": 640,
+      "pr_auc": 0.1677,
+      "top_10_edges": [
+        {
+          "source": "BAMLH0A0HYM2",
+          "target": "BAMLH0A2HYB",
+          "score": 0.9181,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCILM",
+          "target": "DRTSCIS",
+          "score": 0.8905,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCIS",
+          "target": "DRTSCILM",
+          "score": 0.8905,
+          "is_ground_truth": true
+        },
+        {
+          "source": "BAMLC0A2CAA",
+          "target": "BAMLC0A0CM",
+          "score": 0.8237,
+          "is_ground_truth": false
+        },
+        {
+          "source": "^GSPC",
+          "target": "XLV",
+          "score": 0.7947,
+          "is_ground_truth": true
+        },
+        {
+          "source": "^NDX",
+          "target": "^RUT",
+          "score": 0.7844,
+          "is_ground_truth": false
+        },
+        {
+          "source": "CPIAUCSL",
+          "target": "PCEPILFE",
+          "score": 0.7422,
+          "is_ground_truth": true
+        },
+        {
+          "source": "PCEPILFE",
+          "target": "CPIAUCSL",
+          "score": 0.7422,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DGS2",
+          "target": "DGS10",
+          "score": 0.729,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "^GSPC",
+          "score": 0.7092,
+          "is_ground_truth": false
+        }
+      ]
+    },
+    "consensus_min": {
+      "per_k": [
+        {
+          "k": 10,
+          "tp": 3,
+          "precision": 0.3,
+          "recall": 0.12,
+          "f1": 0.1714
+        },
+        {
+          "k": 25,
+          "tp": 5,
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.2
+        },
+        {
+          "k": 50,
+          "tp": 6,
+          "precision": 0.12,
+          "recall": 0.24,
+          "f1": 0.16
+        },
+        {
+          "k": 100,
+          "tp": 9,
+          "precision": 0.09,
+          "recall": 0.36,
+          "f1": 0.144
+        },
+        {
+          "k": 200,
+          "tp": 20,
+          "precision": 0.1,
+          "recall": 0.8,
+          "f1": 0.1778
+        },
+        {
+          "k": 500,
+          "tp": 24,
+          "precision": 0.048,
+          "recall": 0.96,
+          "f1": 0.0914
+        }
+      ],
+      "k_full_recovery": 640,
+      "pr_auc": 0.1527,
+      "top_10_edges": [
+        {
+          "source": "BAMLH0A0HYM2",
+          "target": "BAMLH0A2HYB",
+          "score": 0.9181,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCILM",
+          "target": "DRTSCIS",
+          "score": 0.8905,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCIS",
+          "target": "DRTSCILM",
+          "score": 0.8905,
+          "is_ground_truth": true
+        },
+        {
+          "source": "BAMLC0A2CAA",
+          "target": "BAMLC0A0CM",
+          "score": 0.8237,
+          "is_ground_truth": false
+        },
+        {
+          "source": "^NDX",
+          "target": "^RUT",
+          "score": 0.8214,
+          "is_ground_truth": false
+        },
+        {
+          "source": "^GSPC",
+          "target": "XLV",
+          "score": 0.7947,
+          "is_ground_truth": true
+        },
+        {
+          "source": "CPIAUCSL",
+          "target": "PCEPILFE",
+          "score": 0.7422,
+          "is_ground_truth": true
+        },
+        {
+          "source": "PCEPILFE",
+          "target": "CPIAUCSL",
+          "score": 0.7422,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DGS2",
+          "target": "DGS10",
+          "score": 0.729,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "^GSPC",
+          "score": 0.7092,
+          "is_ground_truth": false
+        }
+      ]
+    },
+    "consensus_tier": {
+      "per_k": [
+        {
+          "k": 10,
+          "tp": 3,
+          "precision": 0.3,
+          "recall": 0.12,
+          "f1": 0.1714
+        },
+        {
+          "k": 25,
+          "tp": 5,
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.2
+        },
+        {
+          "k": 50,
+          "tp": 7,
+          "precision": 0.14,
+          "recall": 0.28,
+          "f1": 0.1867
+        },
+        {
+          "k": 100,
+          "tp": 11,
+          "precision": 0.11,
+          "recall": 0.44,
+          "f1": 0.176
+        },
+        {
+          "k": 200,
+          "tp": 22,
+          "precision": 0.11,
+          "recall": 0.88,
+          "f1": 0.1956
+        },
+        {
+          "k": 500,
+          "tp": 24,
+          "precision": 0.048,
+          "recall": 0.96,
+          "f1": 0.0914
+        }
+      ],
+      "k_full_recovery": 1248,
+      "pr_auc": 0.167,
+      "top_10_edges": [
+        {
+          "source": "BAMLH0A0HYM2",
+          "target": "BAMLH0A2HYB",
+          "score": 0.9582,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCILM",
+          "target": "DRTSCIS",
+          "score": 0.9437,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCIS",
+          "target": "DRTSCILM",
+          "score": 0.9437,
+          "is_ground_truth": true
+        },
+        {
+          "source": "BAMLC0A2CAA",
+          "target": "BAMLC0A0CM",
+          "score": 0.9076,
+          "is_ground_truth": false
+        },
+        {
+          "source": "^GSPC",
+          "target": "XLV",
+          "score": 0.8914,
+          "is_ground_truth": true
+        },
+        {
+          "source": "^NDX",
+          "target": "^RUT",
+          "score": 0.8857,
+          "is_ground_truth": false
+        },
+        {
+          "source": "CPIAUCSL",
+          "target": "PCEPILFE",
+          "score": 0.8615,
+          "is_ground_truth": true
+        },
+        {
+          "source": "PCEPILFE",
+          "target": "CPIAUCSL",
+          "score": 0.8615,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DGS2",
+          "target": "DGS10",
+          "score": 0.8538,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "^GSPC",
+          "score": 0.8421,
+          "is_ground_truth": false
+        }
+      ]
+    },
+    "dynotears_only": {
+      "per_k": [
+        {
+          "k": 10,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        {
+          "k": 25,
+          "tp": 1,
+          "precision": 0.04,
+          "recall": 0.04,
+          "f1": 0.04
+        },
+        {
+          "k": 50,
+          "tp": 6,
+          "precision": 0.12,
+          "recall": 0.24,
+          "f1": 0.16
+        },
+        {
+          "k": 100,
+          "tp": 21,
+          "precision": 0.21,
+          "recall": 0.84,
+          "f1": 0.336
+        },
+        {
+          "k": 200,
+          "tp": 24,
+          "precision": 0.12,
+          "recall": 0.96,
+          "f1": 0.2133
+        },
+        {
+          "k": 500,
+          "tp": 24,
+          "precision": 0.048,
+          "recall": 0.96,
+          "f1": 0.0914
+        }
+      ],
+      "k_full_recovery": 640,
+      "pr_auc": 0.1575,
+      "top_10_edges": [
+        {
+          "source": "EEM",
+          "target": "XLE",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "HYG",
+          "target": "LQD",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "LQD",
+          "target": "HYG",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "TLT",
+          "target": "LQD",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "EEM",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "XLF",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "XLK",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLE",
+          "target": "XLY",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLF",
+          "target": "XLK",
+          "score": 1.0,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLF",
+          "target": "XLU",
+          "score": 1.0,
+          "is_ground_truth": false
+        }
+      ]
+    },
+    "pcmci_only": {
+      "per_k": [
+        {
+          "k": 10,
+          "tp": 1,
+          "precision": 0.1,
+          "recall": 0.04,
+          "f1": 0.0571
+        },
+        {
+          "k": 25,
+          "tp": 3,
+          "precision": 0.12,
+          "recall": 0.12,
+          "f1": 0.12
+        },
+        {
+          "k": 50,
+          "tp": 4,
+          "precision": 0.08,
+          "recall": 0.16,
+          "f1": 0.1067
+        },
+        {
+          "k": 100,
+          "tp": 5,
+          "precision": 0.05,
+          "recall": 0.2,
+          "f1": 0.08
+        },
+        {
+          "k": 200,
+          "tp": 6,
+          "precision": 0.03,
+          "recall": 0.24,
+          "f1": 0.0533
+        },
+        {
+          "k": 500,
+          "tp": 6,
+          "precision": 0.012,
+          "recall": 0.24,
+          "f1": 0.0229
+        }
+      ],
+      "k_full_recovery": 1244,
+      "pr_auc": 0.0395,
+      "top_10_edges": [
+        {
+          "source": "BAMLH0A0HYM2",
+          "target": "BAMLH0A2HYB",
+          "score": 0.9181,
+          "is_ground_truth": false
+        },
+        {
+          "source": "TLT",
+          "target": "DGS10",
+          "score": 0.8958,
+          "is_ground_truth": false
+        },
+        {
+          "source": "^RUT",
+          "target": "^GSPC",
+          "score": 0.8958,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCILM",
+          "target": "DRTSCIS",
+          "score": 0.8905,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCIS",
+          "target": "DRTSCILM",
+          "score": 0.8905,
+          "is_ground_truth": true
+        },
+        {
+          "source": "BAMLH0A1HYBB",
+          "target": "BAMLH0A2HYB",
+          "score": 0.8515,
+          "is_ground_truth": false
+        },
+        {
+          "source": "INDPRO",
+          "target": "UNRATE",
+          "score": 0.8392,
+          "is_ground_truth": false
+        },
+        {
+          "source": "UNRATE",
+          "target": "INDPRO",
+          "score": 0.8392,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLK",
+          "target": "XLY",
+          "score": 0.8283,
+          "is_ground_truth": false
+        },
+        {
+          "source": "BAMLC0A2CAA",
+          "target": "BAMLC0A0CM",
+          "score": 0.8237,
+          "is_ground_truth": false
+        }
+      ]
+    },
+    "weight_magnitude": {
+      "per_k": [
+        {
+          "k": 10,
+          "tp": 1,
+          "precision": 0.1,
+          "recall": 0.04,
+          "f1": 0.0571
+        },
+        {
+          "k": 25,
+          "tp": 3,
+          "precision": 0.12,
+          "recall": 0.12,
+          "f1": 0.12
+        },
+        {
+          "k": 50,
+          "tp": 4,
+          "precision": 0.08,
+          "recall": 0.16,
+          "f1": 0.1067
+        },
+        {
+          "k": 100,
+          "tp": 5,
+          "precision": 0.05,
+          "recall": 0.2,
+          "f1": 0.08
+        },
+        {
+          "k": 200,
+          "tp": 6,
+          "precision": 0.03,
+          "recall": 0.24,
+          "f1": 0.0533
+        },
+        {
+          "k": 500,
+          "tp": 6,
+          "precision": 0.012,
+          "recall": 0.24,
+          "f1": 0.0229
+        }
+      ],
+      "k_full_recovery": 1244,
+      "pr_auc": 0.0395,
+      "top_10_edges": [
+        {
+          "source": "BAMLH0A0HYM2",
+          "target": "BAMLH0A2HYB",
+          "score": 0.9181,
+          "is_ground_truth": false
+        },
+        {
+          "source": "TLT",
+          "target": "DGS10",
+          "score": 0.8958,
+          "is_ground_truth": false
+        },
+        {
+          "source": "^RUT",
+          "target": "^GSPC",
+          "score": 0.8958,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCILM",
+          "target": "DRTSCIS",
+          "score": 0.8905,
+          "is_ground_truth": false
+        },
+        {
+          "source": "DRTSCIS",
+          "target": "DRTSCILM",
+          "score": 0.8905,
+          "is_ground_truth": true
+        },
+        {
+          "source": "BAMLH0A1HYBB",
+          "target": "BAMLH0A2HYB",
+          "score": 0.8515,
+          "is_ground_truth": false
+        },
+        {
+          "source": "INDPRO",
+          "target": "UNRATE",
+          "score": 0.8392,
+          "is_ground_truth": false
+        },
+        {
+          "source": "UNRATE",
+          "target": "INDPRO",
+          "score": 0.8392,
+          "is_ground_truth": false
+        },
+        {
+          "source": "XLK",
+          "target": "XLY",
+          "score": 0.8283,
+          "is_ground_truth": false
+        },
+        {
+          "source": "BAMLC0A2CAA",
+          "target": "BAMLC0A0CM",
+          "score": 0.8237,
+          "is_ground_truth": false
+        }
+      ]
+    }
+  },
+  "best_strategy": "consensus_product",
+  "ground_truth_edges": [
+    [
+      "PAYEMS",
+      "UNRATE"
+    ],
+    [
+      "DGS10",
+      "T10Y2Y"
+    ],
+    [
+      "DGS10",
+      "DGS2"
+    ],
+    [
+      "^GSPC",
+      "XLF"
+    ],
+    [
+      "^GSPC",
+      "XLK"
+    ],
+    [
+      "^GSPC",
+      "XLE"
+    ],
+    [
+      "^GSPC",
+      "XLV"
+    ],
+    [
+      "^GSPC",
+      "XLY"
+    ],
+    [
+      "^GSPC",
+      "XLU"
+    ],
+    [
+      "^GSPC",
+      "^NDX"
+    ],
+    [
+      "^GSPC",
+      "^RUT"
+    ],
+    [
+      "^GSPC",
+      "EEM"
+    ],
+    [
+      "^VIX",
+      "^VVIX"
+    ],
+    [
+      "DGS10",
+      "TLT"
+    ],
+    [
+      "BAMLH0A0HYM2",
+      "HYG"
+    ],
+    [
+      "CL=F",
+      "XLE"
+    ],
+    [
+      "FEDFUNDS",
+      "DGS2"
+    ],
+    [
+      "CPIAUCSL",
+      "PCEPILFE"
+    ],
+    [
+      "BAMLH0A0HYM2",
+      "BAMLH0A1HYBB"
+    ],
+    [
+      "BAMLH0A0HYM2",
+      "BAMLH0A3HYC"
+    ],
+    [
+      "BAMLC0A0CM",
+      "BAMLC0A4CBBB"
+    ],
+    [
+      "BAMLC0A0CM",
+      "BAMLC0A3CA"
+    ],
+    [
+      "DRTSCIS",
+      "DRTSCILM"
+    ],
+    [
+      "DX-Y.NYB",
+      "EURUSD=X"
+    ],
+    [
+      "INDPRO",
+      "PAYEMS"
+    ]
+  ]
+}

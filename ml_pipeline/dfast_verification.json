@@ -1,0 +1,31 @@
+{
+  "scenario_id": "bc54571b-c7c7-4040-80db-4d23d30d1bb8",
+  "scenario_source": "Federal Reserve (Official CSV - Final)",
+  "source_flag": "REAL",
+  "report_id": "42d005d6-9f6f-4329-a1e1-1e81f7daa37b",
+  "report_created_at": "2026-04-04 05:07:02.590319",
+  "verified": {
+    "total_divergences": 34,
+    "bbb_range": [
+      16.8,
+      26.3
+    ],
+    "treasury_range": [
+      10.0,
+      23.9
+    ]
+  },
+  "paper_claims": {
+    "total_divergences": 34,
+    "bbb_range": [
+      17,
+      26
+    ],
+    "treasury_range": [
+      10,
+      24
+    ]
+  },
+  "all_divergences_verified": true,
+  "anomalies": []
+}
