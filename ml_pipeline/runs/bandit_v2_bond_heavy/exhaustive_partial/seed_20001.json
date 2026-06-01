@@ -1,0 +1,87 @@
+{
+  "seed": 20001,
+  "bandit": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6677019053203327,
+    "portfolio_loss": 0.5300600758008888,
+    "dfast_breach": 0.5326646787634857,
+    "causal_fidelity": 0.5655737704918032,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "BAMLH0A3HYC",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 0.9132406355982372,
+    "portfolio_loss": 0.7123744088426147,
+    "dfast_breach": 0.18997041384379068,
+    "causal_fidelity": 0.6065573770491803,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "BAMLH0A0HYM2",
+        "family_name": "single_root",
+        "magnitude": 4.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.186814212272086,
+    "portfolio_loss": 0.9544457811841275,
+    "dfast_breach": 1.1934614284718519,
+    "causal_fidelity": 0.5081967213114754,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20001,
+    "n_sequences": 62500,
+    "max_reward": 1.186814212272086,
+    "mean_reward_all_seqs": 0.2534615132526858,
+    "std_reward_all_seqs": 0.14896637595733808,
+    "best_sequence": "BAMLH0A0HYM2 +4.00\u03c3 -> XLK -5.00\u03c3",
+    "elapsed_s": 345.0864260196686
+  }
+}

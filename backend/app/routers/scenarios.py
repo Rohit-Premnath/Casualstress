@@ -12,7 +12,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 import psycopg2
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 from psycopg2.extras import RealDictCursor
 
@@ -56,6 +56,14 @@ def get_conn():
 
 
 def _scenarios_has_event_type_column() -> bool:
+    return _scenarios_has_column("event_type")
+
+
+def _scenarios_has_anchor_variable_column() -> bool:
+    return _scenarios_has_column("anchor_variable")
+
+
+def _scenarios_has_column(column_name: str) -> bool:
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute(
@@ -64,9 +72,10 @@ def _scenarios_has_event_type_column() -> bool:
         FROM information_schema.columns
         WHERE table_schema = 'models'
           AND table_name = 'scenarios'
-          AND column_name = 'event_type'
+          AND column_name = %s
         LIMIT 1
-        """
+        """,
+        (column_name,),
     )
     exists = cursor.fetchone() is not None
     cursor.close()
@@ -116,6 +125,16 @@ SCENARIO_FAMILY_META = {
 EVENT_TYPE_TO_FAMILY_ID = {
     meta["event_type"]: family_id for family_id, meta in SCENARIO_FAMILY_META.items()
 }
+EVENT_TYPE_TO_DEFAULT_ANCHOR = {
+    meta["event_type"]: meta["default_anchor"] for meta in SCENARIO_FAMILY_META.values()
+}
+LEGACY_SHOCK_VALUE_TO_EVENT_TYPE = {
+    "^GSPC": "market_crash",
+    "BAMLH0A0HYM2": "credit_crisis",
+    "DGS10": "rate_shock",
+    "CL=F": "global_shock",
+    "^VIX": "volatility_shock",
+}
 SEVERITY_MULTIPLIER = {"Mild": 0.5, "Severe": 1.0, "Extreme": 1.6}
 
 FOCUS_VARIABLES = [
@@ -163,13 +182,30 @@ async def get_scenario_metadata():
 
 
 def _infer_event_type(row: dict) -> str:
-    raw_value = row.get("event_type") or row.get("shock_variable") or "market_crash"
-    if raw_value in EVENT_TYPE_TO_FAMILY_ID:
-        return raw_value
-    family_meta = SCENARIO_FAMILY_META.get(raw_value)
+    raw_event_type = row.get("event_type")
+    if raw_event_type in EVENT_TYPE_TO_FAMILY_ID:
+        return raw_event_type
+
+    raw_anchor = row.get("anchor_variable") or row.get("shock_variable")
+    if raw_anchor in LEGACY_SHOCK_VALUE_TO_EVENT_TYPE:
+        return LEGACY_SHOCK_VALUE_TO_EVENT_TYPE[raw_anchor]
+
+    family_meta = SCENARIO_FAMILY_META.get(raw_anchor)
     if family_meta:
         return family_meta["event_type"]
     return "market_crash"
+
+
+def _infer_anchor_variable(row: dict) -> str:
+    anchor_variable = row.get("anchor_variable")
+    if anchor_variable:
+        return anchor_variable
+
+    shock_variable = row.get("shock_variable")
+    if shock_variable and shock_variable not in EVENT_TYPE_TO_FAMILY_ID:
+        return shock_variable
+
+    return EVENT_TYPE_TO_DEFAULT_ANCHOR.get(_infer_event_type(row), "^GSPC")
 
 
 def _infer_severity_from_row(row: dict) -> str:
@@ -280,9 +316,19 @@ def _build_scenario_response(
     paths: List[dict],
     scores: List[float],
     displayed_paths: int,
+    event_type: Optional[str] = None,
+    anchor_variable: Optional[str] = None,
+    shock_magnitude: Optional[float] = None,
     created_at: Optional[str] = None,
 ) -> dict:
     family_meta = SCENARIO_FAMILY_META[family_id]
+    actual_event_type = event_type or family_meta["event_type"]
+    actual_anchor = anchor_variable or family_meta["default_anchor"]
+    actual_shock = (
+        float(shock_magnitude)
+        if shock_magnitude is not None
+        else family_meta["default_magnitude"] * SEVERITY_MULTIPLIER[severity]
+    )
     weights = _normalize_weights(paths)
     current_values = _current_values_for_variables([item["ticker"] for item in FOCUS_VARIABLES])
     score_arr = np.asarray(scores, dtype=float) if scores else np.asarray([], dtype=float)
@@ -364,9 +410,9 @@ def _build_scenario_response(
         )
 
     template = get_shock_template(
-        family_meta["event_type"],
-        family_meta["default_anchor"],
-        family_meta["default_magnitude"] * SEVERITY_MULTIPLIER[severity],
+        actual_event_type,
+        actual_anchor,
+        actual_shock,
         list(FOCUS_VAR_META.keys()) + [item["ticker"] for item in FOCUS_VARIABLES],
     )
 
@@ -387,13 +433,16 @@ def _build_scenario_response(
         "family": {
             "id": family_id,
             "label": family_meta["label"],
-            "eventType": family_meta["event_type"],
+            "eventType": actual_event_type,
         },
         "severity": severity,
         "graph": "Stressed Causal Graph",
         "filter": "Soft",
         "candidateCount": len(paths),
-        "scenarioCount": displayed_paths,
+        "scenarioCount": len(paths),
+        "displayTargetCount": displayed_paths,
+        "anchorVariable": actual_anchor,
+        "shockMagnitude": _round_number(actual_shock, 2),
         "horizon": horizon,
         "createdAt": created_at,
         "avgPlausibility": _round_number(weighted_mean_score, 3),
@@ -415,45 +464,47 @@ def _load_latest_row(event_type: Optional[str] = None) -> Optional[dict]:
     conn = get_conn()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     has_event_type = _scenarios_has_event_type_column()
-    if event_type and has_event_type:
-        cursor.execute(
-            """
-            SELECT id, shock_variable, shock_magnitude, event_type, scenario_paths,
-                   plausibility_scores, n_scenarios, created_at
-            FROM models.scenarios
-            WHERE event_type = %s
-            ORDER BY created_at DESC LIMIT 1
-            """,
-            (event_type,),
-        )
-    elif event_type:
-        cursor.execute(
-            """
-            SELECT id, shock_variable, shock_magnitude, scenario_paths,
-                   plausibility_scores, n_scenarios, created_at
-            FROM models.scenarios
-            ORDER BY created_at DESC LIMIT 1
-            """
-        )
-    else:
+    has_anchor_variable = _scenarios_has_anchor_variable_column()
+    selected_columns = [
+        "id",
+        "shock_variable",
+        "shock_magnitude",
+        "scenario_paths",
+        "plausibility_scores",
+        "n_scenarios",
+        "created_at",
+    ]
+    if has_event_type:
+        selected_columns.insert(3, "event_type")
+    if has_anchor_variable:
+        selected_columns.insert(3, "anchor_variable")
+
+    query = f"""
+        SELECT {", ".join(selected_columns)}
+        FROM models.scenarios
+    """
+    params: List[object] = []
+
+    if event_type:
+        filters = []
         if has_event_type:
-            cursor.execute(
-                """
-                SELECT id, shock_variable, shock_magnitude, event_type, scenario_paths,
-                       plausibility_scores, n_scenarios, created_at
-                FROM models.scenarios
-                ORDER BY created_at DESC LIMIT 1
-                """
-            )
-        else:
-            cursor.execute(
-                """
-                SELECT id, shock_variable, shock_magnitude, scenario_paths,
-                       plausibility_scores, n_scenarios, created_at
-                FROM models.scenarios
-                ORDER BY created_at DESC LIMIT 1
-                """
-            )
+            filters.append("event_type = %s")
+            params.append(event_type)
+
+        legacy_matches = [event_type]
+        default_anchor = EVENT_TYPE_TO_DEFAULT_ANCHOR.get(event_type)
+        if default_anchor:
+            legacy_matches.append(default_anchor)
+            if has_anchor_variable:
+                filters.append("anchor_variable = %s")
+                params.append(default_anchor)
+
+        filters.append("shock_variable = ANY(%s)")
+        params.append(legacy_matches)
+        query += " WHERE " + " OR ".join(f"({flt})" for flt in filters)
+
+    query += " ORDER BY created_at DESC LIMIT 1"
+    cursor.execute(query, params)
     row = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -464,17 +515,22 @@ def _load_latest_row(event_type: Optional[str] = None) -> Optional[dict]:
 async def get_latest_scenarios(event_type: Optional[str] = None):
     row = _load_latest_row(event_type)
     if not row:
-        return {"error": "No scenarios found"}
+        raise HTTPException(status_code=404, detail="No scenarios found")
 
-    family_id = EVENT_TYPE_TO_FAMILY_ID.get(_infer_event_type(row), "market-crash")
+    inferred_event_type = _infer_event_type(row)
+    family_id = EVENT_TYPE_TO_FAMILY_ID.get(inferred_event_type, "market-crash")
+    horizon = len(next(iter(row["scenario_paths"][0]["data"].values()), [])) if row.get("scenario_paths") else 0
     return _build_scenario_response(
         scenario_id=str(row["id"]),
         family_id=family_id,
         severity=_infer_severity_from_row(row),
-        horizon=60,
+        horizon=horizon,
         paths=row["scenario_paths"],
         scores=row["plausibility_scores"] or [],
-        displayed_paths=get_canonical_target_scenarios(),
+        displayed_paths=int(row.get("n_scenarios") or len(row["scenario_paths"]) or 0),
+        event_type=inferred_event_type,
+        anchor_variable=_infer_anchor_variable(row),
+        shock_magnitude=row.get("shock_magnitude"),
         created_at=str(row["created_at"]),
     )
 
@@ -482,7 +538,7 @@ async def get_latest_scenarios(event_type: Optional[str] = None):
 @router.post("/generate")
 async def generate_scenario(request: GenerateScenarioRequest):
     if request.family_id not in SCENARIO_FAMILY_META:
-        return {"error": f"Unknown scenario family: {request.family_id}"}
+        raise HTTPException(status_code=400, detail=f"Unknown scenario family: {request.family_id}")
 
     severity = request.severity if request.severity in SEVERITY_MULTIPLIER else "Severe"
     family_meta = SCENARIO_FAMILY_META[request.family_id]
@@ -556,6 +612,9 @@ async def generate_scenario(request: GenerateScenarioRequest):
         paths=paths,
         scores=[float(score) for score in scores],
         displayed_paths=target_scenarios,
+        event_type=family_meta["event_type"],
+        anchor_variable=anchor_variable,
+        shock_magnitude=float(base_magnitude),
     )
 
 

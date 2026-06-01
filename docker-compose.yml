@@ -37,8 +37,8 @@ services:
   # ── FastAPI Backend ──
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: causalstress-api
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -54,8 +54,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
-      - ./ml_pipeline:/ml_pipeline
+      - ./backend:/app/backend
+      - ./ml_pipeline:/app/ml_pipeline
     depends_on:
       db:
         condition: service_healthy

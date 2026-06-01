@@ -1,0 +1,87 @@
+{
+  "seed": 20007,
+  "bandit": {
+    "seed": 20007,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8778248168891045,
+    "portfolio_loss": 0.642824895921193,
+    "dfast_breach": 0.37562549114227295,
+    "causal_fidelity": 0.8852459016393442,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 2807,
+      "date": "2015-10-08",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20007,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.9974240795374552,
+    "portfolio_loss": 0.7276288460831969,
+    "dfast_breach": 1.8665443864237825,
+    "causal_fidelity": 0.9426229508196722,
+    "diversity": 0.88,
+    "sampled_state": {
+      "row_index": 2807,
+      "date": "2015-10-08",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20007,
+    "sequence": [
+      {
+        "target_var": "XLF",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2226477072732522,
+    "portfolio_loss": 0.9736362468331796,
+    "dfast_breach": 0.2631044666972169,
+    "causal_fidelity": 0.5491803278688525,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2807,
+      "date": "2015-10-08",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20007,
+    "n_sequences": 62500,
+    "max_reward": 1.2226477072732522,
+    "mean_reward_all_seqs": 0.2536567799765686,
+    "std_reward_all_seqs": 0.1487404047271257,
+    "best_sequence": "XLF -4.50\u03c3 -> TLT -5.00\u03c3",
+    "elapsed_s": 206.73582363128662
+  }
+}

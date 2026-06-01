@@ -1,0 +1,87 @@
+{
+  "seed": 20011,
+  "bandit": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8630986000420473,
+    "portfolio_loss": 0.6367035264550113,
+    "dfast_breach": 0.519256591796875,
+    "causal_fidelity": 0.8852459016393442,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "^RUT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.1225833426438443,
+    "portfolio_loss": 0.8113842350499373,
+    "dfast_breach": 1.1351401487986246,
+    "causal_fidelity": 0.9918032786885246,
+    "diversity": 0.86,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "HYG",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "XLV",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2885456294984168,
+    "portfolio_loss": 0.9602971667958049,
+    "dfast_breach": 0.6297563805360253,
+    "causal_fidelity": 0.8360655737704918,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20011,
+    "n_sequences": 62500,
+    "max_reward": 1.2885456294984168,
+    "mean_reward_all_seqs": 0.25352584979389525,
+    "std_reward_all_seqs": 0.14936142946416045,
+    "best_sequence": "HYG -4.50\u03c3 -> XLV -5.00\u03c3",
+    "elapsed_s": 210.90780687332153
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "seed": 20004,
+  "bandit": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6680830629132225,
+    "portfolio_loss": 0.5355903119688076,
+    "dfast_breach": 0.11157604058583577,
+    "causal_fidelity": 0.5245901639344263,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 4.5
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.053790410789965,
+    "portfolio_loss": 0.8262791796260458,
+    "dfast_breach": 1.526620135166921,
+    "causal_fidelity": 0.6311475409836066,
+    "diversity": 0.86,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "CPIAUCSL",
+        "family_name": "single_root",
+        "magnitude": -3.5
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2151843998746048,
+    "portfolio_loss": 0.9734113589099407,
+    "dfast_breach": 0.3493057514378364,
+    "causal_fidelity": 0.5245901639344263,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20004,
+    "n_sequences": 62500,
+    "max_reward": 1.2151843998746048,
+    "mean_reward_all_seqs": 0.2524684358977572,
+    "std_reward_all_seqs": 0.14856815729837564,
+    "best_sequence": "CPIAUCSL -3.50\u03c3 -> TLT -5.00\u03c3",
+    "elapsed_s": 444.05343866348267
+  }
+}

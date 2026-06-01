@@ -1,0 +1,87 @@
+{
+  "seed": 20009,
+  "bandit": {
+    "seed": 20009,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8503744166586719,
+    "portfolio_loss": 0.6306728196495924,
+    "dfast_breach": 0.8277709484100342,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 1209,
+      "date": "2009-08-24",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20009,
+    "sequence": [
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.0060331676812093,
+    "portfolio_loss": 0.7707226869857551,
+    "dfast_breach": 1.1784560810357971,
+    "causal_fidelity": 0.7377049180327869,
+    "diversity": 0.84,
+    "sampled_state": {
+      "row_index": 1209,
+      "date": "2009-08-24",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20009,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "XLE",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2312500228464258,
+    "portfolio_loss": 0.9076174474463388,
+    "dfast_breach": 1.381997697240637,
+    "causal_fidelity": 0.8852459016393442,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1209,
+      "date": "2009-08-24",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20009,
+    "n_sequences": 62500,
+    "max_reward": 1.2312500228464258,
+    "mean_reward_all_seqs": 0.25236805513889354,
+    "std_reward_all_seqs": 0.14838593407105788,
+    "best_sequence": "TLT -4.00\u03c3 -> XLE -5.00\u03c3",
+    "elapsed_s": 203.0797460079193
+  }
+}

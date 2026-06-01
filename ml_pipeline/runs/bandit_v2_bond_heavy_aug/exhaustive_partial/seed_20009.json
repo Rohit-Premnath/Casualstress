@@ -1,0 +1,87 @@
+{
+  "seed": 20009,
+  "bandit": {
+    "seed": 20009,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.5617163021473681,
+    "portfolio_loss": 0.4557081318126008,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.47540983606557374,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1209,
+      "date": "2009-08-24",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20009,
+    "sequence": [
+      {
+        "target_var": "FEDFUNDS",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      }
+    ],
+    "reward": 0.7547490507047918,
+    "portfolio_loss": 0.6100638967097182,
+    "dfast_breach": 0.7339345380352416,
+    "causal_fidelity": 0.4672131147540984,
+    "diversity": 0.97,
+    "sampled_state": {
+      "row_index": 1209,
+      "date": "2009-08-24",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20009,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "CL=F",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2174215211349548,
+    "portfolio_loss": 0.9294340845450276,
+    "dfast_breach": 0.3433730201455827,
+    "causal_fidelity": 0.7295081967213115,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1209,
+      "date": "2009-08-24",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20009,
+    "n_sequences": 62500,
+    "max_reward": 1.2174215211349548,
+    "mean_reward_all_seqs": 0.25234958021666787,
+    "std_reward_all_seqs": 0.14784322664882188,
+    "best_sequence": "TLT -4.50\u03c3 -> CL=F -5.00\u03c3",
+    "elapsed_s": 200.408123254776
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "seed": 20002,
+  "bandit": {
+    "seed": 20002,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2704623322755804,
+    "portfolio_loss": 0.9778952967673237,
+    "dfast_breach": 0.4058345317840576,
+    "causal_fidelity": 0.6639344262295082,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 2826,
+      "date": "2015-11-04",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20002,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLY",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      }
+    ],
+    "reward": 0.9995443808160216,
+    "portfolio_loss": 0.7981177724952853,
+    "dfast_breach": 0.943206865857227,
+    "causal_fidelity": 0.5245901639344263,
+    "diversity": 0.95,
+    "sampled_state": {
+      "row_index": 2826,
+      "date": "2015-11-04",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20002,
+    "sequence": [
+      {
+        "target_var": "HYG",
+        "family_name": "single_root",
+        "magnitude": -3.0
+      },
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2654889053502747,
+    "portfolio_loss": 0.9362509032803333,
+    "dfast_breach": 1.119826145101427,
+    "causal_fidelity": 0.8688524590163934,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2826,
+      "date": "2015-11-04",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20002,
+    "n_sequences": 62500,
+    "max_reward": 1.2654889053502747,
+    "mean_reward_all_seqs": 0.25396347060193114,
+    "std_reward_all_seqs": 0.14841404547806497,
+    "best_sequence": "HYG -3.00\u03c3 -> XLU -5.00\u03c3",
+    "elapsed_s": 233.2130799293518
+  }
+}

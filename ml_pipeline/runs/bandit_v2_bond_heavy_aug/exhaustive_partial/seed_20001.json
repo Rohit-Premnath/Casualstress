@@ -1,0 +1,87 @@
+{
+  "seed": 20001,
+  "bandit": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.5880384940598616,
+    "portfolio_loss": 0.45353835045709384,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.6885245901639344,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "FEDFUNDS",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 0.9219169048622077,
+    "portfolio_loss": 0.7175091377248037,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.6229508196721312,
+    "diversity": 0.98,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "^VIX",
+        "family_name": "single_root",
+        "magnitude": 1.5
+      },
+      {
+        "target_var": "BAMLH0A0HYM2",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 1.3417138055698623,
+    "portfolio_loss": 1.0147988510962245,
+    "dfast_breach": 2.748687409576634,
+    "causal_fidelity": 0.7704918032786885,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20001,
+    "n_sequences": 62500,
+    "max_reward": 1.3417138055698623,
+    "mean_reward_all_seqs": 0.25313504015513427,
+    "std_reward_all_seqs": 0.1490349494654328,
+    "best_sequence": "^VIX +1.50\u03c3 -> BAMLH0A0HYM2 +5.00\u03c3",
+    "elapsed_s": 300.1478705406189
+  }
+}

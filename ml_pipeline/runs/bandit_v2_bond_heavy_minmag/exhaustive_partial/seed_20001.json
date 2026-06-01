@@ -1,0 +1,87 @@
+{
+  "seed": 20001,
+  "bandit": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.38721910642120005,
+    "portfolio_loss": 0.295254568646165,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.7049180327868853,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.9768208475478146,
+    "portfolio_loss": 0.7514385555439957,
+    "dfast_breach": 0.05195116996765137,
+    "causal_fidelity": 0.7131147540983607,
+    "diversity": 0.86,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20001,
+    "sequence": [
+      {
+        "target_var": "FEDFUNDS",
+        "family_name": "single_root",
+        "magnitude": 2.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2183560125042787,
+    "portfolio_loss": 0.9407440002374781,
+    "dfast_breach": 1.3660006166071341,
+    "causal_fidelity": 0.680327868852459,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3019,
+      "date": "2016-08-01",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20001,
+    "n_sequences": 62500,
+    "max_reward": 1.2183560125042787,
+    "mean_reward_all_seqs": 0.2521659844710335,
+    "std_reward_all_seqs": 0.1481590340413257,
+    "best_sequence": "FEDFUNDS +2.00\u03c3 -> LQD -5.00\u03c3",
+    "elapsed_s": 217.7340385913849
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "seed": 20000,
+  "bandit": {
+    "seed": 20000,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6909589144806101,
+    "portfolio_loss": 0.5473830361469768,
+    "dfast_breach": 0.04868706573022542,
+    "causal_fidelity": 0.5409836065573771,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 3437,
+      "date": "2018-03-08",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20000,
+    "sequence": [
+      {
+        "target_var": "HYG",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8382990076802271,
+    "portfolio_loss": 0.6613640216626934,
+    "dfast_breach": 0.2529605229695638,
+    "causal_fidelity": 0.6229508196721312,
+    "diversity": 0.8064516129032258,
+    "sampled_state": {
+      "row_index": 3437,
+      "date": "2018-03-08",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20000,
+    "sequence": [
+      {
+        "target_var": "XLE",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.1527350559006155,
+    "portfolio_loss": 0.8850340261285263,
+    "dfast_breach": 0.46747722731767843,
+    "causal_fidelity": 0.7049180327868853,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3437,
+      "date": "2018-03-08",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20000,
+    "n_sequences": 62500,
+    "max_reward": 1.1527350559006155,
+    "mean_reward_all_seqs": 0.2529867308908083,
+    "std_reward_all_seqs": 0.14858889987033244,
+    "best_sequence": "XLE -4.50\u03c3 -> TLT -5.00\u03c3",
+    "elapsed_s": 550.8729729652405
+  }
+}

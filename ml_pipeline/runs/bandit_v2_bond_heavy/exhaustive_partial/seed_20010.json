@@ -1,0 +1,87 @@
+{
+  "seed": 20010,
+  "bandit": {
+    "seed": 20010,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.4536798469622246,
+    "portfolio_loss": 0.3389817572843667,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3849,
+      "date": "2019-10-07",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20010,
+    "sequence": [
+      {
+        "target_var": "XLY",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLY",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.7916566955137633,
+    "portfolio_loss": 0.619990479218636,
+    "dfast_breach": 0.2627103234229765,
+    "causal_fidelity": 0.6229508196721312,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3849,
+      "date": "2019-10-07",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20010,
+    "sequence": [
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 3.0
+      },
+      {
+        "target_var": "XLE",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.28617658307363,
+    "portfolio_loss": 1.0045552754445068,
+    "dfast_breach": 0.23508086204528808,
+    "causal_fidelity": 0.6311475409836066,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3849,
+      "date": "2019-10-07",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20010,
+    "n_sequences": 62500,
+    "max_reward": 1.28617658307363,
+    "mean_reward_all_seqs": 0.2536062377397327,
+    "std_reward_all_seqs": 0.14880909082200866,
+    "best_sequence": "BAMLC0A0CM +3.00\u03c3 -> XLE -5.00\u03c3",
+    "elapsed_s": 357.38196873664856
+  }
+}

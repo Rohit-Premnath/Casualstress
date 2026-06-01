@@ -1,0 +1,87 @@
+{
+  "seed": 20014,
+  "bandit": {
+    "seed": 20014,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.7876784280532847,
+    "portfolio_loss": 0.6265273713815408,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5573770491803278,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 2979,
+      "date": "2016-06-06",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20014,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      }
+    ],
+    "reward": 0.9132751479575023,
+    "portfolio_loss": 0.6828936861864897,
+    "dfast_breach": 0.24577959841437547,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 0.89,
+    "sampled_state": {
+      "row_index": 2979,
+      "date": "2016-06-06",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20014,
+    "sequence": [
+      {
+        "target_var": "CPIAUCSL",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.3130231442331226,
+    "portfolio_loss": 0.9803357584144683,
+    "dfast_breach": 0.41416828361314334,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2979,
+      "date": "2016-06-06",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20014,
+    "n_sequences": 62500,
+    "max_reward": 1.3130231442331226,
+    "mean_reward_all_seqs": 0.2534170620974192,
+    "std_reward_all_seqs": 0.14840526002,
+    "best_sequence": "CPIAUCSL -4.00\u03c3 -> LQD -5.00\u03c3",
+    "elapsed_s": 312.92080783843994
+  }
+}

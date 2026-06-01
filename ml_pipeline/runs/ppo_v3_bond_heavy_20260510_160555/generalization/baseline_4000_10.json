@@ -1,0 +1,52 @@
+{
+  "run_dir": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\ml_pipeline\\runs\\ppo_v3_bond_heavy_20260510_160555",
+  "model": "final.zip",
+  "mode": "real",
+  "portfolio_profile": "bond_heavy",
+  "seed_start": 4000,
+  "n_seeds": 10,
+  "rl": {
+    "mean_reward": 0.7821739971077573,
+    "std_reward": 0.14196245328738552,
+    "mean_portfolio_loss": 0.49160022661595404,
+    "mean_dfast_breach": 0.2058341105779012,
+    "mean_causal_fidelity": 0.6352459016393442,
+    "mean_diversity": 1.0
+  },
+  "random": {
+    "mean_reward": 0.45942036124386565,
+    "std_reward": 0.07505042166040864,
+    "mean_portfolio_loss": 0.18556790222747221,
+    "mean_dfast_breach": 0.11710594427564891,
+    "mean_causal_fidelity": 0.5795081967213114,
+    "mean_diversity": 1.0
+  },
+  "heuristic": {
+    "mean_reward": 0.706863372069849,
+    "std_reward": 0.14118126859293342,
+    "mean_portfolio_loss": 0.39923091580865594,
+    "mean_dfast_breach": 0.3506881517746629,
+    "mean_causal_fidelity": 0.7054415208706433,
+    "mean_diversity": 0.96
+  },
+  "brute_force": {
+    "mean_reward": 1.1271590055576814,
+    "std_reward": 0.07963659552358307,
+    "mean_portfolio_loss": 0.8109590055576815,
+    "mean_dfast_breach": 0.5557476632008169,
+    "mean_causal_fidelity": 0.75,
+    "mean_diversity": 0.9120000000000001
+  },
+  "top_rl_action": {
+    "target_var": "TLT",
+    "family_name": "market_crash",
+    "magnitude": -5.0,
+    "reward": 1.0832958521552674
+  },
+  "top_brute_action": {
+    "target_var": "XLU",
+    "family_name": "credit_crisis",
+    "magnitude": -5.0,
+    "reward": 1.3265808184107255
+  }
+}

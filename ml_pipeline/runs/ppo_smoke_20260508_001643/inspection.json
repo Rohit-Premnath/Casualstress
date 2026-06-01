@@ -1,0 +1,98 @@
+{
+  "deterministic": {
+    "distribution": {
+      "n_samples": 100,
+      "unique_joint_actions": 1,
+      "top_joint_share": 1.0,
+      "verdict": "FULLY CONVERGED \u2014 100% on a single action",
+      "targets": {
+        "DGS10": 100
+      },
+      "families": {
+        "pandemic_exogenous": 100
+      },
+      "magnitudes": {
+        "-5.0": 100
+      }
+    },
+    "top_actions": [
+      {
+        "target_var": "DGS10",
+        "family_name": "pandemic_exogenous",
+        "magnitude": -5.0,
+        "n_picks": 100,
+        "reward_mean": 0.24325420985503976,
+        "reward_std": 0.03990860137993059,
+        "portfolio_loss_mean": 0.031188636084547944,
+        "causal_fidelity_mean": 0.7068852459016394
+      }
+    ],
+    "reward_mean": 0.24325420985503976,
+    "reward_std": 0.03990860137993059,
+    "rejections": 0
+  },
+  "stochastic": {
+    "distribution": {
+      "n_samples": 100,
+      "unique_joint_actions": 50,
+      "top_joint_share": 0.26,
+      "verdict": "NEAR-RANDOM \u2014 50 unique actions across 100 samples"
+    },
+    "top_actions": [
+      {
+        "target_var": "DGS10",
+        "family_name": "pandemic_exogenous",
+        "magnitude": -5.0,
+        "n_picks": 26,
+        "reward_mean": 0.24495296890916826,
+        "reward_std": 0.04544572546828478,
+        "portfolio_loss_mean": 0.04520517571875215,
+        "causal_fidelity_mean": 0.6658259773013872
+      },
+      {
+        "target_var": "DGS2",
+        "family_name": "pandemic_exogenous",
+        "magnitude": -5.0,
+        "n_picks": 4,
+        "reward_mean": 0.21001602254082494,
+        "reward_std": 0.029061613933389577,
+        "portfolio_loss_mean": 0.021286514344103613,
+        "causal_fidelity_mean": 0.6290983606557378
+      },
+      {
+        "target_var": "FEDFUNDS",
+        "family_name": "pandemic_exogenous",
+        "magnitude": -5.0,
+        "n_picks": 4,
+        "reward_mean": 0.23064048100693654,
+        "reward_std": 0.031035100179444514,
+        "portfolio_loss_mean": 0.005640481006936523,
+        "causal_fidelity_mean": 0.75
+      },
+      {
+        "target_var": "^GSPC",
+        "family_name": "pandemic_exogenous",
+        "magnitude": -5.0,
+        "n_picks": 3,
+        "reward_mean": 0.23788419307503328,
+        "reward_std": 0.05123707194583346,
+        "portfolio_loss_mean": 0.05099894717339395,
+        "causal_fidelity_mean": 0.6229508196721312
+      },
+      {
+        "target_var": "DGS10",
+        "family_name": "pandemic_exogenous",
+        "magnitude": -4.5,
+        "n_picks": 3,
+        "reward_mean": 0.21394192503252205,
+        "reward_std": 0.007594992674627994,
+        "portfolio_loss_mean": 0.032794384048915486,
+        "causal_fidelity_mean": 0.6038251366120219
+      }
+    ],
+    "reward_mean": 0.24541988568539388,
+    "reward_std": 0.07318997381960472,
+    "rejections": 0
+  },
+  "sanity_flags": []
+}

@@ -234,12 +234,12 @@ async def get_top_causal_links(limit: int = 10):
     for edge_key, edge_data in row["adjacency_matrix"].items():
         cause, effect = edge_key.split("->")
         weight = abs(edge_data.get("weight", 0))
-        confidence = edge_data.get("confidence", 1.0)
+        confidence = edge_data.get("confidence")
         edges.append({
             "cause": cause,
             "effect": effect,
             "weight": round(weight, 2),
-            "confidence": round(confidence * 100, 0),
+            "confidence": round(confidence * 100, 0) if confidence is not None else None,
         })
 
     edges.sort(key=lambda x: x["weight"], reverse=True)

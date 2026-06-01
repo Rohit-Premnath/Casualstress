@@ -1,0 +1,123 @@
+{
+  "run_dir": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\runs\\ppo_adversarial_20260510_031528",
+  "model": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\runs\\ppo_adversarial_20260510_031528\\final.zip",
+  "n_episodes": 100,
+  "portfolio_profile": "tech_heavy",
+  "trained_mean_portfolio_loss": 0.7437046625085009,
+  "trained_max_portfolio_loss": 1.8677319530781054,
+  "random_mean_portfolio_loss": 0.28556972289627075,
+  "trained_mean_total": 0.9441566607402935,
+  "random_mean_total": 0.4822191091291403,
+  "top_10_episodes": [
+    {
+      "ep": 53,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.8677319530781054,
+      "dfast_breach": 1.0316964960337445,
+      "causal_fidelity": 0.5245901639344263,
+      "diversity": 0.06804918122974501,
+      "total": 2.0319139203814074
+    },
+    {
+      "ep": 88,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.6055617653804963,
+      "dfast_breach": 0.04650427002328762,
+      "causal_fidelity": 0.860655737704918,
+      "diversity": 0.06986897009793591,
+      "total": 1.8707453837017651
+    },
+    {
+      "ep": 77,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.519864079750475,
+      "dfast_breach": 0.5901491303381897,
+      "causal_fidelity": 0.6311475409836066,
+      "diversity": 0.07219528097259942,
+      "total": 1.716427870142817
+    },
+    {
+      "ep": 98,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.4864618495726012,
+      "dfast_breach": 0.4337159683125453,
+      "causal_fidelity": 0.7622950819672131,
+      "diversity": 0.06198961900486899,
+      "total": 1.7213493360632521
+    },
+    {
+      "ep": 96,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.4277533649729763,
+      "dfast_breach": 0.32494471439250217,
+      "causal_fidelity": 0.6065573770491803,
+      "diversity": 0.07132999336338208,
+      "total": 1.6168535774240687
+    },
+    {
+      "ep": 24,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.3550447742033487,
+      "dfast_breach": 0.7836560750725308,
+      "causal_fidelity": 0.5573770491803278,
+      "diversity": 0.07184745530042014,
+      "total": 1.529442634487489
+    },
+    {
+      "ep": 30,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.281023707674608,
+      "dfast_breach": 1.822847917127823,
+      "causal_fidelity": 0.5655737704918032,
+      "diversity": 0.07266376392918394,
+      "total": 1.4579622152150673
+    },
+    {
+      "ep": 72,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.2789695059557744,
+      "dfast_breach": 0.12121107578277587,
+      "causal_fidelity": 0.7459016393442623,
+      "diversity": 0.07255551512961911,
+      "total": 1.5099955492720152
+    },
+    {
+      "ep": 31,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.2677239643597922,
+      "dfast_breach": 0.6730935589229443,
+      "causal_fidelity": 0.7950819672131147,
+      "diversity": 0.07023204525147309,
+      "total": 1.5132717590488738
+    },
+    {
+      "ep": 60,
+      "target_var": "XLK",
+      "family_name": "market_crash",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.240982995716697,
+      "dfast_breach": 0.08784556498223424,
+      "causal_fidelity": 0.6557377049180327,
+      "diversity": 0.06851379262020851,
+      "total": 1.4445556864541276
+    }
+  ]
+}

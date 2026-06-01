@@ -1,0 +1,87 @@
+{
+  "seed": 20006,
+  "bandit": {
+    "seed": 20006,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.4135422901797743,
+    "portfolio_loss": 0.3084249871740583,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8360655737704918,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1746,
+      "date": "2011-09-14",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20006,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6962355806444548,
+    "portfolio_loss": 0.5578810742343387,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5,
+    "diversity": 0.98,
+    "sampled_state": {
+      "row_index": 1746,
+      "date": "2011-09-14",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20006,
+    "sequence": [
+      {
+        "target_var": "XLV",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 1.300252224863039,
+    "portfolio_loss": 1.0395065034094624,
+    "dfast_breach": 0.21476133664449057,
+    "causal_fidelity": 0.5327868852459017,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1746,
+      "date": "2011-09-14",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20006,
+    "n_sequences": 62500,
+    "max_reward": 1.300252224863039,
+    "mean_reward_all_seqs": 0.2528235699468371,
+    "std_reward_all_seqs": 0.14826597296659663,
+    "best_sequence": "XLV -4.00\u03c3 -> BAMLC0A0CM +5.00\u03c3",
+    "elapsed_s": 336.10463786125183
+  }
+}

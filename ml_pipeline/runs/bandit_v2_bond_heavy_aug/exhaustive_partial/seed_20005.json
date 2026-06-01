@@ -1,0 +1,87 @@
+{
+  "seed": 20005,
+  "bandit": {
+    "seed": 20005,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6977948810600497,
+    "portfolio_loss": 0.5341383830425779,
+    "dfast_breach": 0.12078622976938884,
+    "causal_fidelity": 0.7213114754098361,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1722,
+      "date": "2011-08-11",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20005,
+    "sequence": [
+      {
+        "target_var": "FEDFUNDS",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      },
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.9101744723542743,
+    "portfolio_loss": 0.6836002217933306,
+    "dfast_breach": 0.5621840334741763,
+    "causal_fidelity": 0.8114754098360656,
+    "diversity": 0.88,
+    "sampled_state": {
+      "row_index": 1722,
+      "date": "2011-08-11",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20005,
+    "sequence": [
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -0.5
+      },
+      {
+        "target_var": "GC=F",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      }
+    ],
+    "reward": 1.193649244576066,
+    "portfolio_loss": 0.8872877083076214,
+    "dfast_breach": 0.5574118444285296,
+    "causal_fidelity": 0.8442622950819673,
+    "diversity": 0.92,
+    "sampled_state": {
+      "row_index": 1722,
+      "date": "2011-08-11",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20005,
+    "n_sequences": 62500,
+    "max_reward": 1.193649244576066,
+    "mean_reward_all_seqs": 0.2533061747830843,
+    "std_reward_all_seqs": 0.148228203395683,
+    "best_sequence": "LQD -0.50\u03c3 -> GC=F -4.50\u03c3",
+    "elapsed_s": 774.2098920345306
+  }
+}

@@ -157,7 +157,7 @@ BOXES = [
      "AI Risk Narratives",
      ["LLM-assisted explanations",
       "Regulatory-style narratives",
-      "DFAST/EBA alignment"]),
+      "DFAST 2026 verified"]),
 
     # ---------- VALIDATION LAYER ----------
     ("validation", 10, 28, 12, 23,

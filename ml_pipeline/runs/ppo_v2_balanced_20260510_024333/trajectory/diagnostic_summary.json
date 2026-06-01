@@ -1,0 +1,123 @@
+{
+  "run_dir": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\ml_pipeline\\runs\\ppo_v2_balanced_20260510_024333",
+  "model": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\ml_pipeline\\runs\\ppo_v2_balanced_20260510_024333\\final.zip",
+  "n_episodes": 100,
+  "portfolio_profile": "balanced",
+  "trained_mean_portfolio_loss": 0.6940511880209509,
+  "trained_max_portfolio_loss": 1.6445557533216613,
+  "random_mean_portfolio_loss": 0.30217144482740094,
+  "trained_mean_total": 0.8933144832227314,
+  "random_mean_total": 0.5038407626721698,
+  "top_10_episodes": [
+    {
+      "ep": 53,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.6445557533216613,
+      "dfast_breach": 1.1986532084769652,
+      "causal_fidelity": 0.5491803278688525,
+      "diversity": 0.07152396420256624,
+      "total": 1.8164622481025736
+    },
+    {
+      "ep": 88,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.4708668481385057,
+      "dfast_breach": 0.2561772902277868,
+      "causal_fidelity": 0.860655737704918,
+      "diversity": 0.07268160572836746,
+      "total": 1.7363317300228176
+    },
+    {
+      "ep": 77,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.470482549637391,
+      "dfast_breach": 0.8177742059250577,
+      "causal_fidelity": 0.5245901639344263,
+      "diversity": 0.07459819942683554,
+      "total": 1.6353194187604025
+    },
+    {
+      "ep": 98,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.4200982957128383,
+      "dfast_breach": 0.5086658079195829,
+      "causal_fidelity": 0.7622950819672131,
+      "diversity": 0.06442182043153133,
+      "total": 1.6552290023461553
+    },
+    {
+      "ep": 96,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.3751506984653097,
+      "dfast_breach": 0.5828754157708358,
+      "causal_fidelity": 0.5655737704918032,
+      "diversity": 0.07501730058132228,
+      "total": 1.5523245596709827
+    },
+    {
+      "ep": 24,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.2650241747612352,
+      "dfast_breach": 1.0020784846521824,
+      "causal_fidelity": 0.4918032786885246,
+      "diversity": 0.07406921967587932,
+      "total": 1.4199720803353804
+    },
+    {
+      "ep": 72,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.261903271684088,
+      "dfast_breach": 0.1816347599029541,
+      "causal_fidelity": 0.7459016393442623,
+      "diversity": 0.07634375452598197,
+      "total": 1.493308138939965
+    },
+    {
+      "ep": 60,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.2331817657676711,
+      "dfast_breach": 0.42441588933347085,
+      "causal_fidelity": 0.6147540983606558,
+      "diversity": 0.07181661569634668,
+      "total": 1.4247896568455025
+    },
+    {
+      "ep": 31,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.2217808312128657,
+      "dfast_breach": 0.879792324884328,
+      "causal_fidelity": 0.7950819672131147,
+      "diversity": 0.07457639157528573,
+      "total": 1.4677630605343286
+    },
+    {
+      "ep": 82,
+      "target_var": "XLY",
+      "family_name": "pandemic_exogenous",
+      "magnitude": -5.0,
+      "portfolio_loss": 1.1959737067495861,
+      "dfast_breach": 0.7960920054489466,
+      "causal_fidelity": 0.6475409836065574,
+      "diversity": 0.07088685824777008,
+      "total": 1.3973246876563303
+    }
+  ]
+}

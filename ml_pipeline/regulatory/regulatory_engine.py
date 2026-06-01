@@ -1,20 +1,39 @@
 """
 Regulatory Compliance Engine
 ===============================
-Loads official DFAST/CCAR/EBA stress test scenarios from the Federal Reserve
-and runs them through our causal model to:
+Loads regulatory stress test scenarios and runs them through our causal model to:
 
 1. Stress test portfolios against official regulatory scenarios
 2. Generate the "Causal Difference Report" — showing WHERE our causal model
-   diverges from the Fed's assumptions and WHY
+   diverges from the regulator's assumptions and WHY
 
 The Causal Difference Report is our killer differentiator:
-- Fed uses historical correlations to project variable paths
+- Regulators use historical correlations to project variable paths
 - We use a causally-discovered graph to propagate shocks
 - Where we diverge, we trace the causal path and explain in plain English
 
+------------------------------------------------------------------------------
+Scenario coverage status (April 2026)
+------------------------------------------------------------------------------
+- DFAST 2026 Severely Adverse: VERIFIED against the official Federal Reserve
+  CSV. Loaded into the DB by load_real_dfast_2026.py. The paper headline
+  comparison (BBB and Treasury divergence ranges) uses these official paths.
+  See canonical_paper_numbers.py field DFAST_SCENARIO_SOURCE.
+- EBA 2025 Adverse: ILLUSTRATIVE only. No official EBA CSV ingestion has
+  been performed. Variable paths are approximated and the variable mapping
+  to our 56-variable space uses US-centric proxies (e.g. ^GSPC for EU
+  equity prices). Treated in the paper as a cross-jurisdictional example,
+  not as a verified regulatory comparison.
+
+The fallback scenarios at the top of this file are used only when the DB has
+no scenarios loaded. The DFAST fallback should never be used in paper-
+producing runs (the official CSV path always wins). The EBA entry IS the
+source of truth, since there is no official-CSV path for EBA at this time.
+
 DFAST scenarios are published annually at:
 https://www.federalreserve.gov/supervisionreg/dfast.htm
+EBA scenarios are published at:
+https://www.eba.europa.eu/risk-and-data-analysis/risk-analysis/eu-wide-stress-testing
 """
 
 import os
@@ -33,9 +52,15 @@ load_dotenv()
 
 
 # ============================================
-# FALLBACK SCENARIOS (only used if DB is empty)
-# These are approximations — real data should be
-# loaded from Fed CSVs via load_real_dfast.py
+# FALLBACK SCENARIOS
+# --------------------------------------------
+# DFAST: only used if the DB has no DFAST scenarios loaded. In paper-producing
+#        runs the official Fed CSV is loaded into the DB by load_real_dfast.py
+#        and that path takes precedence over this fallback.
+# EBA:   illustrative entry. There is no official EBA CSV ingestion path.
+#        Variable paths are approximated and the variable mapping uses
+#        US-centric proxies. Treat as a cross-jurisdictional example, not
+#        as a verified regulatory comparison.
 # ============================================
 
 DFAST_2026_SEVERELY_ADVERSE = {
@@ -81,12 +106,18 @@ DFAST_2026_SEVERELY_ADVERSE = {
 }
 
 EBA_2025_ADVERSE = {
-    "name": "EBA 2025 Adverse Scenario",
-    "source": "European Banking Authority",
+    "name": "EBA 2025 Adverse Scenario (Illustrative)",
+    "source": "European Banking Authority (Illustrative — Approximated)",
     "year": 2025,
     "scenario_type": "adverse",
-    "description": "European adverse scenario featuring geopolitical tensions, energy price shocks, "
-                   "and sovereign debt stress across the Euro area.",
+    "description": "Illustrative cross-jurisdictional example based on the EBA 2025 "
+                   "adverse scenario themes (geopolitical tensions, energy price "
+                   "shocks, sovereign debt stress). Variable paths are approximated "
+                   "and the variable mapping uses US-centric proxies (e.g. ^GSPC for "
+                   "EU equity prices, A191RL1Q225SBEA for EU GDP). NOT a verified "
+                   "regulatory comparison. For US regulatory verification see the "
+                   "DFAST 2026 Severely Adverse scenario, which is loaded from the "
+                   "official Federal Reserve CSV.",
     "horizon_quarters": 9,
     "variables": {
         "GDP_GROWTH": {

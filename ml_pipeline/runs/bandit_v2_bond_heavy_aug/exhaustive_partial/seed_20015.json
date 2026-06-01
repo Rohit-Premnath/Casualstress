@@ -1,0 +1,87 @@
+{
+  "seed": 20015,
+  "bandit": {
+    "seed": 20015,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.7951400452741174,
+    "portfolio_loss": 0.6167795366444705,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.6639344262295082,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1214,
+      "date": "2009-08-31",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20015,
+    "sequence": [
+      {
+        "target_var": "GC=F",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "GC=F",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6834462593438534,
+    "portfolio_loss": 0.5435491762708612,
+    "dfast_breach": 0.6892749468485514,
+    "causal_fidelity": 0.5245901639344263,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 1214,
+      "date": "2009-08-31",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20015,
+    "sequence": [
+      {
+        "target_var": "CPIAUCSL",
+        "family_name": "single_root",
+        "magnitude": -0.5
+      },
+      {
+        "target_var": "XLY",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2608628767911578,
+    "portfolio_loss": 0.9607954364625131,
+    "dfast_breach": 1.3686299468629295,
+    "causal_fidelity": 0.7377049180327869,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1214,
+      "date": "2009-08-31",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20015,
+    "n_sequences": 62500,
+    "max_reward": 1.2608628767911578,
+    "mean_reward_all_seqs": 0.2537793233955523,
+    "std_reward_all_seqs": 0.1480941007581581,
+    "best_sequence": "CPIAUCSL -0.50\u03c3 -> XLY -5.00\u03c3",
+    "elapsed_s": 183.6364872455597
+  }
+}

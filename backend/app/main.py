@@ -5,31 +5,46 @@ FastAPI backend serving real data from the ML pipeline to the frontend.
 All data comes from PostgreSQL — the same database ml_pipeline writes to.
 """
 
+import asyncio
 import logging
 import time
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import dashboard, causal, regimes, scenarios, stress_test, advisor
+from app.routers import dashboard, causal, regimes, scenarios, stress_test, advisor, adversarial
+
+logger = logging.getLogger("causalstress.api")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Pre-load bandit models once at startup — eliminates cold-start latency per request."""
+    loop = asyncio.get_event_loop()
+    try:
+        from ml_pipeline.generative_engine_rl.adversarial_serve import load_all_engines
+        logger.info("Pre-loading adversarial bandit models...")
+        await loop.run_in_executor(None, load_all_engines)
+        logger.info("Adversarial models ready.")
+    except Exception as e:
+        logger.warning("Could not pre-load adversarial models (non-fatal): %s", e)
+    yield
+
 
 app = FastAPI(
     title="CausalStress API",
     description="AI-powered financial stress testing with causal discovery, "
                 "regime detection, and generative scenarios",
     version="0.2.0",
+    lifespan=lifespan,
 )
 
 # CORS - allow frontend to talk to backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "http://localhost:8080",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,8 +57,7 @@ app.include_router(regimes.router)
 app.include_router(scenarios.router)
 app.include_router(stress_test.router)
 app.include_router(advisor.router)
-
-logger = logging.getLogger("causalstress.api")
+app.include_router(adversarial.router)
 
 
 @app.middleware("http")
@@ -68,6 +82,8 @@ async def root():
             "regimes": "/api/v1/regimes/current",
             "scenarios": "/api/v1/scenarios/latest",
             "stress_test": "/api/v1/stress-test/run",
+            "adversarial_worst_case": "/api/v1/adversarial/worst-case",
+            "adversarial_status": "/api/v1/adversarial/status",
             "advisor": "/api/v1/advisor/chat",
             "docs": "/docs",
         },

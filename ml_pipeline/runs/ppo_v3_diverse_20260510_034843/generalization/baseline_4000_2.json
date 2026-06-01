@@ -1,0 +1,52 @@
+{
+  "run_dir": "runs\\ppo_v3_diverse_20260510_034843",
+  "model": "final.zip",
+  "mode": "real",
+  "portfolio_profile": "balanced",
+  "seed_start": 4000,
+  "n_seeds": 2,
+  "rl": {
+    "mean_reward": 0.8807517330998539,
+    "std_reward": 0.38190367738869335,
+    "mean_portfolio_loss": 0.5594402576900178,
+    "mean_dfast_breach": 0.5287527091332531,
+    "mean_causal_fidelity": 0.7377049180327868,
+    "mean_diversity": 1.0
+  },
+  "random": {
+    "mean_reward": 0.5011870255155721,
+    "std_reward": 0.050469613213836306,
+    "mean_portfolio_loss": 0.24635095994180178,
+    "mean_dfast_breach": 0.0,
+    "mean_causal_fidelity": 0.5327868852459017,
+    "mean_diversity": 0.95
+  },
+  "heuristic": {
+    "mean_reward": 1.4465710308794657,
+    "std_reward": 0.2295396437836592,
+    "mean_portfolio_loss": 1.1376366046499575,
+    "mean_dfast_breach": 0.29764691159881623,
+    "mean_causal_fidelity": 0.7131147540983607,
+    "mean_diversity": 0.95
+  },
+  "brute_force": {
+    "mean_reward": 1.7742126769630233,
+    "std_reward": 0.09194695447846701,
+    "mean_portfolio_loss": 1.4721901795789982,
+    "mean_dfast_breach": 1.2571368949621404,
+    "mean_causal_fidelity": 0.7008196721311475,
+    "mean_diversity": 0.9177659574468084
+  },
+  "top_rl_action": {
+    "target_var": "XLY",
+    "family_name": "single_root",
+    "magnitude": -5.0,
+    "reward": 1.2626554104885472
+  },
+  "top_brute_action": {
+    "target_var": "BAMLH0A3HYC",
+    "family_name": "single_root",
+    "magnitude": 5.0,
+    "reward": 1.8661596314414903
+  }
+}

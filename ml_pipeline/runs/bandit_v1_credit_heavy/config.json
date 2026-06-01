@@ -1,0 +1,23 @@
+{
+  "mode": "real",
+  "portfolio_profile": "credit_heavy",
+  "n_magnitude_bins": 21,
+  "reward_mode": "portfolio_adversarial",
+  "train_seed_start": 1000,
+  "n_train_seeds": 50,
+  "hidden": 128,
+  "dropout": 0.15,
+  "n_epochs": 500,
+  "batch_size": 512,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "alpha": 0.6,
+  "patience": 60,
+  "eval_seed_start": 20000,
+  "n_eval_seeds": 16,
+  "beam_width": 6,
+  "ucb_beta": 0.5,
+  "out_dir": null,
+  "run_name": "bandit_v1_credit_heavy",
+  "n_train_total": 12500
+}

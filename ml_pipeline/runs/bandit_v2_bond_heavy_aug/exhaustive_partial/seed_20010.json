@@ -1,0 +1,87 @@
+{
+  "seed": 20010,
+  "bandit": {
+    "seed": 20010,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.0736365133768502,
+    "portfolio_loss": 0.8022026863790771,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3849,
+      "date": "2019-10-07",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20010,
+    "sequence": [
+      {
+        "target_var": "XLF",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.0820121771733462,
+    "portfolio_loss": 0.837704566665492,
+    "dfast_breach": 0.6559381484985352,
+    "causal_fidelity": 0.6721311475409836,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3849,
+      "date": "2019-10-07",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20010,
+    "sequence": [
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -0.5
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.1980296184693404,
+    "portfolio_loss": 0.9429530809490171,
+    "dfast_breach": 1.3364490187747589,
+    "causal_fidelity": 0.5983606557377049,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3849,
+      "date": "2019-10-07",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20010,
+    "n_sequences": 62500,
+    "max_reward": 1.1980296184693404,
+    "mean_reward_all_seqs": 0.2540492014628348,
+    "std_reward_all_seqs": 0.14918561178311848,
+    "best_sequence": "XLU -0.50\u03c3 -> LQD -5.00\u03c3",
+    "elapsed_s": 222.05692553520203
+  }
+}

@@ -3,13 +3,14 @@ Stress Test API Router
 Runs portfolio stress tests against generated scenarios.
 """
 
-from fastapi import APIRouter
-from pydantic import BaseModel
-from typing import List, Optional, Dict
-import psycopg2
-from psycopg2.extras import RealDictCursor
-import numpy as np
+from typing import Dict, List, Optional
 import uuid
+
+import numpy as np
+import psycopg2
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from psycopg2.extras import RealDictCursor
 
 from app.config import settings
 from ml_pipeline.canonical_best_model import CANONICAL_PAPER_NAME
@@ -33,6 +34,13 @@ SEVERITY_DEFAULT_MAGNITUDES = {
     "volatility_shock": 4.0,
     "pandemic_exogenous": 4.0,
 }
+LEGACY_SHOCK_VALUE_TO_EVENT_TYPE = {
+    "^GSPC": "market_crash",
+    "BAMLH0A0HYM2": "credit_crisis",
+    "DGS10": "rate_shock",
+    "CL=F": "global_shock",
+    "^VIX": "volatility_shock",
+}
 
 
 def get_conn():
@@ -46,6 +54,14 @@ def get_conn():
 
 
 def _scenarios_has_event_type_column() -> bool:
+    return _scenarios_has_column("event_type")
+
+
+def _scenarios_has_anchor_variable_column() -> bool:
+    return _scenarios_has_column("anchor_variable")
+
+
+def _scenarios_has_column(column_name: str) -> bool:
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute(
@@ -54,9 +70,10 @@ def _scenarios_has_event_type_column() -> bool:
         FROM information_schema.columns
         WHERE table_schema = 'models'
           AND table_name = 'scenarios'
-          AND column_name = 'event_type'
+          AND column_name = %s
         LIMIT 1
-        """
+        """,
+        (column_name,),
     )
     exists = cursor.fetchone() is not None
     cursor.close()
@@ -153,8 +170,12 @@ def _build_distribution(values: np.ndarray, total_notional: float, weights: np.n
 
 
 def _infer_event_type(row: dict) -> str:
-    raw_value = row.get("event_type") or row.get("shock_variable") or "market_crash"
-    return raw_value if raw_value in EVENT_TYPE_META else "market_crash"
+    raw_event_type = row.get("event_type")
+    if raw_event_type in EVENT_TYPE_META:
+        return raw_event_type
+
+    raw_anchor = row.get("anchor_variable") or row.get("shock_variable")
+    return LEGACY_SHOCK_VALUE_TO_EVENT_TYPE.get(raw_anchor, "market_crash")
 
 
 def _infer_severity(row: dict) -> str:
@@ -169,47 +190,57 @@ def _infer_severity(row: dict) -> str:
     return "Severe"
 
 
+def _scenario_select_clause() -> str:
+    columns = [
+        "id",
+        "scenario_paths",
+        "shock_variable",
+        "shock_magnitude",
+        "created_at",
+        "n_scenarios",
+    ]
+    if _scenarios_has_event_type_column():
+        columns.insert(2, "event_type")
+    if _scenarios_has_anchor_variable_column():
+        columns.insert(2, "anchor_variable")
+    return ", ".join(columns)
+
+
 @router.post("/run")
 async def run_stress_test(request: StressTestRequest):
     """Run portfolio stress test against latest or specified scenarios."""
     conn = get_conn()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
-    has_event_type = _scenarios_has_event_type_column()
 
-    # Load scenarios
+    select_clause = _scenario_select_clause()
     if request.scenario_id:
-        if has_event_type:
-            cursor.execute("""
-                SELECT id, scenario_paths, event_type, shock_variable, shock_magnitude, created_at, n_scenarios
-                FROM models.scenarios WHERE id = %s
-            """, (request.scenario_id,))
-        else:
-            cursor.execute("""
-                SELECT id, scenario_paths, shock_variable, shock_magnitude, created_at, n_scenarios
-                FROM models.scenarios WHERE id = %s
-            """, (request.scenario_id,))
+        cursor.execute(
+            f"SELECT {select_clause} FROM models.scenarios WHERE id = %s",
+            (request.scenario_id,),
+        )
     else:
-        if has_event_type:
-            cursor.execute("""
-                SELECT id, scenario_paths, event_type, shock_variable, shock_magnitude, created_at, n_scenarios
-                FROM models.scenarios
-                ORDER BY created_at DESC LIMIT 1
-            """)
-        else:
-            cursor.execute("""
-                SELECT id, scenario_paths, shock_variable, shock_magnitude, created_at, n_scenarios
-                FROM models.scenarios
-                ORDER BY created_at DESC LIMIT 1
-            """)
+        cursor.execute(
+            f"SELECT {select_clause} FROM models.scenarios ORDER BY created_at DESC LIMIT 1"
+        )
 
     row = cursor.fetchone()
     if not row:
         cursor.close()
         conn.close()
-        return {"error": "No scenarios found"}
+        raise HTTPException(status_code=404, detail="No scenarios found")
 
     paths = row["scenario_paths"]
     total_notional = sum(h.amount for h in request.holdings)
+    if total_notional <= 0:
+        cursor.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="Portfolio amount must be greater than zero")
+
+    if not paths:
+        cursor.close()
+        conn.close()
+        raise HTTPException(status_code=500, detail="Scenario set has no paths")
+
     event_type = _infer_event_type(row)
     scenario_meta = EVENT_TYPE_META.get(event_type, {"familyId": "market-crash", "family": "Market Crash"})
 
@@ -226,8 +257,26 @@ async def run_stress_test(request: StressTestRequest):
             first_series = next(iter(first_valid_path["data"].values()), [])
             horizon = len(first_series) if isinstance(first_series, list) else 0
 
-    # Compute portfolio P&L for each scenario
+    available_var_codes = set()
+    for path in paths:
+        if isinstance(path, dict) and isinstance(path.get("data"), dict):
+            available_var_codes.update(path["data"].keys())
+
+    unsupported_assets = sorted({
+        holding.asset
+        for holding in request.holdings
+        if ASSET_VAR_MAP.get(holding.asset, holding.asset) not in available_var_codes
+    })
+    if unsupported_assets:
+        cursor.close()
+        conn.close()
+        raise HTTPException(
+            status_code=400,
+            detail="Unsupported holdings for this scenario set: " + ", ".join(unsupported_assets),
+        )
+
     portfolio_pnls = []
+    portfolio_drawdowns = []
     per_holding_pnls: Dict[str, List[float]] = {holding.asset: [] for holding in request.holdings}
     per_holding_weights: Dict[str, List[float]] = {holding.asset: [] for holding in request.holdings}
     scenario_weights = []
@@ -237,82 +286,79 @@ async def run_stress_test(request: StressTestRequest):
             continue
 
         scenario_weight = float(path.get("soft_filter_weight", 1.0) or 1.0)
-        scenario_pnl = 0
+        path_horizon = max(
+            (len(series) for series in path["data"].values() if isinstance(series, list)),
+            default=horizon,
+        )
+        portfolio_path = np.full(path_horizon, total_notional, dtype=float)
+
         for holding in request.holdings:
             var_code = ASSET_VAR_MAP.get(holding.asset, holding.asset)
-            if var_code not in path["data"]:
-                continue
-
-            cum_return = sum(path["data"][var_code])
+            increments = np.asarray(path["data"][var_code][:path_horizon], dtype=float)
+            cumulative = np.cumsum(increments)
             if var_code in LOG_RETURN_VARS:
-                pct_return = np.exp(cum_return) - 1
+                cumulative_returns = np.exp(cumulative) - 1
             else:
-                pct_return = cum_return
+                cumulative_returns = cumulative
 
-            holding_pnl = holding.amount * pct_return
-            scenario_pnl += holding_pnl
-            per_holding_pnls[holding.asset].append(float(holding_pnl))
+            holding_pnl_path = holding.amount * cumulative_returns
+            portfolio_path[:len(holding_pnl_path)] += holding_pnl_path
+            holding_pnl = float(holding_pnl_path[-1]) if holding_pnl_path.size else 0.0
+            per_holding_pnls[holding.asset].append(holding_pnl)
             per_holding_weights[holding.asset].append(scenario_weight)
 
+        scenario_pnl = float(portfolio_path[-1] - total_notional) if portfolio_path.size else 0.0
+        running_peak = np.maximum.accumulate(portfolio_path)
+        scenario_drawdown = float(np.min(portfolio_path - running_peak)) if portfolio_path.size else 0.0
         portfolio_pnls.append(scenario_pnl)
+        portfolio_drawdowns.append(scenario_drawdown)
         scenario_weights.append(scenario_weight)
 
     if not portfolio_pnls:
         cursor.close()
         conn.close()
-        return {"error": "Could not compute P&L"}
+        raise HTTPException(status_code=500, detail="Could not compute P&L")
 
-    pnls = np.array(portfolio_pnls)
+    pnls = np.array(portfolio_pnls, dtype=float)
     weights = _normalize_weights(np.asarray(scenario_weights, dtype=float))
 
-    # Risk metrics
     var_95 = _weighted_quantile(pnls, 0.05, weights)
     var_99 = _weighted_quantile(pnls, 0.01, weights)
     tail_mask = pnls <= var_95
     cvar_95 = _weighted_mean(pnls[tail_mask], weights[tail_mask]) if np.any(tail_mask) else var_95
-    max_drawdown = float(np.min(pnls))
+    max_drawdown = float(np.min(np.asarray(portfolio_drawdowns, dtype=float))) if portfolio_drawdowns else 0.0
 
-    # Loss probabilities
     loss_any = float(np.average((pnls < 0).astype(float), weights=weights) * 100)
     loss_5 = float(np.average((pnls < -total_notional * 0.05).astype(float), weights=weights) * 100)
     loss_10 = float(np.average((pnls < -total_notional * 0.10).astype(float), weights=weights) * 100)
 
-    # Sector risk decomposition
     sector_risk = {}
     for holding in request.holdings:
-        cat = holding.category
-        var_code = ASSET_VAR_MAP.get(holding.asset, holding.asset)
-        asset_pnls = []
-        for path in paths:
-            if isinstance(path, dict) and "data" in path and var_code in path["data"]:
-                cum = sum(path["data"][var_code])
-                if var_code in LOG_RETURN_VARS:
-                    asset_pnls.append(holding.amount * (np.exp(cum) - 1))
-                else:
-                    asset_pnls.append(holding.amount * cum)
-
+        category = holding.category
+        asset_pnls = per_holding_pnls.get(holding.asset, [])
         if asset_pnls:
             asset_weights = np.asarray(per_holding_weights.get(holding.asset, []), dtype=float)
             risk_contribution = abs(_weighted_quantile(np.asarray(asset_pnls, dtype=float), 0.05, asset_weights))
         else:
             risk_contribution = 0
 
-        if cat not in sector_risk:
-            sector_risk[cat] = 0
-        sector_risk[cat] += risk_contribution
+        if category not in sector_risk:
+            sector_risk[category] = 0
+        sector_risk[category] += risk_contribution
 
     total_risk = sum(sector_risk.values()) or 1
     sector_colors = {
-        "equity": "#3b82f6", "fixed-income": "#a855f7",
-        "commodities": "#f59e0b", "currency": "#06b6d4",
+        "equity": "#3b82f6",
+        "fixed-income": "#a855f7",
+        "commodities": "#f59e0b",
+        "currency": "#06b6d4",
     }
     sector_data = [{
-        "sector": k.replace("-", " ").title(),
-        "value": round(v / total_risk * 100),
-        "color": sector_colors.get(k, "#6b7280"),
-    } for k, v in sector_risk.items()]
+        "sector": key.replace("-", " ").title(),
+        "value": round(value / total_risk * 100),
+        "color": sector_colors.get(key, "#6b7280"),
+    } for key, value in sector_risk.items()]
 
-    # Per-holding risk
     holding_risk = []
     contributor_data = []
     absorber_data = []
@@ -362,16 +408,19 @@ async def run_stress_test(request: StressTestRequest):
     ]
     pnl_distribution = _build_distribution(pnls, total_notional, weights)
 
-    # Store result
     result_id = str(uuid.uuid4())
     cursor.execute("""
         INSERT INTO app.stress_test_results
-            (id, portfolio, var_95, var_99, cvar_95, max_drawdown, sector_decomposition, marginal_contributions)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            (id, portfolio, scenario_id, var_95, var_99, cvar_95, max_drawdown, sector_decomposition, marginal_contributions)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     """, (
         result_id,
-        psycopg2.extras.Json([h.dict() for h in request.holdings]),
-        var_95, var_99, cvar_95, max_drawdown,
+        psycopg2.extras.Json([h.model_dump() for h in request.holdings]),
+        row["id"],
+        var_95,
+        var_99,
+        cvar_95,
+        max_drawdown,
         psycopg2.extras.Json(sector_data),
         psycopg2.extras.Json(holding_risk),
     ))

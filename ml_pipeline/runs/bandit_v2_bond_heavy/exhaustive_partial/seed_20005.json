@@ -1,0 +1,87 @@
+{
+  "seed": 20005,
+  "bandit": {
+    "seed": 20005,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.5467361206970833,
+    "portfolio_loss": 0.4192972512260759,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.7131147540983607,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1722,
+      "date": "2011-08-11",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20005,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.9896989287423693,
+    "portfolio_loss": 0.7938204735350093,
+    "dfast_breach": 0.12509446144104003,
+    "causal_fidelity": 0.5491803278688525,
+    "diversity": 0.8200000000000001,
+    "sampled_state": {
+      "row_index": 1722,
+      "date": "2011-08-11",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20005,
+    "sequence": [
+      {
+        "target_var": "CL=F",
+        "family_name": "single_root",
+        "magnitude": -2.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.329803182076074,
+    "portfolio_loss": 1.0527831450161649,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5737704918032787,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1722,
+      "date": "2011-08-11",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20005,
+    "n_sequences": 62500,
+    "max_reward": 1.329803182076074,
+    "mean_reward_all_seqs": 0.25317634397565814,
+    "std_reward_all_seqs": 0.14840727045313948,
+    "best_sequence": "CL=F -2.00\u03c3 -> TLT -5.00\u03c3",
+    "elapsed_s": 422.78338384628296
+  }
+}

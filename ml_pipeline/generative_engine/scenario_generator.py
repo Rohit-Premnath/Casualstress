@@ -559,6 +559,7 @@ def generate_scenarios(
     var_model, shock_variable, shock_magnitude,
     n_scenarios=N_SCENARIOS_DEFAULT, horizon=SCENARIO_HORIZON,
     causal_adjacency=None, use_multi_shock=True, event_type="market_crash",
+    custom_shock_template=None,
 ):
     """
     Generate scenarios with all 5 improvements:
@@ -581,7 +582,22 @@ def generate_scenarios(
         print(f"  WARNING: {shock_variable} not in variables, using ^GSPC")
         shock_variable = "^GSPC"
 
-    base_template = get_shock_template(event_type, shock_variable, shock_magnitude, variables)
+    if custom_shock_template:
+        base_template = {
+            var: float(sigma)
+            for var, sigma in custom_shock_template.items()
+            if var in variables
+        }
+        if "^VIX" in base_template:
+            base_template["^VIX"] = float(
+                np.clip(base_template["^VIX"], -VIX_TEMPLATE_CAP, VIX_TEMPLATE_CAP)
+            )
+        if not base_template:
+            base_template = get_shock_template(
+                event_type, shock_variable, shock_magnitude, variables
+            )
+    else:
+        base_template = get_shock_template(event_type, shock_variable, shock_magnitude, variables)
     anchor_var = shock_variable if shock_variable in base_template else next(iter(base_template))
     anchor_sigma = base_template.get(anchor_var, shock_magnitude)
 
@@ -744,20 +760,50 @@ def store_scenarios(scenarios, scores, shock_variable, shock_magnitude,
             graph_uuid = None
 
     cursor.execute("""
-        INSERT INTO models.scenarios
-            (id, shock_variable, shock_magnitude, regime_condition,
-             causal_graph_id, scenario_paths, plausibility_scores, n_scenarios)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-    """, (
-        scenario_id,
-        event_type or shock_variable,
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_schema = 'models'
+          AND table_name = 'scenarios'
+    """)
+    available_columns = {row[0] for row in cursor.fetchall()}
+    insert_columns = ["id"]
+    insert_values = [scenario_id]
+
+    if "event_type" in available_columns:
+        insert_columns.append("event_type")
+        insert_values.append(event_type)
+    if "anchor_variable" in available_columns:
+        insert_columns.append("anchor_variable")
+        insert_values.append(shock_variable)
+
+    insert_columns.extend([
+        "shock_variable",
+        "shock_magnitude",
+        "regime_condition",
+        "causal_graph_id",
+        "scenario_paths",
+        "plausibility_scores",
+        "n_scenarios",
+    ])
+    insert_values.extend([
+        shock_variable,
         shock_magnitude,
         regime_condition_label if regime_condition_label is not None else 0,
         graph_uuid,
         Json(paths),
         Json(scores),
         len(scenarios),
-    ))
+    ])
+
+    placeholders = ", ".join(["%s"] * len(insert_columns))
+    cursor.execute(
+        f"""
+        INSERT INTO models.scenarios
+            ({", ".join(insert_columns)})
+        VALUES ({placeholders})
+        """,
+        insert_values,
+    )
 
     conn.commit()
     cursor.close()

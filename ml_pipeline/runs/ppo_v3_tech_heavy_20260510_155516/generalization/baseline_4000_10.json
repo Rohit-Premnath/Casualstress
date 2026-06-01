@@ -1,0 +1,52 @@
+{
+  "run_dir": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\ml_pipeline\\runs\\ppo_v3_tech_heavy_20260510_155516",
+  "model": "final.zip",
+  "mode": "real",
+  "portfolio_profile": "tech_heavy",
+  "seed_start": 4000,
+  "n_seeds": 10,
+  "rl": {
+    "mean_reward": 0.906889169945025,
+    "std_reward": 0.24316617591884543,
+    "mean_portfolio_loss": 0.6158235961745331,
+    "mean_dfast_breach": 0.18629217751023108,
+    "mean_causal_fidelity": 0.6368852459016393,
+    "mean_diversity": 1.0
+  },
+  "random": {
+    "mean_reward": 0.5141436356668032,
+    "std_reward": 0.13614068876494945,
+    "mean_portfolio_loss": 0.2402911766504098,
+    "mean_dfast_breach": 0.11710594427564891,
+    "mean_causal_fidelity": 0.5795081967213114,
+    "mean_diversity": 1.0
+  },
+  "heuristic": {
+    "mean_reward": 1.088395193249503,
+    "std_reward": 0.3184491028488664,
+    "mean_portfolio_loss": 0.7716293852869738,
+    "mean_dfast_breach": 0.28150042971927824,
+    "mean_causal_fidelity": 0.732552693208431,
+    "mean_diversity": 0.9700000000000001
+  },
+  "brute_force": {
+    "mean_reward": 2.0292896787654007,
+    "std_reward": 0.15192170479810244,
+    "mean_portfolio_loss": 1.7423519738473676,
+    "mean_dfast_breach": 1.034786432008565,
+    "mean_causal_fidelity": 0.6524590163934427,
+    "mean_diversity": 0.9120000000000001
+  },
+  "top_rl_action": {
+    "target_var": "^NDX",
+    "family_name": "pandemic",
+    "magnitude": -5.0,
+    "reward": 1.345447860685482
+  },
+  "top_brute_action": {
+    "target_var": "XLK",
+    "family_name": "global_shock",
+    "magnitude": -5.0,
+    "reward": 2.347799423402791
+  }
+}

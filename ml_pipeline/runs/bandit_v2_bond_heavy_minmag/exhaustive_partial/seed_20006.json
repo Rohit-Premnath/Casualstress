@@ -1,0 +1,87 @@
+{
+  "seed": 20006,
+  "bandit": {
+    "seed": 20006,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.5408907477677389,
+    "portfolio_loss": 0.4318630315946607,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5081967213114754,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 1746,
+      "date": "2011-09-14",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20006,
+    "sequence": [
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.0906546862377604,
+    "portfolio_loss": 0.8182559418070201,
+    "dfast_breach": 0.3682130231856593,
+    "causal_fidelity": 0.819672131147541,
+    "diversity": 0.87,
+    "sampled_state": {
+      "row_index": 1746,
+      "date": "2011-09-14",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20006,
+    "sequence": [
+      {
+        "target_var": "CPIAUCSL",
+        "family_name": "single_root",
+        "magnitude": -1.5
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2700082741702154,
+    "portfolio_loss": 0.951714410441925,
+    "dfast_breach": 1.523598838996896,
+    "causal_fidelity": 0.8114754098360656,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1746,
+      "date": "2011-09-14",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20006,
+    "n_sequences": 62500,
+    "max_reward": 1.2700082741702154,
+    "mean_reward_all_seqs": 0.25367609140091674,
+    "std_reward_all_seqs": 0.14912386337249076,
+    "best_sequence": "CPIAUCSL -1.50\u03c3 -> XLK -5.00\u03c3",
+    "elapsed_s": 214.06439352035522
+  }
+}

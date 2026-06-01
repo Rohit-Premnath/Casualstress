@@ -25,6 +25,10 @@ yfinance==0.2.51
 # CORS and validation
 pydantic==2.10.4
 
+# ML inference (adversarial bandit — torch installed via Dockerfile for CPU-only wheel)
+gymnasium==0.29.1
+networkx>=3.2
+
 # Testing
 pytest==8.3.4
 httpx==0.28.1

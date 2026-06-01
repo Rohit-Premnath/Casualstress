@@ -156,7 +156,7 @@ const ScenarioLab = () => {
                 <span className="text-xs font-mono text-foreground">{displayedPaths}</span>
               </div>
               <p className="text-[10px] text-muted-foreground mt-1">
-                Engine generates {candidateCount} candidates internally and soft-weights the final {displayedPaths} scenarios.
+                Engine generates {candidateCount} candidate paths internally and applies soft weights across the stored scenario set.
               </p>
             </div>
           </div>

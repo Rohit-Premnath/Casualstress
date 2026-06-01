@@ -1,0 +1,197 @@
+{
+  "run_name": "ppo_smoke_20260509_032144",
+  "config": {
+    "run_name": "ppo_smoke",
+    "output_dir": "runs",
+    "seed": 0,
+    "mode": "real",
+    "n_envs": 1,
+    "n_magnitude_bins": 21,
+    "regime_at_episode_start": "stressed",
+    "use_subproc": false,
+    "total_timesteps": 512,
+    "learning_rate": 0.0003,
+    "n_steps": 64,
+    "batch_size": 64,
+    "n_epochs": 4,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "tensorboard": true,
+    "eval_freq": 0,
+    "n_eval_episodes": 30,
+    "checkpoint_freq": 0,
+    "run_smoke_test": true,
+    "smoke_test_episodes": 50,
+    "resume_from": null
+  },
+  "training_seconds": 5.2407214641571045,
+  "random_baseline": {
+    "n_episodes": 50,
+    "mean": 0.27413833767175677,
+    "std": 0.10688843514129204,
+    "min": 0.12668532133102417,
+    "max": 0.6503687500953674
+  },
+  "trained_policy": {
+    "n_episodes": 50,
+    "mean": 0.2687276482582092,
+    "std": 0.10004728788312184,
+    "min": 0.132083922624588,
+    "max": 0.6354132890701294,
+    "rejections": 0,
+    "breakdowns": [
+      {
+        "portfolio_loss": 0.020336780642451594,
+        "dfast_breach": 0.1448421080907186,
+        "causal_fidelity": 0.5081967213114754,
+        "diversity": 0.03926791252063466,
+        "total": 0.24914364233331698
+      },
+      {
+        "portfolio_loss": 0.025651440713217573,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.5573770491803278,
+        "diversity": 0.038491936444731256,
+        "total": 0.19671374911178902
+      },
+      {
+        "portfolio_loss": 0.01611728685985209,
+        "dfast_breach": 0.09559510151545206,
+        "causal_fidelity": 0.5,
+        "diversity": 0.038784356718370105,
+        "total": 0.21779327328941514
+      },
+      {
+        "portfolio_loss": 0.03231476528654753,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.5327868852459017,
+        "diversity": 0.04271506119194857,
+        "total": 0.1964223369795129
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.10786283016204834,
+        "causal_fidelity": 0.45901639344262296,
+        "diversity": 0.03805432237222117,
+        "total": 0.1954417653510332
+      },
+      {
+        "portfolio_loss": 0.06905285984540446,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.6218487394957983,
+        "diversity": 0.056249015495829724,
+        "total": 0.2612323832437269
+      },
+      {
+        "portfolio_loss": 0.018604980079786563,
+        "dfast_breach": 0.210092822710673,
+        "causal_fidelity": 0.4918032786885246,
+        "diversity": 0.058902126682586986,
+        "total": 0.2770825877099391
+      },
+      {
+        "portfolio_loss": 0.20577087030081542,
+        "dfast_breach": 0.3413873664831768,
+        "causal_fidelity": 0.8442622950819673,
+        "diversity": 0.05670064819168097,
+        "total": 0.635413306886162
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.5931933487769182,
+        "causal_fidelity": 0.8442622950819673,
+        "diversity": 0.07750509640092562,
+        "total": 0.5576258725531419
+      },
+      {
+        "portfolio_loss": 0.06899388505774877,
+        "dfast_breach": 0.200725156996529,
+        "causal_fidelity": 0.5901639344262295,
+        "diversity": 0.07185687868104473,
+        "total": 0.35359133175198654
+      }
+    ]
+  },
+  "improvement_over_random": -0.005410689413547554,
+  "smoke_test_passed": false,
+  "learning_diagnosis": {
+    "n_rollouts": 8,
+    "n_clean_rollouts": 7,
+    "first_quartile_reward": NaN,
+    "last_quartile_reward": NaN,
+    "reward_trend": NaN,
+    "reward_available": false,
+    "reward_improved": null,
+    "first_quartile_entropy": -8.342756748199463,
+    "last_quartile_entropy": -8.340361833572388,
+    "entropy_trend": 0.0023949146270751953,
+    "entropy_decreased": false,
+    "max_clip_fraction": 0.0,
+    "clipping_active": false,
+    "signals_passed": 0,
+    "signals_total": 2,
+    "verdict": "FAIL"
+  },
+  "training_signal_history": [
+    {
+      "timestep": 64,
+      "ep_rew_mean": NaN,
+      "entropy_loss": NaN,
+      "clip_fraction": NaN,
+      "approx_kl": NaN
+    },
+    {
+      "timestep": 128,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.342756748199463,
+      "clip_fraction": 0.0,
+      "approx_kl": 0.000783274881541729
+    },
+    {
+      "timestep": 192,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.342476606369019,
+      "clip_fraction": 0.0,
+      "approx_kl": 0.00019834190607070923
+    },
+    {
+      "timestep": 256,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.342090606689453,
+      "clip_fraction": 0.0,
+      "approx_kl": 0.00013216305524110794
+    },
+    {
+      "timestep": 320,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.341755390167236,
+      "clip_fraction": 0.0,
+      "approx_kl": 0.00013040564954280853
+    },
+    {
+      "timestep": 384,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.341399908065796,
+      "clip_fraction": 0.0,
+      "approx_kl": 0.0001286882907152176
+    },
+    {
+      "timestep": 448,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.340875148773193,
+      "clip_fraction": 0.0,
+      "approx_kl": 9.82191413640976e-05
+    },
+    {
+      "timestep": 512,
+      "ep_rew_mean": NaN,
+      "entropy_loss": -8.340361833572388,
+      "clip_fraction": 0.0,
+      "approx_kl": 0.00010719802230596542
+    }
+  ]
+}

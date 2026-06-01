@@ -1,0 +1,235 @@
+{
+  "mode": "real",
+  "n_seeds": 2,
+  "top_k": 5,
+  "profiles": {
+    "balanced": {
+      "top_scenarios": [
+        {
+          "target_var": "XLE",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0,
+          "dfast_breach": 1.0325493909784857,
+          "causal_fidelity": 0.5163934426229508,
+          "portfolio_loss_mean": 1.5763167171302557,
+          "portfolio_loss_max": 1.660706884979896,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "TLT",
+          "family_name": "global_shock",
+          "magnitude": -5.0,
+          "dfast_breach": 0.16786706447601318,
+          "causal_fidelity": 0.7295081967213115,
+          "portfolio_loss_mean": 1.3566822770926366,
+          "portfolio_loss_max": 1.5414116960014008,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "rate_shock",
+          "magnitude": 5.0,
+          "dfast_breach": 0.2847861623827425,
+          "causal_fidelity": 0.5901639344262295,
+          "portfolio_loss_mean": 1.3512706220699457,
+          "portfolio_loss_max": 1.4045395945467674,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "XLK",
+          "family_name": "rate_shock",
+          "magnitude": -5.0,
+          "dfast_breach": 0.11407413737531602,
+          "causal_fidelity": 0.6229508196721312,
+          "portfolio_loss_mean": 1.2900442458034211,
+          "portfolio_loss_max": 1.403331971376148,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "^RUT",
+          "family_name": "pandemic",
+          "magnitude": -5.0,
+          "dfast_breach": 0.6303573637396984,
+          "causal_fidelity": 0.7049180327868853,
+          "portfolio_loss_mean": 1.258176794810085,
+          "portfolio_loss_max": 1.324469864003277,
+          "n_seeds": 2
+        }
+      ],
+      "total_scanned": 4000,
+      "mean_portfolio_loss_all": 0.32680698100059813,
+      "max_portfolio_loss_all": 1.7924414061596137
+    },
+    "tech_heavy": {
+      "top_scenarios": [
+        {
+          "target_var": "^NDX",
+          "family_name": "global_shock",
+          "magnitude": -5.0,
+          "dfast_breach": 0.7224950807932753,
+          "causal_fidelity": 0.6557377049180327,
+          "portfolio_loss_mean": 1.4345628266667263,
+          "portfolio_loss_max": 1.5742871688190878,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "^NDX",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0,
+          "dfast_breach": 0.07996942996978759,
+          "causal_fidelity": 0.5655737704918032,
+          "portfolio_loss_mean": 1.4053492584268978,
+          "portfolio_loss_max": 1.471961910814829,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "XLY",
+          "family_name": "rate_shock",
+          "magnitude": -5.0,
+          "dfast_breach": 0.5962205701687134,
+          "causal_fidelity": 0.5819672131147541,
+          "portfolio_loss_mean": 1.320271739024454,
+          "portfolio_loss_max": 1.5154941348941127,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "TLT",
+          "family_name": "market_crash",
+          "magnitude": -5.0,
+          "dfast_breach": 0.30784710651710234,
+          "causal_fidelity": 0.7950819672131147,
+          "portfolio_loss_mean": 1.2921178876361026,
+          "portfolio_loss_max": 1.3723480395360586,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "XLV",
+          "family_name": "market_crash",
+          "magnitude": -5.0,
+          "dfast_breach": 0.540427721510494,
+          "causal_fidelity": 0.7213114754098361,
+          "portfolio_loss_mean": 1.2889989363351215,
+          "portfolio_loss_max": 1.339633441195288,
+          "n_seeds": 2
+        }
+      ],
+      "total_scanned": 4000,
+      "mean_portfolio_loss_all": 0.3068507975805989,
+      "max_portfolio_loss_all": 1.8721298300554312
+    },
+    "bond_heavy": {
+      "top_scenarios": [
+        {
+          "target_var": "^NDX",
+          "family_name": "volatility_shock",
+          "magnitude": -5.0,
+          "dfast_breach": 0.11254692393332542,
+          "causal_fidelity": 0.5573770491803278,
+          "portfolio_loss_mean": 0.6375985712041905,
+          "portfolio_loss_max": 0.8293741133022119,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "LQD",
+          "family_name": "sovereign_crisis",
+          "magnitude": -5.0,
+          "dfast_breach": 0.0,
+          "causal_fidelity": 0.8032786885245902,
+          "portfolio_loss_mean": 0.6219709932359141,
+          "portfolio_loss_max": 0.7368291204586197,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "FEDFUNDS",
+          "family_name": "market_crash",
+          "magnitude": 5.0,
+          "dfast_breach": 0.27648411783519844,
+          "causal_fidelity": 0.5901639344262295,
+          "portfolio_loss_mean": 0.6034730862227504,
+          "portfolio_loss_max": 0.8218543318928324,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "TLT",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0,
+          "dfast_breach": 0.0,
+          "causal_fidelity": 0.819672131147541,
+          "portfolio_loss_mean": 0.601736927264378,
+          "portfolio_loss_max": 0.7953489675101654,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "XLK",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0,
+          "dfast_breach": 1.7421571596870224,
+          "causal_fidelity": 0.819672131147541,
+          "portfolio_loss_mean": 0.5994158710030001,
+          "portfolio_loss_max": 0.6287173892491587,
+          "n_seeds": 2
+        }
+      ],
+      "total_scanned": 4000,
+      "mean_portfolio_loss_all": 0.18825042872476608,
+      "max_portfolio_loss_all": 0.8469926364363284
+    },
+    "credit_heavy": {
+      "top_scenarios": [
+        {
+          "target_var": "CL=F",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0,
+          "dfast_breach": 0.03895847797393799,
+          "causal_fidelity": 0.6065573770491803,
+          "portfolio_loss_mean": 0.8821146531090811,
+          "portfolio_loss_max": 1.105687799315462,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "T10Y2Y",
+          "family_name": "global_shock",
+          "magnitude": 5.0,
+          "dfast_breach": 0.0,
+          "causal_fidelity": 0.6885245901639344,
+          "portfolio_loss_mean": 0.8102590600134433,
+          "portfolio_loss_max": 0.982971607429546,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "BAMLC0A0CM",
+          "family_name": "pandemic_exogenous",
+          "magnitude": 5.0,
+          "dfast_breach": 0.135185440381368,
+          "causal_fidelity": 0.7868852459016393,
+          "portfolio_loss_mean": 0.7969846123979203,
+          "portfolio_loss_max": 1.0273508130689526,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "XLK",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0,
+          "dfast_breach": 0.5303938309351603,
+          "causal_fidelity": 0.6147540983606558,
+          "portfolio_loss_mean": 0.7829932793654771,
+          "portfolio_loss_max": 0.946092980071766,
+          "n_seeds": 2
+        },
+        {
+          "target_var": "T10Y2Y",
+          "family_name": "pandemic_exogenous",
+          "magnitude": 5.0,
+          "dfast_breach": 0.3571791172027588,
+          "causal_fidelity": 0.4672131147540984,
+          "portfolio_loss_mean": 0.7658553457012331,
+          "portfolio_loss_max": 0.8346113010032584,
+          "n_seeds": 2
+        }
+      ],
+      "total_scanned": 4000,
+      "mean_portfolio_loss_all": 0.22417162313866146,
+      "max_portfolio_loss_all": 1.13602558083303
+    }
+  }
+}

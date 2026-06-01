@@ -1,0 +1,402 @@
+# =============================================================================
+# CausalStress Action Space Specification
+# =============================================================================
+# Schema version: 1.0
+# Lock date: 2026-05-05
+# Source of truth: ml_pipeline/generative_engine/scenario_generator.py
+# Verified by:    ml_pipeline/action_space/verify_action_space.py
+#
+# This file specifies the COMPLETE space of valid scenario-generation actions,
+# consolidating values that previously lived as Python constants in
+# scenario_generator.py. It serves two consumers:
+#
+#   1. The existing canonical multi-root scenario generator
+#      (see scenario_generator.py — uses these constants directly).
+#
+#   2. The Phase 2B reinforcement-learning adversarial scenario generator
+#      (see generative_engine_rl/ — will load this file at agent init time
+#      and use it to mask invalid actions).
+#
+# This file is INTENT, not RUNTIME. Editing it does not change runtime behavior
+# until scenario_generator.py is updated to import from here. Until that
+# migration, scenario_generator.py remains the runtime source of truth and
+# this file MUST stay synchronized via the verify_action_space.py script.
+# =============================================================================
+
+schema_version: "1.0"
+lock_date: "2026-05-05"
+
+# -----------------------------------------------------------------------------
+# Section 1 — Variable taxonomy
+# -----------------------------------------------------------------------------
+# CORE_VARIABLES is the production set of variables eligible for VAR fitting
+# and shock targeting. Capped at MAX_VAR_VARIABLES (=25) for numerical
+# stability. The full 56-variable system is used for causal discovery; this
+# subset is used for scenario simulation.
+
+variables:
+  max_var_dim: 25                  # MAX_VAR_VARIABLES in scenario_generator.py
+  vix_template_cap: 3.5            # VIX_TEMPLATE_CAP — sigma cap on ^VIX shocks
+  vix_propagation_scale: 0.65      # VIX_PROPAGATION_SCALE — VIX shock damping
+
+  # The 25 production-tier variables
+  core:
+    - "^GSPC"        # S&P 500
+    - "^VIX"         # CBOE VIX
+    - "^NDX"         # Nasdaq 100
+    - "^RUT"         # Russell 2000
+    - "DGS10"        # 10Y Treasury yield
+    - "DGS2"         # 2Y Treasury yield
+    - "T10Y2Y"       # 10Y-2Y spread
+    - "FEDFUNDS"     # Fed Funds Rate
+    - "CL=F"         # WTI Crude Oil
+    - "GC=F"         # Gold Futures
+    - "BAMLH0A0HYM2" # HY Master Spread
+    - "BAMLH0A3HYC"  # CCC HY Spread
+    - "BAMLC0A0CM"   # IG Master Spread
+    - "XLF"          # Financial Sector ETF
+    - "XLK"          # Tech Sector ETF
+    - "XLE"          # Energy Sector ETF
+    - "XLV"          # Healthcare Sector ETF
+    - "XLY"          # Consumer Discretionary ETF
+    - "XLU"          # Utilities Sector ETF
+    - "TLT"          # 20Y+ Treasury ETF
+    - "LQD"          # IG Bond ETF
+    - "HYG"          # HY Bond ETF
+    - "EEM"          # Emerging Markets ETF
+    - "CPIAUCSL"     # CPI
+    - "UNRATE"       # Unemployment Rate
+
+  # Transform classes — determines how a shock magnitude is interpreted.
+  # log_return: shock is in standardized log-return units
+  # first_diff: shock is in standardized first-difference units
+  log_return:
+    - "^GSPC"
+    - "^NDX"
+    - "^RUT"
+    - "^VIX"
+    - "^VVIX"
+    - "^MOVE"
+    - "XLF"
+    - "XLK"
+    - "XLE"
+    - "XLV"
+    - "XLY"
+    - "XLU"
+    - "XLRE"
+    - "TLT"
+    - "LQD"
+    - "HYG"
+    - "EEM"
+    - "CL=F"
+    - "GC=F"
+    - "DX-Y.NYB"
+    - "EURUSD=X"
+    - "CPIAUCSL"
+    - "PCEPILFE"
+    - "PAYEMS"
+    - "INDPRO"
+    - "M2SL"
+    - "HOUST"
+    - "ICSA"
+    - "RSXFS"
+    - "UMCSENT"
+
+  first_diff:
+    - "BAMLH0A0HYM2"
+    - "BAMLH0A1HYBB"
+    - "BAMLH0A2HYB"
+    - "BAMLH0A3HYC"
+    - "BAMLC0A0CM"
+    - "BAMLC0A4CBBB"
+    - "BAMLC0A3CA"
+    - "BAMLC0A2CAA"
+    - "BAMLC0A1CAAA"
+    - "BAMLEMCBPIOAS"
+    - "DGS10"
+    - "DGS2"
+    - "T10Y2Y"
+    - "FEDFUNDS"
+    - "TEDRATE"
+    - "SOFR"
+    - "SOFR90DAYAVG"
+    - "DCPF3M"
+    - "DCPN3M"
+    - "DRTSCILM"
+    - "DRTSCIS"
+    - "DRTSSP"
+    - "DRSDCILM"
+    - "UNRATE"
+
+# -----------------------------------------------------------------------------
+# Section 2 — Action units and coordinate system
+# -----------------------------------------------------------------------------
+# All shock magnitudes are specified in STANDARDIZED SIGMA UNITS — a value of
+# -3.0 means a shock of -3 standard deviations relative to that variable's
+# pre-event distribution. The scenario generator multiplies by the empirical
+# stddev to recover real transformed-value space, then applies the relevant
+# transform inverse to get back to price/yield space.
+#
+# This unit choice matters for the RL agent:
+#   - Action space is bounded in sigma units (see action_bounds below)
+#   - Different transform classes behave differently under the same sigma value
+#   - VIX gets a hard cap of ±3.5 sigma (vix_template_cap above)
+
+action_units: "standardized_sigma"
+
+# Section 2.1 — VIX runtime clipping (subtle but important)
+# ---------------------------------------------------------
+# Some shock templates specify ^VIX magnitudes ABOVE the vix_template_cap
+# (e.g. volatility_shock has ^VIX: 4.0, pandemic_exogenous has ^VIX: 5.0).
+# At runtime, scenario_generator.py line 445 clips ^VIX to ±vix_template_cap
+# (±3.5) before propagation.
+#
+# This means the EFFECTIVE shock used in scenario generation is min(template,
+# vix_template_cap), not the raw template value. We preserve the un-clipped
+# template values here for traceability, but the RL agent's action mask must
+# enforce the post-clip bound (±3.5), not the pre-clip template value.
+#
+# Invariant 12 in Section 8 enforces that rl_action_space special_caps for
+# ^VIX equals ±vix_template_cap, NOT the raw template max.
+
+# -----------------------------------------------------------------------------
+# Section 3 — Shock-type taxonomy (event families)
+# -----------------------------------------------------------------------------
+# Eight families recognized by the system. Each family has a deterministic
+# multi-root template that the canonical generator uses as initialization.
+# The RL agent in Phase 2B will be conditioned on these as discrete event
+# families (one-hot input feature) and may shock additional variables beyond
+# the template roots, subject to the plausibility constraint in Section 5.
+#
+# The shock_template values below match scenario_generator.py exactly. Any
+# drift will be caught by verify_action_space.py.
+
+shock_families:
+  market_crash:
+    description: "Broad equity sell-off with VIX spike, no specific catalyst"
+    historical_events: []
+    shock_template:
+      "^GSPC": -3.0
+      "^VIX": 3.5
+      "XLF": -3.5
+      "BAMLH0A0HYM2": 3.0
+      "DGS10": -1.5
+
+  credit_crisis:
+    description: "Bank/credit-quality cascade, sector-specific equity stress"
+    historical_events:
+      - "2008 Global Financial Crisis"
+      - "2023 SVB Banking Crisis"
+    shock_template:
+      "^GSPC": -3.0
+      "^VIX": 3.0
+      "XLF": -3.0
+      "BAMLH0A0HYM2": 3.0
+      "DGS10": -1.0
+
+  sovereign_crisis:
+    description: "Sovereign-debt or geopolitical shock, flight to Treasuries"
+    historical_events:
+      - "2010 Flash Crash / Euro Stress"
+      - "2011 US Debt Downgrade / Euro Crisis"
+      - "2016 Brexit Shock"
+    shock_template:
+      "^GSPC": -3.0
+      "^VIX": 3.0
+      "BAMLH0A0HYM2": 2.5
+      "DGS10": -2.0
+      "XLF": -2.5
+
+  global_shock:
+    description: "Cross-border macro disruption with commodity component"
+    historical_events:
+      - "2015 China Devaluation / Oil Crash"
+    shock_template:
+      "^GSPC": -2.0
+      "^VIX": 2.5
+      "CL=F": -3.0
+      "XLF": -1.5
+      "BAMLH0A0HYM2": 1.5
+
+  volatility_shock:
+    description: "Volatility regime break without underlying credit/macro shock"
+    historical_events:
+      - "2018 Volmageddon"
+      - "2020 September Tech Selloff"
+    shock_template:
+      "^GSPC": -2.0
+      "^VIX": 4.0          # clipped to vix_template_cap (3.5) at runtime — see Section 2.1
+      "XLF": -2.0
+      "BAMLH0A0HYM2": 1.0
+
+  rate_shock:
+    description: "Monetary-policy-driven rate move, duration repricing"
+    historical_events:
+      - "2018 Q4 Fed Tightening Selloff"
+      - "2022 Rate Hike Selloff"
+    shock_template:
+      "^GSPC": -1.5
+      "^VIX": 2.0
+      "DGS10": 3.0
+      "TLT": -2.5
+      "XLF": -1.5
+
+  pandemic_exogenous:
+    description: "Out-of-distribution exogenous shock (pandemic-class events)"
+    historical_events:
+      - "2020 COVID Crash"
+    shock_template:
+      "^GSPC": -4.0
+      "^VIX": 5.0
+      "CL=F": -5.0
+      "XLF": -4.0
+      "BAMLH0A0HYM2": 4.0
+      "DGS10": -2.5
+
+  pandemic:
+    description: "Alias for pandemic_exogenous (same template, used by some narrative paths)"
+    historical_events: []
+    shock_template_inherits: "pandemic_exogenous"
+
+# -----------------------------------------------------------------------------
+# Section 4 — Per-variable per-family guardrails
+# -----------------------------------------------------------------------------
+# Hard caps applied AFTER scenario generation in real transformed-value space
+# (post-sigma scaling). These are not RL action constraints — they are
+# post-hoc safety checks on the generated trajectory. The RL agent in Phase 2B
+# can also use them as terminal-condition rewards (negative reward for
+# trajectories that would have been clipped).
+#
+# Guardrail dimensions:
+#   daily_abs_cap: maximum absolute single-day move in transformed space
+#   cum_abs_cap:   maximum absolute cumulative move over horizon
+#   cum_min:       minimum required cumulative move (signed)
+#   cum_max:       maximum allowed cumulative move (signed)
+
+guardrails:
+  market_crash:
+    "^VIX":      { cum_min: 0.50, cum_max: 4.50, daily_abs_cap: 0.18 }
+    "CL=F":      { cum_abs_cap: 0.45, daily_abs_cap: 0.08 }
+    "DGS10":     { cum_abs_cap: 1.20, daily_abs_cap: 0.03 }
+
+  credit_crisis:
+    "^VIX":            { cum_min: 0.40, cum_max: 4.00, daily_abs_cap: 0.16 }
+    "CL=F":            { cum_abs_cap: 0.40, daily_abs_cap: 0.08 }
+    "BAMLH0A0HYM2":    { cum_min: 0.05, daily_abs_cap: 0.20 }
+
+  rate_shock:
+    "^VIX":      { cum_min: 0.20, cum_max: 3.20, daily_abs_cap: 0.12 }
+    "CL=F":      { cum_abs_cap: 0.55, daily_abs_cap: 0.10 }
+    "DGS10":     { cum_min: 0.15, daily_abs_cap: 0.05 }
+
+  global_shock:
+    "^VIX":      { cum_min: 0.15, cum_max: 3.00, daily_abs_cap: 0.12 }
+    "CL=F":      { cum_min: -0.35, daily_abs_cap: 0.12 }
+
+# -----------------------------------------------------------------------------
+# Section 5 — Causal plausibility constraint (RL action mask)
+# -----------------------------------------------------------------------------
+# This is the central novelty for Phase 2B. The RL agent's action space is
+# CONSTRAINED to shock only variables that have outgoing causal edges in the
+# current regime's causal graph. This prevents the agent from finding
+# trivially-adversarial scenarios that exploit physically-impossible
+# transmission patterns (e.g. shocking a downstream variable that has no
+# causal influence on the rest of the system).
+#
+# The constraint is evaluated PER REGIME — calm-regime constraints differ
+# from stress-regime constraints, which differ from crisis-regime constraints.
+# This is what enables the agent to "navigate regime boundaries" in the
+# stretch-goal regime-transition action space.
+#
+# Source of truth for valid shock targets per regime:
+#   regime_causal_graphs.json — variables with outgoing edges in graph[regime]
+#
+# All 25 CORE_VARIABLES have outgoing edges in both calm and stressed regimes,
+# verified 2026-05-05. The constraint becomes binding only for non-core
+# variables and for cross-regime transitions.
+
+causal_plausibility:
+  enabled: true
+  rule: "shock target must have at least one outgoing edge in the current regime's causal graph"
+  source: "regime_causal_graphs.json"
+  fallback_regime: "stressed"   # if regime label is unknown, use stressed graph
+  edge_dedup: "by (source, target)"   # multi-lag edges count once
+
+# -----------------------------------------------------------------------------
+# Section 6 — RL agent action space (Phase 2B)
+# -----------------------------------------------------------------------------
+# This section is FORWARD-LOOKING. It defines the action space the Phase 2B
+# RL agent will operate in. The canonical generator does NOT use this section —
+# it uses the deterministic shock_template per family.
+#
+# Action space type: hybrid discrete-continuous
+#   - target_var_idx:    discrete, indexes into causally-valid variables
+#                        (subset of CORE_VARIABLES filtered by Section 5 constraint)
+#   - shock_magnitude:   continuous, in [-action_bound, +action_bound] sigma units
+#   - regime_transition: discrete (stretch goal), in {0=stay, 1=elevate, 2=destress}
+
+rl_action_space:
+  type: "hybrid_discrete_continuous"
+  target_var:
+    space: "discrete"
+    cardinality: 25                  # equals max_var_dim
+    constrained_by: "causal_plausibility"
+
+  shock_magnitude:
+    space: "continuous"
+    bounds: [-5.0, 5.0]              # sigma units; matches max value in pandemic_exogenous template
+    special_caps:
+      "^VIX": [-3.5, 3.5]            # vix_template_cap
+
+  regime_transition:
+    space: "discrete"
+    cardinality: 3
+    options: ["stay", "elevate", "destress"]
+    enabled_in_phase: "2B-stretch"   # may be scoped out if PPO training unstable
+
+  episode:
+    horizon_days: 60                 # matches existing backtest horizon
+    initial_state_distribution: "uniform_over_pre_event_states"
+
+# -----------------------------------------------------------------------------
+# Section 7 — Reward signal (Phase 2B)
+# -----------------------------------------------------------------------------
+# Defines the RL agent's reward function. The agent is ADVERSARIAL — it
+# searches for worst-case scenarios. Reward components combine portfolio
+# damage, regulatory breach severity, and a causal fidelity bonus.
+
+rl_reward:
+  components:
+    portfolio_loss:
+      weight: 1.0
+      description: "Negative portfolio return at episode end, NORMALIZED by a severe_loss_threshold (default 0.30 = 30% drawdown). After normalization a severe scenario produces reward ~= 1.0 and a catastrophic scenario produces reward > 1.0. This is the PRIMARY adversarial objective — the agent is rewarded most for finding shocks that cause real portfolio damage. See portfolio_model.adversarial_reward_from_loss()."
+
+    dfast_breach_severity:
+      weight: 0.5
+      description: "DFAST 2026 Q1 severely-adverse breach severity. Compares the agent's terminal trajectory values against DFAST 2026 Q1 thresholds for UNRATE, BAMLH0A0HYM2, ^GSPC, and ^VIX. Score is the mean per-variable breach severity, normalized so a scenario at exactly DFAST Q1 stress = 0 (boundary), more severe than DFAST = > 0, in the rough 0-1 range. Wired in via generative_engine_rl.dfast_breach. Disabled in fast mode (returns 0 for sigma-unit trajectories)."
+
+    causal_fidelity_bonus:
+      weight: 0.3
+      description: "Fraction of cross-variable movements that respect the causal-graph direction (range 0-1). Acts as a CONSTRAINT, not the primary objective — penalizes random shocks dressed up as causal scenarios but does not by itself reward catastrophic damage."
+
+    diversity_bonus:
+      weight: 0.1
+      description: "Distance to nearest historical crisis trajectory. Encourages discovery of novel scenarios. STUB returns 0 in current scaffolding."
+
+  scoping_note: "Component weights are tunable. v0.4 (May 2026) added portfolio_loss normalization so all components are roughly commensurate at typical adversarial-scenario scale. Prior scaffolding had portfolio_loss values ~0.01 dwarfed by causal_fidelity ~0.7, leading to small-magnitude convergence in early experiments."
+
+# -----------------------------------------------------------------------------
+# Section 8 — Schema invariants (must not drift)
+# -----------------------------------------------------------------------------
+# These properties MUST hold at all times. verify_action_space.py asserts them
+# on every CI run.
+
+invariants:
+  - "len(variables.core) == variables.max_var_dim"
+  - "all shock_template variables are in variables.core"
+  - "all guardrail variables are in variables.core"
+  - "shock_families.keys() match scenario_generator.EVENT_SHOCK_TEMPLATES.keys() up to 'pandemic' alias"
+  - "guardrails.keys() are a subset of shock_families.keys()"
+  - "vix_template_cap matches scenario_generator.VIX_TEMPLATE_CAP"
+  - "no shock_template magnitude exceeds rl_action_space.shock_magnitude.bounds"
+  - "every shock_template root variable has outgoing edges in stressed regime"

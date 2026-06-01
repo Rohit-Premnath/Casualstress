@@ -1,0 +1,87 @@
+{
+  "seed": 20004,
+  "bandit": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.7592687257621908,
+    "portfolio_loss": 0.5693348773385819,
+    "dfast_breach": 0.20418109060749717,
+    "causal_fidelity": 0.7786885245901639,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "^NDX",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6716634240910765,
+    "portfolio_loss": 0.5431072637436295,
+    "dfast_breach": 0.12195615020805872,
+    "causal_fidelity": 0.45901639344262296,
+    "diversity": 0.99,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -1.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      }
+    ],
+    "reward": 1.2188087734337558,
+    "portfolio_loss": 0.908636143620487,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 0.9299999999999999,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20004,
+    "n_sequences": 62500,
+    "max_reward": 1.2188087734337558,
+    "mean_reward_all_seqs": 0.2544620806130571,
+    "std_reward_all_seqs": 0.14897986523912418,
+    "best_sequence": "LQD -1.00\u03c3 -> TLT -4.00\u03c3",
+    "elapsed_s": 233.28474736213684
+  }
+}

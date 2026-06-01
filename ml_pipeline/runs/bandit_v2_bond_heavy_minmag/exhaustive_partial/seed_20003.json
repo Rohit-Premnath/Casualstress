@@ -1,0 +1,87 @@
+{
+  "seed": 20003,
+  "bandit": {
+    "seed": 20003,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.7316012623377527,
+    "portfolio_loss": 0.5663410787132349,
+    "dfast_breach": 0.041963744163513186,
+    "causal_fidelity": 0.639344262295082,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 2794,
+      "date": "2015-09-21",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20003,
+    "sequence": [
+      {
+        "target_var": "UNRATE",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      }
+    ],
+    "reward": 0.6450639115070798,
+    "portfolio_loss": 0.4976652535436006,
+    "dfast_breach": 0.6762385397098318,
+    "causal_fidelity": 0.6639344262295082,
+    "diversity": 0.97,
+    "sampled_state": {
+      "row_index": 2794,
+      "date": "2015-09-21",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20003,
+    "sequence": [
+      {
+        "target_var": "XLE",
+        "family_name": "single_root",
+        "magnitude": -2.5
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.199252685801032,
+    "portfolio_loss": 0.919013754021469,
+    "dfast_breach": 0.9092867505219924,
+    "causal_fidelity": 0.7131147540983607,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2794,
+      "date": "2015-09-21",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20003,
+    "n_sequences": 62500,
+    "max_reward": 1.199252685801032,
+    "mean_reward_all_seqs": 0.2526732606287296,
+    "std_reward_all_seqs": 0.1496833170268831,
+    "best_sequence": "XLE -2.50\u03c3 -> LQD -5.00\u03c3",
+    "elapsed_s": 206.50256371498108
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "seed": 20011,
+  "bandit": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.6416305341369671,
+    "portfolio_loss": 0.49294033479036514,
+    "dfast_breach": 0.5354935646057128,
+    "causal_fidelity": 0.6721311475409836,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "GC=F",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "^RUT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8844508122866725,
+    "portfolio_loss": 0.7064766135829222,
+    "dfast_breach": 0.06965007384618123,
+    "causal_fidelity": 0.5163934426229508,
+    "diversity": 0.97,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "DGS10",
+        "family_name": "single_root",
+        "magnitude": 1.0
+      },
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2625722115428533,
+    "portfolio_loss": 0.9730376736126397,
+    "dfast_breach": 1.2619480860772294,
+    "causal_fidelity": 0.6885245901639344,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20011,
+    "n_sequences": 62500,
+    "max_reward": 1.2625722115428533,
+    "mean_reward_all_seqs": 0.2528364846284768,
+    "std_reward_all_seqs": 0.14833005258244783,
+    "best_sequence": "DGS10 +1.00\u03c3 -> XLU -5.00\u03c3",
+    "elapsed_s": 198.20656561851501
+  }
+}

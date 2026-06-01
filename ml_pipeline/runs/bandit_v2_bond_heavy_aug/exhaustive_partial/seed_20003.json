@@ -1,0 +1,87 @@
+{
+  "seed": 20003,
+  "bandit": {
+    "seed": 20003,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.49823474795585554,
+    "portfolio_loss": 0.3715896763089276,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8360655737704918,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 2794,
+      "date": "2015-09-21",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20003,
+    "sequence": [
+      {
+        "target_var": "XLE",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8540539190924293,
+    "portfolio_loss": 0.6673321855899752,
+    "dfast_breach": 0.3171478907267253,
+    "causal_fidelity": 0.639344262295082,
+    "diversity": 0.88,
+    "sampled_state": {
+      "row_index": 2794,
+      "date": "2015-09-21",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20003,
+    "sequence": [
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "XLE",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2158612028607048,
+    "portfolio_loss": 0.9720388117390727,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5327868852459017,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2794,
+      "date": "2015-09-21",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20003,
+    "n_sequences": 62500,
+    "max_reward": 1.2158612028607048,
+    "mean_reward_all_seqs": 0.25325506108769885,
+    "std_reward_all_seqs": 0.1481940894295293,
+    "best_sequence": "LQD -4.50\u03c3 -> XLE -5.00\u03c3",
+    "elapsed_s": 308.37793016433716
+  }
+}

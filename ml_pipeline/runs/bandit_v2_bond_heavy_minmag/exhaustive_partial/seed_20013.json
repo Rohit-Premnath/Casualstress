@@ -1,0 +1,87 @@
+{
+  "seed": 20013,
+  "bandit": {
+    "seed": 20013,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8593220436449661,
+    "portfolio_loss": 0.6768062577449055,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5655737704918032,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 2772,
+      "date": "2015-08-20",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20013,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.0
+      },
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8469951631738663,
+    "portfolio_loss": 0.6399146018529334,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.7786885245901639,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 2772,
+      "date": "2015-08-20",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20013,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2655301477626681,
+    "portfolio_loss": 1.001899248725166,
+    "dfast_breach": 1.5926696451608224,
+    "causal_fidelity": 0.5737704918032787,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2772,
+      "date": "2015-08-20",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20013,
+    "n_sequences": 62500,
+    "max_reward": 1.2655301477626681,
+    "mean_reward_all_seqs": 0.25362040018781484,
+    "std_reward_all_seqs": 0.14829787960274426,
+    "best_sequence": "TLT -4.50\u03c3 -> XLU -5.00\u03c3",
+    "elapsed_s": 199.41927289962769
+  }
+}

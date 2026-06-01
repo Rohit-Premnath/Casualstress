@@ -1,0 +1,630 @@
+{
+  "mode": "real",
+  "portfolio_profile": "credit_heavy",
+  "actions_per_episode": 1,
+  "use_family_templates": true,
+  "reward_mode": "portfolio_adversarial",
+  "seed_start": 20000,
+  "n_seeds": 12,
+  "beam_width": 6,
+  "top_k": 3,
+  "min_portfolio_loss": 0.1,
+  "use_crisis_seeds": true,
+  "n_crisis_seeds_used": 12,
+  "kept_sequences": 36,
+  "filtered_out_sequences": 0,
+  "sequence_records": [
+    {
+      "seed": 20000,
+      "reward": 1.1967708666787809,
+      "portfolio_loss": 0.889424453017446,
+      "dfast_breach": 0.2556931972503662,
+      "causal_fidelity": 0.8360655737704918,
+      "diversity": 0.9473684210526316,
+      "decoded_actions": [
+        {
+          "target_var": "HYG",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Lehman collapse",
+      "crisis_date": "2008-09-15"
+    },
+    {
+      "seed": 20000,
+      "reward": 0.8389483359053911,
+      "portfolio_loss": 0.6695905409936487,
+      "dfast_breach": 0.5597051089976023,
+      "causal_fidelity": 0.5573770491803278,
+      "diversity": 0.8571428571428572,
+      "decoded_actions": [
+        {
+          "target_var": "XLU",
+          "family_name": "pandemic",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Lehman collapse",
+      "crisis_date": "2008-09-15"
+    },
+    {
+      "seed": 20000,
+      "reward": 0.7748634514510064,
+      "portfolio_loss": 0.5962449527701212,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7377049180327869,
+      "diversity": 0.782608695652174,
+      "decoded_actions": [
+        {
+          "target_var": "HYG",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Lehman collapse",
+      "crisis_date": "2008-09-15"
+    },
+    {
+      "seed": 20001,
+      "reward": 0.9990807083156646,
+      "portfolio_loss": 0.7603733400780479,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7131147540983607,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "GFC first panic",
+      "crisis_date": "2008-10-10"
+    },
+    {
+      "seed": 20001,
+      "reward": 0.931751689853931,
+      "portfolio_loss": 0.7567469166847068,
+      "dfast_breach": 0.14234618345896402,
+      "causal_fidelity": 0.47540983606557374,
+      "diversity": 0.8863636363636364,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "GFC first panic",
+      "crisis_date": "2008-10-10"
+    },
+    {
+      "seed": 20001,
+      "reward": 0.912905289420995,
+      "portfolio_loss": 0.6799247259242884,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.8360655737704918,
+      "diversity": 0.9183673469387755,
+      "decoded_actions": [
+        {
+          "target_var": "LQD",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "GFC first panic",
+      "crisis_date": "2008-10-10"
+    },
+    {
+      "seed": 20002,
+      "reward": 1.331871411767377,
+      "portfolio_loss": 1.0079920113872207,
+      "dfast_breach": 1.1077902314704837,
+      "causal_fidelity": 0.7377049180327869,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "global_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "GFC market bottom",
+      "crisis_date": "2009-03-09"
+    },
+    {
+      "seed": 20002,
+      "reward": 1.1529602668570043,
+      "portfolio_loss": 0.8527167928299897,
+      "dfast_breach": 0.019142852054835985,
+      "causal_fidelity": 0.8442622950819673,
+      "diversity": 0.9882352941176471,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "GFC market bottom",
+      "crisis_date": "2009-03-09"
+    },
+    {
+      "seed": 20002,
+      "reward": 1.0998713066520636,
+      "portfolio_loss": 0.8926896881169163,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.45901639344262296,
+      "diversity": 0.9438202247191011,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "GFC market bottom",
+      "crisis_date": "2009-03-09"
+    },
+    {
+      "seed": 20003,
+      "reward": 1.1658827771906952,
+      "portfolio_loss": 0.9111960206102806,
+      "dfast_breach": 0.3672130176908696,
+      "causal_fidelity": 0.5983606557377049,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "US debt downgrade",
+      "crisis_date": "2011-08-05"
+    },
+    {
+      "seed": 20003,
+      "reward": 1.0677204958846502,
+      "portfolio_loss": 0.8166275922684646,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7049180327868853,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "US debt downgrade",
+      "crisis_date": "2011-08-05"
+    },
+    {
+      "seed": 20003,
+      "reward": 1.04413634326953,
+      "portfolio_loss": 0.8016048748922842,
+      "dfast_breach": 0.29329851685295844,
+      "causal_fidelity": 0.6885245901639344,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "FEDFUNDS",
+          "family_name": "sovereign_crisis",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "US debt downgrade",
+      "crisis_date": "2011-08-05"
+    },
+    {
+      "seed": 20004,
+      "reward": 1.3019831916174354,
+      "portfolio_loss": 1.0334544526826748,
+      "dfast_breach": 1.1034924253186038,
+      "causal_fidelity": 0.5327868852459017,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "HYG",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "China devaluation",
+      "crisis_date": "2015-08-24"
+    },
+    {
+      "seed": 20004,
+      "reward": 1.210640281681201,
+      "portfolio_loss": 0.9101548846122489,
+      "dfast_breach": 0.7824487535588074,
+      "causal_fidelity": 0.7704918032786885,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLC0A0CM",
+          "family_name": "pandemic",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "China devaluation",
+      "crisis_date": "2015-08-24"
+    },
+    {
+      "seed": 20004,
+      "reward": 0.9299774408836091,
+      "portfolio_loss": 0.6922768185234017,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.8278688524590164,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "GC=F",
+          "family_name": "global_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "China devaluation",
+      "crisis_date": "2015-08-24"
+    },
+    {
+      "seed": 20005,
+      "reward": 0.9439385446276076,
+      "portfolio_loss": 0.7608585219255802,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.47540983606557374,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "TLT",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Q4 2018 selloff",
+      "crisis_date": "2018-12-24"
+    },
+    {
+      "seed": 20005,
+      "reward": 0.9232217592156265,
+      "portfolio_loss": 0.7414947638203189,
+      "dfast_breach": 0.4978024800618489,
+      "causal_fidelity": 0.48360655737704916,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "TLT",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Q4 2018 selloff",
+      "crisis_date": "2018-12-24"
+    },
+    {
+      "seed": 20005,
+      "reward": 0.9018000755700273,
+      "portfolio_loss": 0.7260391015847488,
+      "dfast_breach": 0.4533738056818644,
+      "causal_fidelity": 0.48360655737704916,
+      "diversity": 0.97,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLC0A0CM",
+          "family_name": "global_shock",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "Q4 2018 selloff",
+      "crisis_date": "2018-12-24"
+    },
+    {
+      "seed": 20006,
+      "reward": 1.1799703375713686,
+      "portfolio_loss": 0.9065834195081992,
+      "dfast_breach": 0.08580290625867758,
+      "causal_fidelity": 0.6885245901639344,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID first panic",
+      "crisis_date": "2020-02-24"
+    },
+    {
+      "seed": 20006,
+      "reward": 1.1717803799069275,
+      "portfolio_loss": 0.9013013287055529,
+      "dfast_breach": 0.6088812933681989,
+      "causal_fidelity": 0.680327868852459,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "rate_shock",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "COVID first panic",
+      "crisis_date": "2020-02-24"
+    },
+    {
+      "seed": 20006,
+      "reward": 1.1499582911093165,
+      "portfolio_loss": 0.9068133791518215,
+      "dfast_breach": 0.2152416622250644,
+      "causal_fidelity": 0.5737704918032787,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID first panic",
+      "crisis_date": "2020-02-24"
+    },
+    {
+      "seed": 20007,
+      "reward": 1.4357137835516607,
+      "portfolio_loss": 1.114386756373682,
+      "dfast_breach": 0.6439847216197921,
+      "causal_fidelity": 0.6311475409836066,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "sovereign_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID crash",
+      "crisis_date": "2020-03-16"
+    },
+    {
+      "seed": 20007,
+      "reward": 1.0559927096043378,
+      "portfolio_loss": 0.8518660524202839,
+      "dfast_breach": 0.38691446781158445,
+      "causal_fidelity": 0.47540983606557374,
+      "diversity": 0.97,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "sovereign_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID crash",
+      "crisis_date": "2020-03-16"
+    },
+    {
+      "seed": 20007,
+      "reward": 0.906981293389288,
+      "portfolio_loss": 0.7037391263562152,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.639344262295082,
+      "diversity": 0.97,
+      "decoded_actions": [
+        {
+          "target_var": "GC=F",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID crash",
+      "crisis_date": "2020-03-16"
+    },
+    {
+      "seed": 20008,
+      "reward": 1.3579130474558152,
+      "portfolio_loss": 1.0725594775900857,
+      "dfast_breach": 0.7706895557137963,
+      "causal_fidelity": 0.5901639344262295,
+      "diversity": 0.89,
+      "decoded_actions": [
+        {
+          "target_var": "LQD",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID second wave fear",
+      "crisis_date": "2020-09-03"
+    },
+    {
+      "seed": 20008,
+      "reward": 1.1004838297029866,
+      "portfolio_loss": 0.8860578338993451,
+      "dfast_breach": 0.31642759350193433,
+      "causal_fidelity": 0.5,
+      "diversity": 0.92,
+      "decoded_actions": [
+        {
+          "target_var": "LQD",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID second wave fear",
+      "crisis_date": "2020-09-03"
+    },
+    {
+      "seed": 20008,
+      "reward": 1.098768608448319,
+      "portfolio_loss": 0.8489535796750786,
+      "dfast_breach": 0.1028162211698142,
+      "causal_fidelity": 0.6475409836065574,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "HYG",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "COVID second wave fear",
+      "crisis_date": "2020-09-03"
+    },
+    {
+      "seed": 20009,
+      "reward": 1.1575451712073912,
+      "portfolio_loss": 0.8944234016549607,
+      "dfast_breach": 0.18291700192841406,
+      "causal_fidelity": 0.6639344262295082,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "LQD",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Rate fear onset",
+      "crisis_date": "2022-01-19"
+    },
+    {
+      "seed": 20009,
+      "reward": 1.0797150036507719,
+      "portfolio_loss": 0.8066456242828792,
+      "dfast_breach": 0.4254301508255095,
+      "causal_fidelity": 0.7950819672131147,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "EEM",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Rate fear onset",
+      "crisis_date": "2022-01-19"
+    },
+    {
+      "seed": 20009,
+      "reward": 1.013943313667181,
+      "portfolio_loss": 0.7420046803313263,
+      "dfast_breach": 0.2989342038266493,
+      "causal_fidelity": 0.9016393442622951,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "EEM",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Rate fear onset",
+      "crisis_date": "2022-01-19"
+    },
+    {
+      "seed": 20010,
+      "reward": 1.3269318565112362,
+      "portfolio_loss": 1.0533260881929263,
+      "dfast_breach": 1.2892147994155136,
+      "causal_fidelity": 0.5491803278688525,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "XLV",
+          "family_name": "pandemic",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Rate shock peak",
+      "crisis_date": "2022-06-13"
+    },
+    {
+      "seed": 20010,
+      "reward": 1.1908532892379253,
+      "portfolio_loss": 0.8992801337432649,
+      "dfast_breach": 0.754849964714266,
+      "causal_fidelity": 0.7540983606557377,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A3HYC",
+          "family_name": "rate_shock",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "Rate shock peak",
+      "crisis_date": "2022-06-13"
+    },
+    {
+      "seed": 20010,
+      "reward": 1.1485417595062506,
+      "portfolio_loss": 0.8512264881039205,
+      "dfast_breach": 1.1019568585058233,
+      "causal_fidelity": 0.8442622950819673,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "volatility_shock",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "Rate shock peak",
+      "crisis_date": "2022-06-13"
+    },
+    {
+      "seed": 20011,
+      "reward": 1.1273658496417729,
+      "portfolio_loss": 0.8774058642495107,
+      "dfast_breach": 0.7772117928388363,
+      "causal_fidelity": 0.6229508196721312,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "sovereign_crisis",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "UK gilt crisis",
+      "crisis_date": "2022-09-27"
+    },
+    {
+      "seed": 20011,
+      "reward": 0.9401499420355627,
+      "portfolio_loss": 0.6985705154293115,
+      "dfast_breach": 0.45992770495351465,
+      "causal_fidelity": 0.8360655737704918,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "sovereign_crisis",
+          "magnitude": 5.0
+        }
+      ],
+      "crisis_event": "UK gilt crisis",
+      "crisis_date": "2022-09-27"
+    },
+    {
+      "seed": 20011,
+      "reward": 0.8767994641802117,
+      "portfolio_loss": 0.656786690018824,
+      "dfast_breach": 0.00990467071533203,
+      "causal_fidelity": 0.8032786885245902,
+      "diversity": 0.94,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "sovereign_crisis",
+          "magnitude": -5.0
+        }
+      ],
+      "crisis_event": "UK gilt crisis",
+      "crisis_date": "2022-09-27"
+    }
+  ]
+}

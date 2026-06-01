@@ -1,0 +1,166 @@
+{
+  "model_path": "runs\\ppo_fixed_v1_20260510_021405\\final.zip",
+  "random_baseline": {
+    "n_episodes": 50,
+    "mean": 0.45106374979019165,
+    "std": 0.18903002646288283,
+    "min": 0.17764493823051453,
+    "max": 0.967762291431427
+  },
+  "trained_policy": {
+    "n_episodes": 50,
+    "mean": 0.8860819160938262,
+    "std": 0.3610900220852823,
+    "min": 0.2770158350467682,
+    "max": 2.0367112159729004,
+    "rejections": 0
+  },
+  "improvement_over_random": 0.4350181663036346,
+  "beat_random_floor": true,
+  "policy_converged": false,
+  "smoke_test_passed": true,
+  "random_breakdowns_sample": [
+    {
+      "portfolio_loss": 0.40030138898087786,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.5409836065573771,
+      "diversity": 0.03872655835921601,
+      "total": 0.5664691267840125
+    },
+    {
+      "portfolio_loss": 0.37508856825621034,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7131147540983607,
+      "diversity": 0.07228973379003212,
+      "total": 0.5962519678647218
+    },
+    {
+      "portfolio_loss": 0.6695973596912235,
+      "dfast_breach": 0.29961000283559164,
+      "causal_fidelity": 0.5163934426229508,
+      "diversity": 0.053782926266808806,
+      "total": 0.8298936851047896
+    },
+    {
+      "portfolio_loss": 0.3221219689559572,
+      "dfast_breach": 0.016214394569396974,
+      "causal_fidelity": 0.5573770491803278,
+      "diversity": 0.03603774504688595,
+      "total": 0.4929388582147441
+    },
+    {
+      "portfolio_loss": 0.287103068138727,
+      "dfast_breach": 0.08012840747833253,
+      "causal_fidelity": 0.47540983606557374,
+      "diversity": 0.055729993337369055,
+      "total": 0.435299018292136
+    },
+    {
+      "portfolio_loss": 0.0738449337168601,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7622950819672131,
+      "diversity": 0.0398477545144017,
+      "total": 0.3065182337584642
+    },
+    {
+      "portfolio_loss": 0.19343375133084945,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7213114754098361,
+      "diversity": 0.03631941620460699,
+      "total": 0.413459135574261
+    },
+    {
+      "portfolio_loss": 0.10922453248824872,
+      "dfast_breach": 0.05818883430409932,
+      "causal_fidelity": 0.6721311475409836,
+      "diversity": 0.03786152384307451,
+      "total": 0.31465002913485124
+    },
+    {
+      "portfolio_loss": 0.11620164434000525,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.5327868852459017,
+      "diversity": 0.03847417806767872,
+      "total": 0.27988512772054364
+    },
+    {
+      "portfolio_loss": 0.12198150025625325,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.6557377049180327,
+      "diversity": 0.03836777027834448,
+      "total": 0.3225395887594975
+    }
+  ],
+  "trained_breakdowns_sample": [
+    {
+      "portfolio_loss": 1.3149484305776846,
+      "dfast_breach": 0.01013332943738325,
+      "causal_fidelity": 0.7868852459016393,
+      "diversity": 0.07983642448750083,
+      "total": 1.5589976467969264
+    },
+    {
+      "portfolio_loss": 0.8055385688329125,
+      "dfast_breach": 0.0177152156829834,
+      "causal_fidelity": 0.48360655737704916,
+      "diversity": 0.07229128856092826,
+      "total": 0.9578496649021201
+    },
+    {
+      "portfolio_loss": 0.6707195873212631,
+      "dfast_breach": 1.1192614237467449,
+      "causal_fidelity": 0.8524590163934426,
+      "diversity": 0.0701734589435995,
+      "total": 0.9334746381336559
+    },
+    {
+      "portfolio_loss": 0.6950936607326775,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.47540983606557374,
+      "diversity": 0.07692639280307079,
+      "total": 0.8454092508326567
+    },
+    {
+      "portfolio_loss": 0.2145300013269759,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.5245901639344263,
+      "diversity": 0.06972692748307596,
+      "total": 0.37887974325561136
+    },
+    {
+      "portfolio_loss": 0.24359615624461733,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7377049180327869,
+      "diversity": 0.07240428023147372,
+      "total": 0.47214805967760076
+    },
+    {
+      "portfolio_loss": 1.0050361444710263,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.680327868852459,
+      "diversity": 0.07265723072814056,
+      "total": 1.216400228199578
+    },
+    {
+      "portfolio_loss": 0.4960129528331679,
+      "dfast_breach": 0.09778312842051189,
+      "causal_fidelity": 0.8114754098360656,
+      "diversity": 0.06641579570168088,
+      "total": 0.7460971553541557
+    },
+    {
+      "portfolio_loss": 0.4359144973332488,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.5409836065573771,
+      "diversity": 0.06358963281656282,
+      "total": 0.6045685425821182
+    },
+    {
+      "portfolio_loss": 0.2835077095496739,
+      "dfast_breach": 0.0,
+      "causal_fidelity": 0.7131147540983607,
+      "diversity": 0.07018694627300737,
+      "total": 0.5044608304064828
+    }
+  ]
+}

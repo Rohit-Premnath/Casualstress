@@ -1,0 +1,87 @@
+{
+  "seed": 20011,
+  "bandit": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.7186022272444994,
+    "portfolio_loss": 0.5359424851682902,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8360655737704918,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "XLY",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.9823531143576052,
+    "portfolio_loss": 0.7719320345212283,
+    "dfast_breach": 0.4790459417172147,
+    "causal_fidelity": 0.5819672131147541,
+    "diversity": 0.98,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20011,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -3.0
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.2090579521429703,
+    "portfolio_loss": 0.9027127584817957,
+    "dfast_breach": 1.0891729990641277,
+    "causal_fidelity": 0.8278688524590164,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 2819,
+      "date": "2015-10-26",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20011,
+    "n_sequences": 62500,
+    "max_reward": 1.2090579521429703,
+    "mean_reward_all_seqs": 0.25417027750474724,
+    "std_reward_all_seqs": 0.1492498511735178,
+    "best_sequence": "TLT -3.00\u03c3 -> XLK -5.00\u03c3",
+    "elapsed_s": 340.836119890213
+  }
+}

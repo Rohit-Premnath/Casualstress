@@ -313,7 +313,9 @@ const Index = () => {
                       </div>
                     </td>
                     <td className="py-2.5 text-right">
-                      <span className="text-[10px] font-mono text-emerald-400">{link.confidence}%</span>
+                      <span className={`text-[10px] font-mono ${link.confidence === null ? "text-muted-foreground" : "text-emerald-400"}`}>
+                        {link.confidence === null ? "N/A" : `${link.confidence}%`}
+                      </span>
                     </td>
                   </tr>
                 ))}

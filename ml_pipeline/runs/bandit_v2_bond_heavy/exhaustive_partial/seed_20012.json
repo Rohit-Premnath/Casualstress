@@ -1,0 +1,87 @@
+{
+  "seed": 20012,
+  "bandit": {
+    "seed": 20012,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.47854933006755235,
+    "portfolio_loss": 0.37842246738554175,
+    "dfast_breach": 0.4915679295857747,
+    "causal_fidelity": 0.5819672131147541,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 3025,
+      "date": "2016-08-09",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20012,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -3.0
+      },
+      {
+        "target_var": "DGS2",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 0.6739069684066015,
+    "portfolio_loss": 0.5397910220179984,
+    "dfast_breach": 0.6881560216325088,
+    "causal_fidelity": 0.5081967213114754,
+    "diversity": 0.96,
+    "sampled_state": {
+      "row_index": 3025,
+      "date": "2016-08-09",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20012,
+    "sequence": [
+      {
+        "target_var": "XLF",
+        "family_name": "single_root",
+        "magnitude": -1.0
+      },
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 1.256700536979831,
+    "portfolio_loss": 0.9348511939582407,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.8442622950819673,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3025,
+      "date": "2016-08-09",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20012,
+    "n_sequences": 62500,
+    "max_reward": 1.256700536979831,
+    "mean_reward_all_seqs": 0.2533777540851895,
+    "std_reward_all_seqs": 0.14856358921561336,
+    "best_sequence": "XLF -1.00\u03c3 -> BAMLC0A0CM +5.00\u03c3",
+    "elapsed_s": 343.0704128742218
+  }
+}

@@ -1,5 +1,6 @@
--- Enable TimescaleDB extension
+-- Enable required extensions
 CREATE EXTENSION IF NOT EXISTS timescaledb;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- ============================================
 -- SCHEMA: raw (staging area for ingested data)
@@ -93,14 +94,22 @@ CREATE INDEX IF NOT EXISTS idx_regimes_date
 CREATE TABLE IF NOT EXISTS models.scenarios (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at TIMESTAMP DEFAULT NOW(),
+    event_type VARCHAR(50),
+    anchor_variable VARCHAR(50),
     shock_variable VARCHAR(50),
     shock_magnitude DOUBLE PRECISION,
-    regime_condition INTEGER,
+    regime_condition VARCHAR(50),
     causal_graph_id UUID REFERENCES models.causal_graphs(id),
     scenario_paths JSONB,
     plausibility_scores JSONB,
     n_scenarios INTEGER
 );
+
+CREATE INDEX IF NOT EXISTS idx_scenarios_created_at
+    ON models.scenarios (created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_scenarios_event_type
+    ON models.scenarios (event_type, created_at DESC);
 
 -- ============================================
 -- SCHEMA: app (user-facing data)
@@ -117,6 +126,52 @@ CREATE TABLE IF NOT EXISTS app.stress_test_results (
     max_drawdown DOUBLE PRECISION,
     sector_decomposition JSONB,
     marginal_contributions JSONB,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS app.scheduler_log (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    job_name VARCHAR(100) NOT NULL,
+    status VARCHAR(30) NOT NULL,
+    details JSONB,
+    executed_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS app.regime_alerts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    date DATE NOT NULL,
+    old_regime VARCHAR(30),
+    new_regime VARCHAR(30) NOT NULL,
+    confidence DOUBLE PRECISION,
+    notified BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- ============================================
+-- SCHEMA: regulatory (regulatory scenario comparison)
+-- ============================================
+CREATE SCHEMA IF NOT EXISTS regulatory;
+
+CREATE TABLE IF NOT EXISTS regulatory.scenarios (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    source VARCHAR(255) NOT NULL,
+    year INTEGER NOT NULL,
+    scenario_type VARCHAR(50),
+    description TEXT,
+    variables JSONB NOT NULL,
+    horizon_quarters INTEGER,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS regulatory.causal_difference_reports (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    regulatory_scenario_id UUID REFERENCES regulatory.scenarios(id),
+    portfolio JSONB,
+    fed_projections JSONB NOT NULL,
+    causal_projections JSONB NOT NULL,
+    divergences JSONB NOT NULL,
+    causal_explanations JSONB NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 

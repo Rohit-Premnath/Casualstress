@@ -1,0 +1,121 @@
+{
+  "run_name": "ppo_smoke_20260507_035228",
+  "config": {
+    "run_name": "ppo_smoke",
+    "output_dir": "runs",
+    "seed": 0,
+    "mode": "real",
+    "n_envs": 1,
+    "n_magnitude_bins": 21,
+    "regime_at_episode_start": "stressed",
+    "use_subproc": false,
+    "total_timesteps": 8192,
+    "learning_rate": 0.0003,
+    "n_steps": 256,
+    "batch_size": 64,
+    "n_epochs": 4,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "tensorboard": true,
+    "eval_freq": 0,
+    "n_eval_episodes": 30,
+    "checkpoint_freq": 0,
+    "run_smoke_test": true,
+    "smoke_test_episodes": 50,
+    "resume_from": null
+  },
+  "training_seconds": 154.4755859375,
+  "random_baseline": {
+    "n_episodes": 50,
+    "mean": 0.20023488730192185,
+    "std": 0.036976692663628186,
+    "min": 0.12295082211494446,
+    "max": 0.31367310881614685
+  },
+  "trained_policy": {
+    "n_episodes": 50,
+    "mean": 0.21744730561971665,
+    "std": 0.03033133741846043,
+    "min": 0.1623580902814865,
+    "max": 0.2689523696899414,
+    "rejections": 0,
+    "breakdowns": [
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.819672131147541,
+        "diversity": 0.0,
+        "total": 0.2459016393442623
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.8032786885245902,
+        "diversity": 0.0,
+        "total": 0.24098360655737705
+      },
+      {
+        "portfolio_loss": 0.08452613327198558,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.6147540983606558,
+        "diversity": 0.0,
+        "total": 0.2689523627801823
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.6639344262295082,
+        "diversity": 0.0,
+        "total": 0.19918032786885245
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.7131147540983607,
+        "diversity": 0.0,
+        "total": 0.2139344262295082
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.8032786885245902,
+        "diversity": 0.0,
+        "total": 0.24098360655737705
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.680327868852459,
+        "diversity": 0.0,
+        "total": 0.2040983606557377
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.8278688524590164,
+        "diversity": 0.0,
+        "total": 0.2483606557377049
+      },
+      {
+        "portfolio_loss": 0.013244054867580958,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.6311475409836066,
+        "diversity": 0.0,
+        "total": 0.20258831716266293
+      },
+      {
+        "portfolio_loss": 0.0,
+        "dfast_breach": 0.0,
+        "causal_fidelity": 0.7131147540983607,
+        "diversity": 0.0,
+        "total": 0.2139344262295082
+      }
+    ]
+  },
+  "improvement_over_random": 0.017212418317794798,
+  "smoke_test_passed": false
+}

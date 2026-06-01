@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Info, TrendingDown, TrendingUp, ExternalLink, Plus, Trash2, Pencil, Check } from "lucide-react";
+import { Shield, Info, TrendingDown, TrendingUp, ExternalLink, Plus, Trash2, Pencil, Check, Zap } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
 import { portfolioPresets, categoryColors } from "@/data/mockData";
-import { api, type ScenarioListItem, type StressTestResult } from "@/services/api";
+import { api, type ScenarioListItem, type StressTestResult, type AdversarialRankedResponse } from "@/services/api";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type ScenarioSource = "latest" | "saved";
@@ -51,6 +51,9 @@ const StressTest = () => {
   const [results, setResults] = useState<StressTestResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
+  const [adversarialResults, setAdversarialResults] = useState<AdversarialRankedResponse | null>(null);
+  const [adversarialLoading, setAdversarialLoading] = useState(false);
+  const [adversarialError, setAdversarialError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadScenarios = async () => {
@@ -126,25 +129,42 @@ const StressTest = () => {
     resetResults();
   };
 
-  const handleRun = async () => {
+  const handleRun = () => {
     if (!isValid || !activeScenario?.id) return;
+
+    const holdingsPayload = holdings.map((h) => ({
+      asset: h.asset,
+      weight: h.weight,
+      amount: h.amount,
+      category: h.category,
+    }));
+
     setLoading(true);
+    setAdversarialLoading(true);
     setError(null);
+    setAdversarialError(null);
     setResults(null);
-    try {
-      const response = await api.stressTest.run(holdings.map((holding) => ({
-        asset: holding.asset,
-        weight: holding.weight,
-        amount: holding.amount,
-        category: holding.category,
-      })), activeScenario.id);
-      setResults(response);
-    } catch (e) {
-      console.error(e);
-      setError("Could not run the live stress test. Check that the backend API and database are running.");
-    } finally {
-      setLoading(false);
-    }
+    setAdversarialResults(null);
+
+    // Stress test — controls main button loading state
+    api.stressTest
+      .run(holdingsPayload, activeScenario.id)
+      .then((r) => setResults(r))
+      .catch((e) => {
+        console.error(e);
+        setError(e instanceof Error ? e.message : "Could not run the live stress test.");
+      })
+      .finally(() => setLoading(false));
+
+    // Adversarial ranked search — fires concurrently, independent loading state
+    api.adversarial
+      .getRankedScenarios(holdingsPayload, { n_seeds: 20, top_k: 5 })
+      .then((r) => setAdversarialResults(r))
+      .catch((e) => {
+        console.error(e);
+        setAdversarialError("Adversarial scenario search unavailable.");
+      })
+      .finally(() => setAdversarialLoading(false));
   };
 
   const riskMetrics = [
@@ -598,6 +618,162 @@ const StressTest = () => {
                 <Info className="w-4 h-4 text-muted-foreground shrink-0" />
               </div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Adversarial Ranked Scenarios Panel — renders independently of stress test results */}
+      <AnimatePresence>
+        {(adversarialLoading || adversarialResults !== null || adversarialError !== null) && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+
+            {/* Loading state */}
+            {adversarialLoading && adversarialResults === null && (
+              <div className="glass rounded-2xl p-6 border-l-2 border-orange-500/30">
+                <div className="flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-orange-500 animate-pulse" />
+                  <h3 className="text-sm font-medium text-foreground">Analyzing adversarial scenarios...</h3>
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-2">
+                  Searching 20 market starting states for the worst plausible shock sequences specific to your portfolio.
+                </p>
+              </div>
+            )}
+
+            {/* Error state (non-fatal — stress test results still visible above) */}
+            {adversarialError !== null && adversarialResults === null && !adversarialLoading && (
+              <div className="glass rounded-2xl p-4 border-l-2 border-orange-500/20">
+                <p className="text-sm text-muted-foreground">{adversarialError}</p>
+              </div>
+            )}
+
+            {/* Results state */}
+            {adversarialResults !== null && (
+              <div className="glass rounded-2xl p-6 border-l-2 border-orange-500/30 space-y-5">
+
+                {/* Header */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-orange-500 shrink-0" />
+                    <div>
+                      <h3 className="text-xl font-medium text-foreground">AI Adversarial Worst-Case Scenarios</h3>
+                      <p className="text-[11px] text-muted-foreground mt-0.5">
+                        Portfolio-specific ranked search · {adversarialResults.seeds_tried} starting states · {adversarialResults.scenarios.length} distinct pathways
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-secondary border border-border text-muted-foreground shrink-0 text-right">
+                    {adversarialResults.quality_note}
+                  </span>
+                </div>
+
+                {/* Profile fingerprint */}
+                <div className="p-3 rounded-xl bg-secondary/50 border border-border">
+                  <p className="text-[11px] text-muted-foreground mb-2">
+                    {adversarialResults.inferred_profile ? "Auto-detected vulnerability profile:" : "Specified profile:"}{" "}
+                    <span className="text-foreground font-medium">
+                      {adversarialResults.profile.replace(/_/g, " ")}
+                    </span>
+                    {" "}
+                    <span className="text-muted-foreground">
+                      ({adversarialResults.profile_confidence.toFixed(0)}% dominant exposure)
+                    </span>
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {Object.entries(adversarialResults.profile_fingerprint).map(([key, val]) =>
+                      (val as number) > 0 ? (
+                        <span key={key} className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-secondary border border-border text-muted-foreground">
+                          <span className="capitalize">{key}</span>: {(val as number).toFixed(0)}%
+                        </span>
+                      ) : null
+                    )}
+                  </div>
+                </div>
+
+                {/* Vulnerability summary */}
+                <p className="text-sm text-muted-foreground">
+                  {adversarialResults.vulnerability_summary}
+                </p>
+
+                {/* Ranked scenario list */}
+                <div className="space-y-3">
+                  {(() => {
+                    const maxLoss = Math.max(...adversarialResults.scenarios.map((s) => s.portfolio_loss));
+                    return adversarialResults.scenarios.map((scenario) => (
+                      <div key={scenario.rank} className="p-4 rounded-xl bg-secondary/50 border border-border">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex items-start gap-3">
+                            <span className="flex-shrink-0 mt-0.5 w-6 h-6 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-500 text-[10px] font-bold flex items-center justify-center">
+                              {scenario.rank}
+                            </span>
+                            <div>
+                              <div className="font-mono text-sm text-foreground flex flex-wrap items-center gap-0.5">
+                                {scenario.sequence.map((step, i) => (
+                                  <span key={i} className="flex items-center gap-0.5">
+                                    {i > 0 && <span className="text-muted-foreground mx-1">→</span>}
+                                    <span className={step.magnitude < 0 ? "text-destructive" : "text-emerald-500"}>
+                                      {step.target_var} {step.magnitude > 0 ? "+" : ""}{step.magnitude.toFixed(1)}σ
+                                    </span>
+                                  </span>
+                                ))}
+                              </div>
+                              <p className="text-[11px] text-muted-foreground mt-0.5">{scenario.causal_pathway}</p>
+                            </div>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <div className="font-mono text-sm font-semibold text-destructive">
+                              {scenario.portfolio_loss.toFixed(3)}
+                            </div>
+                            <div className="text-[10px] text-muted-foreground">severity score</div>
+                          </div>
+                        </div>
+
+                        {/* Severity bar + metrics */}
+                        <div className="mt-3 space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-muted-foreground w-20 shrink-0">Severity</span>
+                            <div className="flex-1 h-1 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className="h-full rounded-full bg-orange-500/70"
+                                style={{ width: `${maxLoss > 0 ? (scenario.portfolio_loss / maxLoss) * 100 : 0}%` }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-mono text-muted-foreground w-8 text-right">
+                              {maxLoss > 0 ? ((scenario.portfolio_loss / maxLoss) * 100).toFixed(0) : 0}%
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-muted-foreground w-20 shrink-0">Causal fidelity</span>
+                            <div className="flex-1 h-1 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className="h-full rounded-full bg-primary/60"
+                                style={{ width: `${(scenario.causal_fidelity * 100).toFixed(0)}%` }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-mono text-muted-foreground w-8 text-right">
+                              {(scenario.causal_fidelity * 100).toFixed(0)}%
+                            </span>
+                          </div>
+                        </div>
+
+                        {scenario.dfast_breach > 0.5 && (
+                          <span className="mt-2 inline-block text-[10px] px-2 py-0.5 rounded-full bg-destructive/10 text-destructive border border-destructive/20">
+                            DFAST breach
+                          </span>
+                        )}
+                      </div>
+                    ));
+                  })()}
+                </div>
+
+                <p className="text-[10px] text-muted-foreground">
+                  Each scenario represents a distinct adversarial causal pathway, not a magnitude variation of the same shock.
+                  Severity score is the bandit's portfolio-loss metric — higher means more adverse. Causal fidelity measures
+                  how closely the shock sequence follows the learned causal graph structure.
+                </p>
+              </div>
+            )}
+
           </motion.div>
         )}
       </AnimatePresence>

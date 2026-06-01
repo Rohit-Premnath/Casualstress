@@ -1,0 +1,585 @@
+{
+  "mode": "real",
+  "portfolio_profile": "tech_heavy",
+  "actions_per_episode": 2,
+  "use_family_templates": false,
+  "reward_mode": "portfolio_adversarial",
+  "seed_start": 10000,
+  "n_seeds": 8,
+  "beam_width": 6,
+  "top_k": 3,
+  "min_portfolio_loss": 0.15,
+  "kept_sequences": 8,
+  "filtered_out_sequences": 16,
+  "teacher_style": "stagewise_best_per_seed",
+  "sequence_records": [
+    {
+      "seed": 10000,
+      "reward": 1.7789146817734074,
+      "portfolio_loss": 1.0730507762189656,
+      "dfast_breach": 0.8706496119713234,
+      "causal_fidelity": 0.8770491803278688,
+      "diversity": 0.07424345470419569,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "single_root",
+          "magnitude": -4.5
+        },
+        {
+          "target_var": "UNRATE",
+          "family_name": "single_root",
+          "magnitude": 5.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.7789146817734074,
+          "portfolio_loss": 1.0730507762189656,
+          "decoded_actions": [
+            {
+              "target_var": "XLK",
+              "family_name": "single_root",
+              "magnitude": -4.5
+            },
+            {
+              "target_var": "UNRATE",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.7491270368851504,
+          "portfolio_loss": 1.2118392668694546,
+          "decoded_actions": [
+            {
+              "target_var": "CL=F",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            },
+            {
+              "target_var": "^RUT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.5424053284488868,
+          "portfolio_loss": 1.0098860270656351,
+          "decoded_actions": [
+            {
+              "target_var": "^RUT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "UNRATE",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10001,
+      "reward": 1.876755812665348,
+      "portfolio_loss": 1.2840797548342517,
+      "dfast_breach": 0.8212236756801979,
+      "causal_fidelity": 0.5819672131147541,
+      "diversity": 0.07474056056571154,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLC0A0CM",
+          "family_name": "single_root",
+          "magnitude": 4.5
+        },
+        {
+          "target_var": "TLT",
+          "family_name": "single_root",
+          "magnitude": -5.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.876755812665348,
+          "portfolio_loss": 1.2840797548342517,
+          "decoded_actions": [
+            {
+              "target_var": "BAMLC0A0CM",
+              "family_name": "single_root",
+              "magnitude": 4.5
+            },
+            {
+              "target_var": "TLT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.4961677039116166,
+          "portfolio_loss": 0.7799336345885698,
+          "decoded_actions": [
+            {
+              "target_var": "TLT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "BAMLH0A0HYM2",
+              "family_name": "single_root",
+              "magnitude": 4.0
+            }
+          ]
+        },
+        {
+          "reward": 1.2820864229770845,
+          "portfolio_loss": 0.8622323737677905,
+          "decoded_actions": [
+            {
+              "target_var": "BAMLH0A0HYM2",
+              "family_name": "single_root",
+              "magnitude": 4.0
+            },
+            {
+              "target_var": "TLT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10002,
+      "reward": 1.463635798451936,
+      "portfolio_loss": 1.077358752949629,
+      "dfast_breach": 0.2512564344556603,
+      "causal_fidelity": 0.8442622950819673,
+      "diversity": 0.07370139749886717,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "single_root",
+          "magnitude": -5.0
+        },
+        {
+          "target_var": "XLY",
+          "family_name": "single_root",
+          "magnitude": -5.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.463635798451936,
+          "portfolio_loss": 1.077358752949629,
+          "decoded_actions": [
+            {
+              "target_var": "XLK",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.3593164079892754,
+          "portfolio_loss": 0.912347757556132,
+          "decoded_actions": [
+            {
+              "target_var": "XLK",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "XLF",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            }
+          ]
+        },
+        {
+          "reward": 1.212978182189585,
+          "portfolio_loss": 0.9419329132559209,
+          "decoded_actions": [
+            {
+              "target_var": "BAMLC0A0CM",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            },
+            {
+              "target_var": "XLK",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10003,
+      "reward": 1.2934168578364025,
+      "portfolio_loss": 0.7699801052083739,
+      "dfast_breach": 1.0111471253506532,
+      "causal_fidelity": 0.5573770491803278,
+      "diversity": 0.070188773990014,
+      "decoded_actions": [
+        {
+          "target_var": "UNRATE",
+          "family_name": "single_root",
+          "magnitude": 5.0
+        },
+        {
+          "target_var": "EEM",
+          "family_name": "single_root",
+          "magnitude": -5.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.2934168578364025,
+          "portfolio_loss": 0.7699801052083739,
+          "decoded_actions": [
+            {
+              "target_var": "UNRATE",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            },
+            {
+              "target_var": "EEM",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.0945668120605947,
+          "portfolio_loss": 0.7733571737034768,
+          "decoded_actions": [
+            {
+              "target_var": "LQD",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "UNRATE",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.0451818967735589,
+          "portfolio_loss": 0.790344885393433,
+          "decoded_actions": [
+            {
+              "target_var": "XLK",
+              "family_name": "single_root",
+              "magnitude": -3.0
+            },
+            {
+              "target_var": "EEM",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10004,
+      "reward": 1.4243996843738596,
+      "portfolio_loss": 0.9536741163417933,
+      "dfast_breach": 0.5040951064356106,
+      "causal_fidelity": 0.7868852459016393,
+      "diversity": 0.05478509783524266,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLC0A0CM",
+          "family_name": "single_root",
+          "magnitude": 4.0
+        },
+        {
+          "target_var": "LQD",
+          "family_name": "single_root",
+          "magnitude": -4.5
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.4243996843738596,
+          "portfolio_loss": 0.9536741163417933,
+          "decoded_actions": [
+            {
+              "target_var": "BAMLC0A0CM",
+              "family_name": "single_root",
+              "magnitude": 4.0
+            },
+            {
+              "target_var": "LQD",
+              "family_name": "single_root",
+              "magnitude": -4.5
+            }
+          ]
+        },
+        {
+          "reward": 1.151754100968619,
+          "portfolio_loss": 0.9092347408769108,
+          "decoded_actions": [
+            {
+              "target_var": "HYG",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            },
+            {
+              "target_var": "BAMLC0A0CM",
+              "family_name": "single_root",
+              "magnitude": 4.0
+            }
+          ]
+        },
+        {
+          "reward": 1.145723238340611,
+          "portfolio_loss": 0.8274675978711681,
+          "decoded_actions": [
+            {
+              "target_var": "HYG",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            },
+            {
+              "target_var": "EEM",
+              "family_name": "single_root",
+              "magnitude": -4.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10005,
+      "reward": 1.8074717007890233,
+      "portfolio_loss": 1.3620347807515398,
+      "dfast_breach": 0.5273512961966971,
+      "causal_fidelity": 0.5819672131147541,
+      "diversity": 0.07171108004708815,
+      "decoded_actions": [
+        {
+          "target_var": "FEDFUNDS",
+          "family_name": "single_root",
+          "magnitude": 5.0
+        },
+        {
+          "target_var": "XLY",
+          "family_name": "single_root",
+          "magnitude": -5.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.8074717007890233,
+          "portfolio_loss": 1.3620347807515398,
+          "decoded_actions": [
+            {
+              "target_var": "FEDFUNDS",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            },
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.6130449570776724,
+          "portfolio_loss": 0.924642324534676,
+          "decoded_actions": [
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.583167224261363,
+          "portfolio_loss": 0.7868787001915251,
+          "decoded_actions": [
+            {
+              "target_var": "CL=F",
+              "family_name": "single_root",
+              "magnitude": -0.5
+            },
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10006,
+      "reward": 1.9211978849572202,
+      "portfolio_loss": 1.0344217978133914,
+      "dfast_breach": 1.3505007132457778,
+      "causal_fidelity": 0.680327868852459,
+      "diversity": 0.07427369865202349,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "single_root",
+          "magnitude": -4.0
+        },
+        {
+          "target_var": "LQD",
+          "family_name": "single_root",
+          "magnitude": -5.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 1.9211978849572202,
+          "portfolio_loss": 1.0344217978133914,
+          "decoded_actions": [
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            },
+            {
+              "target_var": "LQD",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.4454850962598904,
+          "portfolio_loss": 0.9032004976379734,
+          "decoded_actions": [
+            {
+              "target_var": "BAMLH0A3HYC",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            },
+            {
+              "target_var": "TLT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        },
+        {
+          "reward": 1.3989731512749797,
+          "portfolio_loss": 0.9400302008868038,
+          "decoded_actions": [
+            {
+              "target_var": "TLT",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "BAMLH0A3HYC",
+              "family_name": "single_root",
+              "magnitude": 5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 10007,
+      "reward": 2.4888066289761723,
+      "portfolio_loss": 1.5122743023381913,
+      "dfast_breach": 1.5916815659086603,
+      "causal_fidelity": 0.5819672131147541,
+      "diversity": 0.061013797492245336,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "single_root",
+          "magnitude": -4.5
+        },
+        {
+          "target_var": "XLU",
+          "family_name": "single_root",
+          "magnitude": -4.0
+        }
+      ],
+      "candidate_count": 3,
+      "alternative_sequences": [
+        {
+          "reward": 2.4888066289761723,
+          "portfolio_loss": 1.5122743023381913,
+          "decoded_actions": [
+            {
+              "target_var": "XLY",
+              "family_name": "single_root",
+              "magnitude": -4.5
+            },
+            {
+              "target_var": "XLU",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            }
+          ]
+        },
+        {
+          "reward": 1.8371236810633857,
+          "portfolio_loss": 1.297370308333624,
+          "decoded_actions": [
+            {
+              "target_var": "^NDX",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "XLF",
+              "family_name": "single_root",
+              "magnitude": -4.0
+            }
+          ]
+        },
+        {
+          "reward": 1.6414279767792515,
+          "portfolio_loss": 1.2643679020387228,
+          "decoded_actions": [
+            {
+              "target_var": "XLK",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            },
+            {
+              "target_var": "CPIAUCSL",
+              "family_name": "single_root",
+              "magnitude": -5.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

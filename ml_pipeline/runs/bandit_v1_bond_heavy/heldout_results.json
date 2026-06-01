@@ -1,0 +1,52 @@
+{
+  "portfolio_profile": "bond_heavy",
+  "reward_mode": "portfolio_adversarial",
+  "seed_start": 20000,
+  "n_seeds": 16,
+  "beam_width": 6,
+  "bandit_greedy": {
+    "mean_reward": 0.5985551173214791,
+    "std_reward": 0.23395606897569413,
+    "mean_portfolio_loss": 0.4625995236791008,
+    "mean_dfast_breach": 0.34070864981416715,
+    "mean_causal_fidelity": 0.7054303278688525,
+    "mean_diversity": 0.8587797619047619
+  },
+  "random": {
+    "mean_reward": 0.26286781575236584,
+    "std_reward": 0.20481479900968186,
+    "mean_portfolio_loss": 0.20114763546169254,
+    "mean_dfast_breach": 0.11691996848750622,
+    "mean_causal_fidelity": 0.6915983606557377,
+    "mean_diversity": 0.97375
+  },
+  "heuristic": {
+    "mean_reward": 0.4823337788352557,
+    "std_reward": 0.18558603506189336,
+    "mean_portfolio_loss": 0.3740218583567504,
+    "mean_dfast_breach": 0.2632096912279937,
+    "mean_causal_fidelity": 0.6526639344262295,
+    "mean_diversity": 0.9346743295019158
+  },
+  "beam": {
+    "mean_reward": 0.9012032397839097,
+    "std_reward": 0.09914892542676848,
+    "mean_portfolio_loss": 0.7018861679453723,
+    "mean_dfast_breach": 0.699957690415608,
+    "mean_causal_fidelity": 0.6331967213114754,
+    "mean_diversity": 0.9561111111111111
+  },
+  "top_bandit_sequence": "TLT -5.00\u03c3 -> TLT -5.00\u03c3",
+  "top_beam_sequence": "GC=F -5.00\u03c3 -> XLF -5.00\u03c3",
+  "bandit_ucb": {
+    "mean_reward": 0.675523249322421,
+    "std_reward": 0.1280298925175694,
+    "mean_portfolio_loss": 0.5296125996768638,
+    "mean_dfast_breach": 0.20327133408263917,
+    "mean_causal_fidelity": 0.6629098360655739,
+    "mean_diversity": 0.7920813965124904
+  },
+  "ucb_beta": 0.5,
+  "bandit_greedy_vs_beam_pct": 66.41732862223182,
+  "bandit_ucb_vs_beam_pct": 74.95792508295885
+}

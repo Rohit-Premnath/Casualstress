@@ -286,12 +286,36 @@ def tool_run_stress_test(portfolio_type="conservative", shock_variable="^GSPC", 
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT id, shock_variable, shock_magnitude, scenario_paths, plausibility_scores
-        FROM models.scenarios
-        WHERE shock_variable = %s
-        ORDER BY created_at DESC
-        LIMIT 1
-    """, (shock_variable,))
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_schema = 'models'
+          AND table_name = 'scenarios'
+    """)
+    available_columns = {row[0] for row in cursor.fetchall()}
+
+    if {"event_type", "anchor_variable"}.issubset(available_columns):
+        cursor.execute("""
+            SELECT id, event_type, anchor_variable, shock_variable, shock_magnitude, scenario_paths, plausibility_scores
+            FROM models.scenarios
+            WHERE event_type = %s OR anchor_variable = %s OR shock_variable = %s
+            ORDER BY
+                CASE
+                    WHEN event_type = %s THEN 0
+                    WHEN anchor_variable = %s THEN 1
+                    WHEN shock_variable = %s THEN 2
+                    ELSE 3
+                END,
+                created_at DESC
+            LIMIT 1
+        """, (shock_variable, shock_variable, shock_variable, shock_variable, shock_variable, shock_variable))
+    else:
+        cursor.execute("""
+            SELECT id, shock_variable, shock_magnitude, scenario_paths, plausibility_scores
+            FROM models.scenarios
+            WHERE shock_variable = %s
+            ORDER BY created_at DESC
+            LIMIT 1
+        """, (shock_variable,))
     row = cursor.fetchone()
 
     if not row:
@@ -299,7 +323,7 @@ def tool_run_stress_test(portfolio_type="conservative", shock_variable="^GSPC", 
         conn.close()
         return json.dumps({"error": f"No scenarios found for {shock_variable}. Run scenario generator first."})
 
-    scenario_paths = row[3]
+    scenario_paths = row[-2]
 
     # Define portfolio
     portfolios = {

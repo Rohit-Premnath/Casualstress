@@ -1,0 +1,87 @@
+{
+  "seed": 20000,
+  "bandit": {
+    "seed": 20000,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.9053518246631341,
+    "portfolio_loss": 0.6851918275986499,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.7377049180327869,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 3437,
+      "date": "2018-03-08",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20000,
+    "sequence": [
+      {
+        "target_var": "XLY",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 0.6994361351629339,
+    "portfolio_loss": 0.5314930457170846,
+    "dfast_breach": 0.277756929397583,
+    "causal_fidelity": 0.8032786885245902,
+    "diversity": 0.75,
+    "sampled_state": {
+      "row_index": 3437,
+      "date": "2018-03-08",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20000,
+    "sequence": [
+      {
+        "target_var": "T10Y2Y",
+        "family_name": "single_root",
+        "magnitude": 4.0
+      },
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.323472432293051,
+    "portfolio_loss": 0.9755993084056519,
+    "dfast_breach": 2.154737041491578,
+    "causal_fidelity": 0.8852459016393442,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 3437,
+      "date": "2018-03-08",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20000,
+    "n_sequences": 62500,
+    "max_reward": 1.323472432293051,
+    "mean_reward_all_seqs": 0.25381400245938696,
+    "std_reward_all_seqs": 0.1489655479049712,
+    "best_sequence": "T10Y2Y +4.00\u03c3 -> TLT -5.00\u03c3",
+    "elapsed_s": 314.65994095802307
+  }
+}

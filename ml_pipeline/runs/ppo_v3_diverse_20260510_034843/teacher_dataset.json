@@ -1,0 +1,556 @@
+{
+  "mode": "real",
+  "portfolio_profile": "balanced",
+  "actions_per_episode": 1,
+  "use_family_templates": true,
+  "reward_mode": "portfolio_adversarial",
+  "seed_start": 10000,
+  "n_seeds": 12,
+  "beam_width": 6,
+  "top_k": 3,
+  "min_portfolio_loss": 0.1,
+  "kept_sequences": 36,
+  "filtered_out_sequences": 0,
+  "sequence_records": [
+    {
+      "seed": 10000,
+      "reward": 1.2933003399483294,
+      "portfolio_loss": 0.9867429628991489,
+      "dfast_breach": 0.5184576822674216,
+      "causal_fidelity": 0.6885245901639344,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "XLU",
+          "family_name": "pandemic",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10000,
+      "reward": 1.2870653314227238,
+      "portfolio_loss": 1.0316789145608973,
+      "dfast_breach": 0.5166099150975545,
+      "causal_fidelity": 0.5655737704918032,
+      "diversity": 0.8571428571428572,
+      "decoded_actions": [
+        {
+          "target_var": "UNRATE",
+          "family_name": "volatility_shock",
+          "magnitude": 5.0
+        }
+      ]
+    },
+    {
+      "seed": 10000,
+      "reward": 1.1716122929399502,
+      "portfolio_loss": 0.89409472853714,
+      "dfast_breach": 0.16400634473405104,
+      "causal_fidelity": 0.639344262295082,
+      "diversity": 0.8571428571428572,
+      "decoded_actions": [
+        {
+          "target_var": "FEDFUNDS",
+          "family_name": "rate_shock",
+          "magnitude": 5.0
+        }
+      ]
+    },
+    {
+      "seed": 10001,
+      "reward": 1.8862445307356024,
+      "portfolio_loss": 1.628827497548877,
+      "dfast_breach": 0.9107503742066947,
+      "causal_fidelity": 0.5409836065573771,
+      "diversity": 0.9512195121951219,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "volatility_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10001,
+      "reward": 1.6791060809910472,
+      "portfolio_loss": 1.402032792659321,
+      "dfast_breach": 1.4283244309548841,
+      "causal_fidelity": 0.6147540983606558,
+      "diversity": 0.9264705882352942,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10001,
+      "reward": 1.616560112906597,
+      "portfolio_loss": 1.315972885111148,
+      "dfast_breach": 0.28615684509277345,
+      "causal_fidelity": 0.6885245901639344,
+      "diversity": 0.9402985074626866,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10002,
+      "reward": 1.8212503426310869,
+      "portfolio_loss": 1.547691106531712,
+      "dfast_breach": 1.5546478859440107,
+      "causal_fidelity": 0.5819672131147541,
+      "diversity": 0.9896907216494846,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "global_shock",
+          "magnitude": 4.0
+        }
+      ]
+    },
+    {
+      "seed": 10002,
+      "reward": 1.6056228110263997,
+      "portfolio_loss": 1.285487806204799,
+      "dfast_breach": 0.9957599098128134,
+      "causal_fidelity": 0.7377049180327869,
+      "diversity": 0.9882352941176471,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -4.5
+        }
+      ]
+    },
+    {
+      "seed": 10002,
+      "reward": 1.3860000322738908,
+      "portfolio_loss": 1.137541015880448,
+      "dfast_breach": 0.2524748329897321,
+      "causal_fidelity": 0.5081967213114754,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "global_shock",
+          "magnitude": 4.0
+        }
+      ]
+    },
+    {
+      "seed": 10003,
+      "reward": 1.5348971118863772,
+      "portfolio_loss": 1.203290554509328,
+      "dfast_breach": 0.4028757596231127,
+      "causal_fidelity": 0.7786885245901639,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "CL=F",
+          "family_name": "global_shock",
+          "magnitude": -4.0
+        }
+      ]
+    },
+    {
+      "seed": 10003,
+      "reward": 1.274129443650533,
+      "portfolio_loss": 0.9621950174210248,
+      "dfast_breach": 0.07269971370697022,
+      "causal_fidelity": 0.7131147540983607,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "rate_shock",
+          "magnitude": -4.0
+        }
+      ]
+    },
+    {
+      "seed": 10003,
+      "reward": 1.2291952631316572,
+      "portfolio_loss": 0.9103428041152636,
+      "dfast_breach": 0.23398250823247893,
+      "causal_fidelity": 0.7295081967213115,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "CL=F",
+          "family_name": "global_shock",
+          "magnitude": -4.0
+        }
+      ]
+    },
+    {
+      "seed": 10004,
+      "reward": 1.9537841949393737,
+      "portfolio_loss": 1.6782759982180622,
+      "dfast_breach": 0.727183870510826,
+      "causal_fidelity": 0.5983606557377049,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10004,
+      "reward": 1.5498980091538326,
+      "portfolio_loss": 1.2580947304653078,
+      "dfast_breach": 0.2149305624903387,
+      "causal_fidelity": 0.639344262295082,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "^NDX",
+          "family_name": "global_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10004,
+      "reward": 1.4689069571187485,
+      "portfolio_loss": 1.1475954817089125,
+      "dfast_breach": 0.7387792054914476,
+      "causal_fidelity": 0.7377049180327869,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "^NDX",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10005,
+      "reward": 1.8045688375958715,
+      "portfolio_loss": 1.5025524441532485,
+      "dfast_breach": 0.6665612196504311,
+      "causal_fidelity": 0.6967213114754098,
+      "diversity": 0.9299999999999999,
+      "decoded_actions": [
+        {
+          "target_var": "^NDX",
+          "family_name": "global_shock",
+          "magnitude": -4.0
+        }
+      ]
+    },
+    {
+      "seed": 10005,
+      "reward": 1.4012078951587328,
+      "portfolio_loss": 1.1143226492570935,
+      "dfast_breach": 0.02887572454595148,
+      "causal_fidelity": 0.6229508196721312,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "XLF",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10005,
+      "reward": 1.2661368809042761,
+      "portfolio_loss": 0.9581204874616532,
+      "dfast_breach": 0.23611268997192383,
+      "causal_fidelity": 0.6967213114754098,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "^RUT",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10006,
+      "reward": 1.8620084124061795,
+      "portfolio_loss": 1.5992543140455238,
+      "dfast_breach": 0.9981783490587065,
+      "causal_fidelity": 0.5491803278688525,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "^NDX",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10006,
+      "reward": 1.8594618234616944,
+      "portfolio_loss": 1.5071831349371043,
+      "dfast_breach": 0.5679292744737359,
+      "causal_fidelity": 0.8442622950819673,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "global_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10006,
+      "reward": 1.7097809535916155,
+      "portfolio_loss": 1.4544039044112875,
+      "dfast_breach": 0.8820190271792532,
+      "causal_fidelity": 0.5245901639344263,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "global_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10007,
+      "reward": 1.593150777134009,
+      "portfolio_loss": 1.2939704492651565,
+      "dfast_breach": 1.169115047475739,
+      "causal_fidelity": 0.6639344262295082,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "^RUT",
+          "family_name": "sovereign_crisis",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10007,
+      "reward": 1.489997862527028,
+      "portfolio_loss": 1.2213257313794872,
+      "dfast_breach": 0.4081956082132216,
+      "causal_fidelity": 0.5655737704918032,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "^RUT",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -4.5
+        }
+      ]
+    },
+    {
+      "seed": 10007,
+      "reward": 1.4550967289817032,
+      "portfolio_loss": 1.1397032863587524,
+      "dfast_breach": 0.0855496883392334,
+      "causal_fidelity": 0.7213114754098361,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "XLU",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10008,
+      "reward": 1.5031707204765872,
+      "portfolio_loss": 1.219285474574948,
+      "dfast_breach": 0.8376731198198104,
+      "causal_fidelity": 0.6229508196721312,
+      "diversity": 0.97,
+      "decoded_actions": [
+        {
+          "target_var": "CPIAUCSL",
+          "family_name": "volatility_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10008,
+      "reward": 1.4502962822992358,
+      "portfolio_loss": 1.111853659348416,
+      "dfast_breach": 0.2170217262397065,
+      "causal_fidelity": 0.8114754098360656,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "TLT",
+          "family_name": "market_crash",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10008,
+      "reward": 1.4419880438633383,
+      "portfolio_loss": 1.1620208307485842,
+      "dfast_breach": 0.5554097936647726,
+      "causal_fidelity": 0.6065573770491803,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "BAMLH0A0HYM2",
+          "family_name": "pandemic",
+          "magnitude": 5.0
+        }
+      ]
+    },
+    {
+      "seed": 10009,
+      "reward": 1.7022426667994632,
+      "portfolio_loss": 1.4277344700781518,
+      "dfast_breach": 0.6379950636669298,
+      "causal_fidelity": 0.5983606557377049,
+      "diversity": 0.95,
+      "decoded_actions": [
+        {
+          "target_var": "XLY",
+          "family_name": "credit_crisis",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10009,
+      "reward": 1.3881816017630992,
+      "portfolio_loss": 1.0206897984844108,
+      "dfast_breach": 0.8326091766357422,
+      "causal_fidelity": 0.9016393442622951,
+      "diversity": 0.97,
+      "decoded_actions": [
+        {
+          "target_var": "FEDFUNDS",
+          "family_name": "credit_crisis",
+          "magnitude": 5.0
+        }
+      ]
+    },
+    {
+      "seed": 10009,
+      "reward": 1.3583773702221498,
+      "portfolio_loss": 1.0651150751401826,
+      "dfast_breach": 1.0359391413752665,
+      "causal_fidelity": 0.6475409836065574,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "^NDX",
+          "family_name": "sovereign_crisis",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10010,
+      "reward": 1.9188998750398267,
+      "portfolio_loss": 1.682735940613597,
+      "dfast_breach": 0.7869686940644709,
+      "causal_fidelity": 0.4672131147540984,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "global_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10010,
+      "reward": 1.6962792642412383,
+      "portfolio_loss": 1.4192300839133694,
+      "dfast_breach": 1.9461083154041645,
+      "causal_fidelity": 0.5901639344262295,
+      "diversity": 1.0,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10010,
+      "reward": 1.50074392488239,
+      "portfolio_loss": 1.1932685150463243,
+      "dfast_breach": 0.37932710170781586,
+      "causal_fidelity": 0.7049180327868853,
+      "diversity": 0.96,
+      "decoded_actions": [
+        {
+          "target_var": "XLK",
+          "family_name": "pandemic_exogenous",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10011,
+      "reward": 2.030998143379176,
+      "portfolio_loss": 1.7451128974775365,
+      "dfast_breach": 1.1800972110241803,
+      "causal_fidelity": 0.6229508196721312,
+      "diversity": 0.99,
+      "decoded_actions": [
+        {
+          "target_var": "UNRATE",
+          "family_name": "pandemic",
+          "magnitude": 5.0
+        }
+      ]
+    },
+    {
+      "seed": 10011,
+      "reward": 1.5910557075071687,
+      "portfolio_loss": 1.3110884943924146,
+      "dfast_breach": 0.8513384041530052,
+      "causal_fidelity": 0.6065573770491803,
+      "diversity": 0.98,
+      "decoded_actions": [
+        {
+          "target_var": "GC=F",
+          "family_name": "rate_shock",
+          "magnitude": -5.0
+        }
+      ]
+    },
+    {
+      "seed": 10011,
+      "reward": 1.5539752926613637,
+      "portfolio_loss": 1.2282867680711997,
+      "dfast_breach": 0.4289580347855625,
+      "causal_fidelity": 0.7622950819672131,
+      "diversity": 0.97,
+      "decoded_actions": [
+        {
+          "target_var": "CL=F",
+          "family_name": "volatility_shock",
+          "magnitude": -4.5
+        }
+      ]
+    }
+  ]
+}

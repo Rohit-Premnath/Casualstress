@@ -1,0 +1,87 @@
+{
+  "seed": 20008,
+  "bandit": {
+    "seed": 20008,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.4394506232043469,
+    "portfolio_loss": 0.35299562833111875,
+    "dfast_breach": 0.5789416631062826,
+    "causal_fidelity": 0.5163934426229508,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1761,
+      "date": "2011-10-05",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20008,
+    "sequence": [
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      },
+      {
+        "target_var": "^RUT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.8006134597373528,
+    "portfolio_loss": 0.6303392065357716,
+    "dfast_breach": 1.3654604765498144,
+    "causal_fidelity": 0.5737704918032787,
+    "diversity": 0.98,
+    "sampled_state": {
+      "row_index": 1761,
+      "date": "2011-10-05",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20008,
+    "sequence": [
+      {
+        "target_var": "XLF",
+        "family_name": "single_root",
+        "magnitude": -1.0
+      },
+      {
+        "target_var": "HYG",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 1.1744147104684943,
+    "portfolio_loss": 0.9333988786931526,
+    "dfast_breach": 0.5064406587369076,
+    "causal_fidelity": 0.5573770491803278,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1761,
+      "date": "2011-10-05",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20008,
+    "n_sequences": 62500,
+    "max_reward": 1.1744147104684943,
+    "mean_reward_all_seqs": 0.25428750128420646,
+    "std_reward_all_seqs": 0.14932826650887676,
+    "best_sequence": "XLF -1.00\u03c3 -> HYG -5.00\u03c3",
+    "elapsed_s": 215.3944833278656
+  }
+}

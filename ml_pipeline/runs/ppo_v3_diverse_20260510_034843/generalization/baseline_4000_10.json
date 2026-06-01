@@ -1,0 +1,52 @@
+{
+  "run_dir": "C:\\Users\\megha\\OneDrive\\Desktop\\Casual Stress\\Casualstress\\ml_pipeline\\runs\\ppo_v3_diverse_20260510_034843",
+  "model": "final.zip",
+  "mode": "real",
+  "portfolio_profile": "balanced",
+  "seed_start": 4000,
+  "n_seeds": 10,
+  "rl": {
+    "mean_reward": 0.8562592035089818,
+    "std_reward": 0.2495756538678711,
+    "mean_portfolio_loss": 0.5703575641647196,
+    "mean_dfast_breach": 0.21709768454233808,
+    "mean_causal_fidelity": 0.619672131147541,
+    "mean_diversity": 1.0
+  },
+  "random": {
+    "mean_reward": 0.5367681956295056,
+    "std_reward": 0.16599552233324474,
+    "mean_portfolio_loss": 0.2724045480062588,
+    "mean_dfast_breach": 0.11710594427564891,
+    "mean_causal_fidelity": 0.5795081967213114,
+    "mean_diversity": 0.9051118860685341
+  },
+  "heuristic": {
+    "mean_reward": 1.1504288215726755,
+    "std_reward": 0.32467197434650236,
+    "mean_portfolio_loss": 0.8437925080308654,
+    "mean_dfast_breach": 0.38104709800315206,
+    "mean_causal_fidelity": 0.6987877118060339,
+    "mean_diversity": 0.97
+  },
+  "brute_force": {
+    "mean_reward": 2.0051547374140637,
+    "std_reward": 0.1411035081216397,
+    "mean_portfolio_loss": 1.7055301472501292,
+    "mean_dfast_breach": 1.0329532382138074,
+    "mean_causal_fidelity": 0.6950819672131148,
+    "mean_diversity": 0.9110000000000001
+  },
+  "top_rl_action": {
+    "target_var": "XLY",
+    "family_name": "global_shock",
+    "magnitude": -5.0,
+    "reward": 1.236527087554968
+  },
+  "top_brute_action": {
+    "target_var": "XLK",
+    "family_name": "global_shock",
+    "magnitude": -5.0,
+    "reward": 2.303943125704412
+  }
+}

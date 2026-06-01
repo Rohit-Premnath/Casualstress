@@ -1,0 +1,87 @@
+{
+  "seed": 20004,
+  "bandit": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "TLT",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      },
+      {
+        "target_var": "LQD",
+        "family_name": "single_root",
+        "magnitude": -5.0
+      }
+    ],
+    "reward": 0.5313468572315218,
+    "portfolio_loss": 0.41935772145326466,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.5901639344262295,
+    "diversity": 0.9,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "beam": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "XLU",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      },
+      {
+        "target_var": "XLK",
+        "family_name": "single_root",
+        "magnitude": -4.5
+      }
+    ],
+    "reward": 0.6872701294363991,
+    "portfolio_loss": 0.5260160338220871,
+    "dfast_breach": 0.0,
+    "causal_fidelity": 0.6885245901639344,
+    "diversity": 1.0,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "exhaustive": {
+    "seed": 20004,
+    "sequence": [
+      {
+        "target_var": "DGS2",
+        "family_name": "single_root",
+        "magnitude": 3.0
+      },
+      {
+        "target_var": "BAMLC0A0CM",
+        "family_name": "single_root",
+        "magnitude": 5.0
+      }
+    ],
+    "reward": 1.2072562360261228,
+    "portfolio_loss": 0.9268936879031541,
+    "dfast_breach": 2.087540226313703,
+    "causal_fidelity": 0.7049180327868853,
+    "diversity": 0.91,
+    "sampled_state": {
+      "row_index": 1801,
+      "date": "2011-11-30",
+      "regime_name": "stressed"
+    }
+  },
+  "stats": {
+    "seed": 20004,
+    "n_sequences": 62500,
+    "max_reward": 1.2072562360261228,
+    "mean_reward_all_seqs": 0.25349279845546635,
+    "std_reward_all_seqs": 0.1487538343267727,
+    "best_sequence": "DGS2 +3.00\u03c3 -> BAMLC0A0CM +5.00\u03c3",
+    "elapsed_s": 350.9480850696564
+  }
+}

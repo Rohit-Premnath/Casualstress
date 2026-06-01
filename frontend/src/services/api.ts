@@ -19,7 +19,20 @@ async function fetchJSON<T>(path: string, options?: RequestInit): Promise<T> {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
-  if (!res.ok) throw new Error(`API error: ${res.status} ${res.statusText}`);
+  if (!res.ok) {
+    let detail = `${res.status} ${res.statusText}`;
+    try {
+      const body = await res.json();
+      if (typeof body?.detail === 'string') {
+        detail = body.detail;
+      } else if (typeof body?.error === 'string') {
+        detail = body.error;
+      }
+    } catch {
+      // Ignore JSON parsing errors and fall back to the HTTP status text.
+    }
+    throw new Error(detail);
+  }
   return res.json();
 }
 
@@ -156,6 +169,7 @@ export interface ScenarioResponse {
   filter: string;
   candidateCount: number;
   scenarioCount: number;
+  displayTargetCount?: number;
   horizon: number;
   createdAt?: string | null;
   avgPlausibility: number;
@@ -168,6 +182,8 @@ export interface ScenarioResponse {
   };
   focusVariables: ScenarioFocusVariable[];
   shockTemplate: { label: string; ticker: string; shock: number }[];
+  anchorVariable?: string;
+  shockMagnitude?: number;
   variables: Record<string, ScenarioVariableResult>;
   keyVariableStressRange: ScenarioStressRangeRow[];
 }
@@ -244,6 +260,51 @@ export interface ChatResponse {
   content: string;
 }
 
+// ==================== ADVERSARIAL TYPES ====================
+
+export interface AdversarialHolding {
+  asset: string;
+  weight: number;
+  amount: number;
+  category: string;
+}
+
+export interface AdversarialShockStep {
+  target_var: string;
+  family_name: string;
+  magnitude: number;
+}
+
+export interface AdversarialScenarioItem {
+  rank: number;
+  sequence: AdversarialShockStep[];
+  portfolio_loss: number;
+  causal_fidelity: number;
+  dfast_breach: number;
+  reward: number;
+  causal_pathway: string;
+}
+
+export interface AdversarialProfileFingerprint {
+  tech: number;
+  duration: number;
+  credit: number;
+  equity: number;
+}
+
+export interface AdversarialRankedResponse {
+  profile: string;
+  inferred_profile: boolean;
+  profile_confidence: number;
+  profile_fingerprint: AdversarialProfileFingerprint;
+  model_version: string;
+  scenarios: AdversarialScenarioItem[];
+  seeds_tried: number;
+  vs_beam_pct: number | null;
+  vulnerability_summary: string;
+  quality_note: string;
+}
+
 // ==================== API CLIENT ====================
 
 export const api = {
@@ -257,7 +318,7 @@ export const api = {
     getRegimeChart: (months = 27): Promise<any[]> =>
       fetchJSON(`/api/v1/dashboard/regime-chart?months=${months}`),
 
-    getTopCausalLinks: (limit = 10): Promise<{ cause: string; effect: string; weight: number; confidence: number }[]> =>
+    getTopCausalLinks: (limit = 10): Promise<{ cause: string; effect: string; weight: number; confidence: number | null }[]> =>
       fetchJSON(`/api/v1/dashboard/top-causal-links?limit=${limit}`),
   },
 
@@ -326,6 +387,25 @@ export const api = {
 
     getSuggestedPrompts: (): Promise<string[]> =>
       fetchJSON('/api/v1/advisor/suggested-prompts'),
+  },
+
+  adversarial: {
+    getRankedScenarios: (
+      holdings: AdversarialHolding[],
+      options?: {
+        n_seeds?: number;
+        top_k?: number;
+        ucb_beta?: number;
+        portfolio_profile?: string;
+      },
+    ): Promise<AdversarialRankedResponse> =>
+      fetchJSON('/api/v1/adversarial/ranked-scenarios', {
+        method: 'POST',
+        body: JSON.stringify({ holdings, ...options }),
+      }),
+
+    getStatus: (): Promise<{ profiles: Record<string, unknown>; loaded_count: number }> =>
+      fetchJSON('/api/v1/adversarial/status'),
   },
 };
 

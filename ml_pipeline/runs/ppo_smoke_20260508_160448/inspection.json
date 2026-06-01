@@ -1,0 +1,104 @@
+{
+  "deterministic": {
+    "distribution": {
+      "n_samples": 100,
+      "unique_joint_actions": 1,
+      "top_joint_share": 1.0,
+      "verdict": "FULLY CONVERGED \u2014 100% on a single action",
+      "targets": {
+        "UNRATE": 100
+      },
+      "families": {
+        "pandemic_exogenous": 100
+      },
+      "magnitudes": {
+        "5.0": 100
+      }
+    },
+    "top_actions": [
+      {
+        "target_var": "UNRATE",
+        "family_name": "pandemic_exogenous",
+        "magnitude": 5.0,
+        "n_picks": 100,
+        "reward_mean": 0.4918650202327979,
+        "reward_std": 0.23339652595983382,
+        "portfolio_loss_mean": 0.031188636084547944,
+        "dfast_breach_mean": 0.5165003092801066,
+        "causal_fidelity_mean": 0.6747540983606559
+      }
+    ],
+    "reward_mean": 0.4918650202327979,
+    "reward_std": 0.23339652595983382,
+    "rejections": 0
+  },
+  "stochastic": {
+    "distribution": {
+      "n_samples": 100,
+      "unique_joint_actions": 22,
+      "top_joint_share": 0.67,
+      "verdict": "STRONGLY CONCENTRATED \u2014 top action 67%, 22 actions used"
+    },
+    "top_actions": [
+      {
+        "target_var": "UNRATE",
+        "family_name": "pandemic_exogenous",
+        "magnitude": 5.0,
+        "n_picks": 67,
+        "reward_mean": 0.5226507315105954,
+        "reward_std": 0.2959271173533561,
+        "portfolio_loss_mean": 0.031716798386063755,
+        "dfast_breach_mean": 0.5890858745681238,
+        "causal_fidelity_mean": 0.6546366528015659
+      },
+      {
+        "target_var": "UNRATE",
+        "family_name": "volatility_shock",
+        "magnitude": 5.0,
+        "n_picks": 5,
+        "reward_mean": 0.2800445504074935,
+        "reward_std": 0.12453822993945801,
+        "portfolio_loss_mean": 0.04778486767138334,
+        "dfast_breach_mean": 0.09665051301320395,
+        "causal_fidelity_mean": 0.6131147540983607
+      },
+      {
+        "target_var": "UNRATE",
+        "family_name": "sovereign_crisis",
+        "magnitude": 5.0,
+        "n_picks": 3,
+        "reward_mean": 0.33929918712444196,
+        "reward_std": 0.11022433869771701,
+        "portfolio_loss_mean": 0.013414947589310874,
+        "dfast_breach_mean": 0.2648832331686228,
+        "causal_fidelity_mean": 0.6448087431693988
+      },
+      {
+        "target_var": "CPIAUCSL",
+        "family_name": "pandemic_exogenous",
+        "magnitude": 5.0,
+        "n_picks": 3,
+        "reward_mean": 0.3271423563700693,
+        "reward_std": 0.036600978465925145,
+        "portfolio_loss_mean": 0.019745488231085483,
+        "dfast_breach_mean": 0.19512160513042665,
+        "causal_fidelity_mean": 0.6994535519125683
+      },
+      {
+        "target_var": "XLV",
+        "family_name": "pandemic_exogenous",
+        "magnitude": 5.0,
+        "n_picks": 2,
+        "reward_mean": 0.41825033113104726,
+        "reward_std": 0.2126975231872027,
+        "portfolio_loss_mean": 0.15839619258030938,
+        "dfast_breach_mean": 0.14839680169163968,
+        "causal_fidelity_mean": 0.6188524590163935
+      }
+    ],
+    "reward_mean": 0.484553455645501,
+    "reward_std": 0.2811210882763316,
+    "rejections": 0
+  },
+  "sanity_flags": []
+}
