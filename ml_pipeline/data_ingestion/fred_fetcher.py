@@ -14,6 +14,7 @@ Variables fetched:
 
 import os
 import sys
+import time
 from datetime import datetime
 
 import pandas as pd
@@ -306,6 +307,7 @@ def fetch_all_series():
 
     for series_id, series_info in FRED_SERIES.items():
         df = fetch_single_series(fred, series_id, series_info)
+        time.sleep(0.5)  # stay under FRED's 120 req/min limit
         if not df.empty:
             all_data.append(df)
 

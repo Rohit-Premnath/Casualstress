@@ -5,25 +5,24 @@ python-dotenv==1.0.1
 
 # Database
 sqlalchemy==2.0.36
-asyncpg==0.30.0
-psycopg2-binary==2.9.10
+psycopg[binary]
 alembic==1.14.1
 
 # Redis
 redis==5.2.1
 
-# Data processing
-pandas==2.2.3
-numpy==2.2.1
-scipy==1.15.0
-statsmodels==0.14.4
+# Data processing (unpinned — exact versions lack Python 3.14 wheels)
+pandas>=3.0
+numpy>=2.4
+scipy>=1.17
+statsmodels>=0.14.6
 
 # Data sources
 fredapi==0.5.2
 yfinance==0.2.51
 
 # CORS and validation
-pydantic==2.10.4
+pydantic>=2.10
 
 # ML inference (adversarial bandit — torch installed via Dockerfile for CPU-only wheel)
 gymnasium==0.29.1

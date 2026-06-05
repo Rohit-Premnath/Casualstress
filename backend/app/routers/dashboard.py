@@ -6,8 +6,8 @@ Reads from the same PostgreSQL database that ml_pipeline writes to.
 
 from fastapi import APIRouter, HTTPException
 from typing import Optional
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import psycopg
+from psycopg.rows import dict_row
 from datetime import datetime, timedelta
 
 from app.config import settings
@@ -16,7 +16,7 @@ router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"])
 
 
 def get_conn():
-    return psycopg2.connect(
+    return psycopg.connect(
         host=settings.POSTGRES_HOST,
         port=settings.POSTGRES_PORT,
         dbname=settings.POSTGRES_DB,
@@ -48,7 +48,7 @@ def _load_preferred_global_graph(cursor):
 async def get_dashboard_summary():
     """Main dashboard summary: current regime, key metrics, system health."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     # Current regime
     cursor.execute("""
@@ -145,7 +145,7 @@ async def get_dashboard_summary():
 async def get_spx_history(days: int = 180):
     """S&P 500 price history for the dashboard chart."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     cursor.execute("""
         SELECT date, raw_value as value
@@ -168,7 +168,7 @@ async def get_spx_history(days: int = 180):
 async def get_regime_chart(months: int = 27):
     """Regime classification timeline for the dashboard chart."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     cursor.execute("""
         SELECT date, regime_name
@@ -221,7 +221,7 @@ async def get_regime_chart(months: int = 27):
 async def get_top_causal_links(limit: int = 10):
     """Top causal links for the dashboard."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     row = _load_preferred_global_graph(cursor)
     cursor.close()

@@ -103,10 +103,10 @@ async def live_check():
 @app.get("/health")
 async def health_check():
     """Health check with database connectivity test."""
-    import psycopg2
+    import psycopg
     db_status = "unknown"
     try:
-        conn = psycopg2.connect(
+        conn = psycopg.connect(
             host=settings.POSTGRES_HOST,
             port=settings.POSTGRES_PORT,
             dbname=settings.POSTGRES_DB,
