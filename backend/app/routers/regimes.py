@@ -5,9 +5,9 @@ Serves regime timeline, current regime, transition matrix, and characteristics.
 
 from collections import Counter, defaultdict
 
-import psycopg2
+import psycopg
 from fastapi import APIRouter
-from psycopg2.extras import RealDictCursor
+from psycopg.rows import dict_row
 
 from app.config import settings
 
@@ -15,7 +15,7 @@ router = APIRouter(prefix="/api/v1/regimes", tags=["regimes"])
 
 
 def get_conn():
-    return psycopg2.connect(
+    return psycopg.connect(
         host=settings.POSTGRES_HOST,
         port=settings.POSTGRES_PORT,
         dbname=settings.POSTGRES_DB,
@@ -52,7 +52,7 @@ def pick_monthly_dominant_regime(counts, probability_sums, last_regime):
 async def get_current_regime():
     """Current regime with confidence and streak."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     cursor.execute("""
         SELECT regime_name, probability, date
@@ -94,7 +94,7 @@ async def get_current_regime():
 async def get_regime_timeline():
     """Monthly dominant regime segments for the long-history timeline chart."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     cursor.execute("""
         SELECT date, regime_name, probability FROM models.regimes ORDER BY date
@@ -178,7 +178,7 @@ async def get_regime_timeline():
 async def get_regime_characteristics():
     """Statistics for each regime: days, VIX mean, SPX return, spreads."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     # Get regime labels joined with key variables
     cursor.execute("""
@@ -225,7 +225,7 @@ async def get_regime_characteristics():
 async def get_transition_matrix():
     """Regime transition probability matrix."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     cursor.execute("""
         SELECT date, regime_name FROM models.regimes ORDER BY date

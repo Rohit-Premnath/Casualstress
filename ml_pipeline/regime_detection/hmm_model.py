@@ -26,7 +26,7 @@ from datetime import datetime
 
 import numpy as np
 import pandas as pd
-from hmmlearn.hmm import GaussianHMM
+from sklearn.mixture import GaussianMixture
 from scipy import stats
 import psycopg2
 from psycopg2.extras import execute_values, Json
@@ -195,19 +195,17 @@ def select_n_states(data):
 
     for n in range(MIN_STATES, MAX_STATES + 1):
         try:
-            model = GaussianHMM(
+            model = GaussianMixture(
                 n_components=n,
                 covariance_type="full",
-                n_iter=200,
+                n_init=3,
                 random_state=42,
+                max_iter=200,
                 tol=0.01,
             )
             model.fit(standardized)
-            score = model.score(standardized)  # log-likelihood
-
-            # Compute BIC: -2 * log_likelihood + k * log(n_samples)
-            n_params = n * (n - 1) + n * data.shape[1] + n * data.shape[1] * (data.shape[1] + 1) / 2
-            bic = -2 * score + n_params * np.log(len(standardized))
+            bic = model.bic(standardized)
+            score = model.score(standardized)
 
             results.append({"n_states": n, "log_likelihood": score, "bic": bic})
             print(f"  {n} states: BIC = {bic:.1f}, Log-Likelihood = {score:.1f}")
@@ -240,12 +238,13 @@ def train_hmm(data, n_states):
     stds = data.std()
     standardized = ((data - means) / stds).values
 
-    # Train HMM
-    model = GaussianHMM(
+    # Train Gaussian Mixture Model (replaces GaussianHMM — no C build needed)
+    model = GaussianMixture(
         n_components=n_states,
         covariance_type="full",
-        n_iter=500,
+        n_init=5,
         random_state=42,
+        max_iter=500,
         tol=0.001,
     )
     model.fit(standardized)
@@ -254,10 +253,15 @@ def train_hmm(data, n_states):
     regime_labels = model.predict(standardized)
     regime_probs = model.predict_proba(standardized)
 
-    # Get transition matrix
-    transition_matrix = model.transmat_
+    # Compute transition matrix empirically from label sequence
+    transition_matrix = np.zeros((n_states, n_states))
+    for i in range(len(regime_labels) - 1):
+        transition_matrix[regime_labels[i], regime_labels[i + 1]] += 1
+    row_sums = transition_matrix.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1
+    transition_matrix = transition_matrix / row_sums
 
-    print(f"  Model converged: {model.monitor_.converged}")
+    print(f"  Model converged: {model.converged_}")
     print(f"  Final log-likelihood: {model.score(standardized):.1f}")
 
     return model, regime_labels, regime_probs, transition_matrix, means, stds

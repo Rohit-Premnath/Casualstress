@@ -323,10 +323,11 @@ export const api = {
   },
 
   causal: {
-    getGraph: (regime?: string, minWeight = 0): Promise<CausalGraphResponse> => {
+    getGraph: (regime?: string, minWeight = 0, limit = 500): Promise<CausalGraphResponse> => {
       const params = new URLSearchParams();
       if (regime) params.set('regime', regime);
       if (minWeight > 0) params.set('min_weight', String(minWeight));
+      params.set('limit', String(limit));
       return fetchJSON(`/api/v1/causal/graph?${params}`);
     },
 

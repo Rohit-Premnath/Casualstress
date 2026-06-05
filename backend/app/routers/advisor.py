@@ -8,8 +8,8 @@ from typing import Any, List
 import os
 import sys
 from pathlib import Path
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import psycopg
+from psycopg.rows import dict_row
 from fastapi import APIRouter
 from pydantic import BaseModel
 
@@ -25,7 +25,7 @@ router = APIRouter(prefix="/api/v1/advisor", tags=["advisor"])
 
 
 def get_conn():
-    return psycopg2.connect(
+    return psycopg.connect(
         host=settings.POSTGRES_HOST,
         port=settings.POSTGRES_PORT,
         dbname=settings.POSTGRES_DB,
@@ -86,7 +86,7 @@ async def chat(request: ChatRequest):
 async def get_suggested_prompts():
     """Return context-aware suggested prompts."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     cursor.execute("""
         SELECT regime_name FROM models.regimes ORDER BY date DESC LIMIT 1

@@ -346,8 +346,15 @@ def fit_regime_var(data, regime_name, max_lag=5, shock_variable=None, train_regi
     """
     if train_regimes:
         regime_data = data[data["regime_name"].isin(train_regimes)].drop(columns=["regime_name"])
+        if len(regime_data) == 0:
+            # Regime names in DB don't match canonical list — use all data as fallback
+            print(f"    WARNING: no rows matched train_regimes {train_regimes}, using all data")
+            regime_data = data.drop(columns=["regime_name"])
     else:
         regime_data = data[data["regime_name"] == regime_name].drop(columns=["regime_name"])
+        if len(regime_data) == 0:
+            print(f"    WARNING: no rows matched regime '{regime_name}', using all data")
+            regime_data = data.drop(columns=["regime_name"])
 
     if len(regime_data.columns) > MAX_VAR_VARIABLES:
         selected_vars = select_var_variables(regime_data, shock_variable)

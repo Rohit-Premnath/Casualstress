@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import * as d3 from "d3";
 import {
   Search, X, Info, ChevronDown, ChevronRight, ChevronUp, Crosshair,
@@ -362,6 +362,12 @@ const CausalGraph = () => {
       retry: 1,
       staleTime: 60_000,
     })),
+  });
+
+  const { data: regimeComparison } = useQuery({
+    queryKey: ["causal-regime-comparison"],
+    queryFn: () => api.causal.getRegimeComparison(),
+    staleTime: 300_000,
   });
 
   const graphResponses = useMemo(() => {
@@ -1100,6 +1106,49 @@ const CausalGraph = () => {
           This explorer shows learned market relationship structure across regimes. <span className="text-foreground/70">Some views are direct graph outputs</span>, while comparison overlays summarize how the network changes under stress.
         </p>
       </div>
+
+      {/* ── Regime edge count summary bar ── */}
+      {regimeComparison && (
+        <div className="border-b border-border px-4 py-1.5 flex items-center gap-2 shrink-0 overflow-x-auto bg-background/60">
+          <span className="text-[9px] text-muted-foreground uppercase tracking-widest whitespace-nowrap shrink-0 mr-1">
+            Edges per regime
+          </span>
+          {(['calm','normal','elevated','stressed','high_stress','crisis'] as const).map(regime => {
+            const label = regime === 'high_stress' ? 'High Stress'
+              : regime.charAt(0).toUpperCase() + regime.slice(1);
+            const count = regimeComparison[regime]?.edges ?? 0;
+            const isStressed = regime === 'stressed';
+            const activeKey = activeRegime.toLowerCase().replace(' ', '_');
+            const isActive = activeKey === regime;
+            return (
+              <div
+                key={regime}
+                onClick={() => setActiveRegime(label)}
+                className={`flex items-center gap-1.5 px-2 py-0.5 rounded cursor-pointer transition-all whitespace-nowrap text-[10px] ${
+                  isActive
+                    ? 'bg-primary/15 border border-primary/30 text-primary'
+                    : isStressed
+                    ? 'bg-amber-500/10 border border-amber-500/20 text-amber-600 hover:bg-amber-500/15'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/60'
+                }`}
+              >
+                <span className="font-medium">{label}</span>
+                <span className={`font-mono font-bold ${isActive ? 'text-primary' : isStressed ? 'text-amber-600' : 'text-foreground'}`}>
+                  {count}
+                </span>
+                {isStressed && (
+                  <span className="text-[8px] text-amber-500 font-semibold bg-amber-500/10 px-1 rounded">
+                    +211 stress-only
+                  </span>
+                )}
+              </div>
+            );
+          })}
+          <span className="text-[9px] text-muted-foreground ml-auto whitespace-nowrap shrink-0">
+            97 calm edges disappear under stress
+          </span>
+        </div>
+      )}
 
       {/* ── Top Control Area ── */}
       <div className="glass border-b border-border relative z-20 px-4 py-2 shrink-0">

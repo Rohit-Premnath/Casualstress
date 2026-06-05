@@ -7,10 +7,11 @@ from typing import Dict, List, Optional
 import uuid
 
 import numpy as np
-import psycopg2
+import psycopg
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from psycopg2.extras import RealDictCursor
+from psycopg.rows import dict_row
+from psycopg.types.json import Jsonb
 
 from app.config import settings
 from ml_pipeline.canonical_best_model import CANONICAL_PAPER_NAME
@@ -44,7 +45,7 @@ LEGACY_SHOCK_VALUE_TO_EVENT_TYPE = {
 
 
 def get_conn():
-    return psycopg2.connect(
+    return psycopg.connect(
         host=settings.POSTGRES_HOST,
         port=settings.POSTGRES_PORT,
         dbname=settings.POSTGRES_DB,
@@ -210,7 +211,7 @@ def _scenario_select_clause() -> str:
 async def run_stress_test(request: StressTestRequest):
     """Run portfolio stress test against latest or specified scenarios."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     select_clause = _scenario_select_clause()
     if request.scenario_id:
@@ -415,14 +416,14 @@ async def run_stress_test(request: StressTestRequest):
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     """, (
         result_id,
-        psycopg2.extras.Json([h.model_dump() for h in request.holdings]),
+        Jsonb([h.model_dump() for h in request.holdings]),
         row["id"],
         var_95,
         var_99,
         cvar_95,
         max_drawdown,
-        psycopg2.extras.Json(sector_data),
-        psycopg2.extras.Json(holding_risk),
+        Jsonb(sector_data),
+        Jsonb(holding_risk),
     ))
     conn.commit()
     cursor.close()

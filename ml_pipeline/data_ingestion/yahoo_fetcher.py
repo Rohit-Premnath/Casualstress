@@ -164,35 +164,39 @@ def fetch_single_ticker(ticker, ticker_info):
 
     try:
         # Download data from Yahoo Finance
+        # auto_adjust=True is the new default in yfinance; use it for pandas 3.x compat
         data = yf.download(
             ticker,
             start=START_DATE,
             end=datetime.now().strftime("%Y-%m-%d"),
             progress=False,
-            auto_adjust=False,
+            auto_adjust=True,
         )
 
         if data.empty:
             print("FAILED - No data returned")
             return pd.DataFrame()
 
-        # Handle multi-level columns that yfinance sometimes returns
+        # Flatten MultiIndex columns (yfinance wraps single-ticker downloads too)
         if isinstance(data.columns, pd.MultiIndex):
-            data.columns = data.columns.get_level_values(0)
+            data.columns = [col[0] for col in data.columns]
 
         # Reset index to get date as a column
         data = data.reset_index()
 
-        # Rename columns to match our schema
+        # Rename columns — with auto_adjust=True there is no 'Adj Close' column
         data = data.rename(columns={
             "Date": "date",
             "Open": "open_price",
             "High": "high_price",
             "Low": "low_price",
             "Close": "close_price",
-            "Adj Close": "adj_close",
             "Volume": "volume",
         })
+
+        # With auto_adjust=True the Close column is already adjusted; mirror it
+        if "adj_close" not in data.columns:
+            data["adj_close"] = data["close_price"]
 
         # Add ticker column
         data["ticker"] = ticker

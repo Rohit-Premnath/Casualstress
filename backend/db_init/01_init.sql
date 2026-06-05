@@ -1,5 +1,10 @@
--- Enable required extensions
-CREATE EXTENSION IF NOT EXISTS timescaledb;
+-- Enable required extensions (TimescaleDB optional — plain PostgreSQL works without it)
+DO $$
+BEGIN
+    CREATE EXTENSION IF NOT EXISTS timescaledb;
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'TimescaleDB not available, continuing with plain PostgreSQL';
+END $$;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- ============================================
@@ -48,12 +53,13 @@ CREATE TABLE IF NOT EXISTS processed.time_series_data (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Convert to TimescaleDB hypertable for fast time-range queries
-SELECT create_hypertable(
-    'processed.time_series_data',
-    'date',
-    if_not_exists => TRUE
-);
+-- Convert to TimescaleDB hypertable if available, otherwise use plain table
+DO $$
+BEGIN
+    PERFORM create_hypertable('processed.time_series_data', 'date', if_not_exists => TRUE);
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Skipping hypertable creation (TimescaleDB not available)';
+END $$;
 
 -- Create index for fast lookups
 CREATE INDEX IF NOT EXISTS idx_ts_variable_date

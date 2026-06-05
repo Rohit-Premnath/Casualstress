@@ -11,10 +11,10 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-import psycopg2
+import psycopg
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
-from psycopg2.extras import RealDictCursor
+from psycopg.rows import dict_row
 
 from app.config import settings
 
@@ -46,7 +46,7 @@ router = APIRouter(prefix="/api/v1/scenarios", tags=["scenarios"])
 
 
 def get_conn():
-    return psycopg2.connect(
+    return psycopg.connect(
         host=settings.POSTGRES_HOST,
         port=settings.POSTGRES_PORT,
         dbname=settings.POSTGRES_DB,
@@ -242,7 +242,7 @@ def _current_values_for_variables(tickers: List[str]) -> Dict[str, dict]:
         return {}
 
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
     current_values: Dict[str, dict] = {}
 
     for ticker in tickers:
@@ -462,7 +462,7 @@ def _build_scenario_response(
 
 def _load_latest_row(event_type: Optional[str] = None) -> Optional[dict]:
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
     has_event_type = _scenarios_has_event_type_column()
     has_anchor_variable = _scenarios_has_anchor_variable_column()
     selected_columns = [
@@ -622,7 +622,7 @@ async def generate_scenario(request: GenerateScenarioRequest):
 async def list_scenarios():
     """List recent scenario sets."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
     has_event_type = _scenarios_has_event_type_column()
     if has_event_type:
         cursor.execute(

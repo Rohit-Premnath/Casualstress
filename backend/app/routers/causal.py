@@ -5,8 +5,8 @@ Serves the causal graph data for visualization.
 
 from fastapi import APIRouter, Query
 from typing import Optional
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import psycopg
+from psycopg.rows import dict_row
 
 from app.config import settings
 
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/api/v1/causal", tags=["causal"])
 
 
 def get_conn():
-    return psycopg2.connect(
+    return psycopg.connect(
         host=settings.POSTGRES_HOST,
         port=settings.POSTGRES_PORT,
         dbname=settings.POSTGRES_DB,
@@ -128,11 +128,11 @@ MAJOR_NODES = {"^GSPC", "^VIX", "DGS10", "BAMLH0A0HYM2", "CL=F", "FEDFUNDS", "UN
 async def get_causal_graph(
     regime: Optional[str] = Query(None, description="Filter edges by regime: Calm, Normal, Elevated, Stressed, High Stress, Crisis, or ALL"),
     min_weight: float = Query(0.0, description="Minimum absolute edge weight to include"),
-    limit: int = Query(200, description="Maximum number of edges to return"),
+    limit: int = Query(500, description="Maximum number of edges to return"),
 ):
     """Full causal graph with nodes and edges."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     # Try regime-specific graph first
     graph_method = None
@@ -205,7 +205,7 @@ async def get_causal_graph(
 async def get_regime_comparison():
     """Compare causal graph structure across regimes."""
     conn = get_conn()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor = conn.cursor(row_factory=dict_row)
 
     regimes = ["calm", "normal", "elevated", "stressed", "high_stress", "crisis"]
     comparison = {}
