@@ -7,7 +7,12 @@
  *   const { data } = useQuery({ queryKey: ['dashboard'], queryFn: api.dashboard.getSummary });
  */
 
-const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+const API_BASE = (
+  configuredApiUrl && configuredApiUrl !== 'REPLACE_WITH_NGROK_BACKEND_URL'
+    ? configuredApiUrl
+    : 'http://localhost:8000'
+).replace(/\/$/, '');
 
 function buildUrl(path: string): string {
   if (!API_BASE) return path;

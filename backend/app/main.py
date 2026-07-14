@@ -7,6 +7,7 @@ All data comes from PostgreSQL — the same database ml_pipeline writes to.
 
 import asyncio
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
 
@@ -17,6 +18,28 @@ from app.config import settings
 from app.routers import dashboard, causal, regimes, scenarios, stress_test, advisor, adversarial
 
 logger = logging.getLogger("causalstress.api")
+
+
+def _split_origins(value: str) -> list[str]:
+    return [origin.strip().rstrip("/") for origin in value.split(",") if origin.strip()]
+
+
+# Demo CORS: keep localhost for local dev and allow a one-off public frontend
+# origin through ALLOWED_ORIGIN. The regex covers ngrok's rotating demo URLs
+# without using insecure global "*" CORS while credentials are enabled.
+DEMO_ALLOWED_ORIGINS = list(
+    dict.fromkeys(
+        [
+            *settings.CORS_ORIGINS,
+            "http://localhost:8080",
+            *_split_origins(os.getenv("ALLOWED_ORIGIN", "")),
+        ]
+    )
+)
+DEMO_ALLOWED_ORIGIN_REGEX = (
+    os.getenv("ALLOWED_ORIGIN_REGEX", "").strip()
+    or r"^https://.*\.(ngrok-free\.app|ngrok\.app|ngrok\.io)$"
+)
 
 
 @asynccontextmanager
@@ -44,7 +67,8 @@ app = FastAPI(
 # CORS - allow frontend to talk to backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=DEMO_ALLOWED_ORIGINS,
+    allow_origin_regex=DEMO_ALLOWED_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

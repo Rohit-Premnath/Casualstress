@@ -6,6 +6,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    allowedHosts: [".ngrok-free.app", ".ngrok.app", ".ngrok.io"],
     hmr: {
       overlay: false,
     },
