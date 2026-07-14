@@ -115,7 +115,7 @@ Keep it under 400 words. Write as if speaking to an intelligent person who
 is NOT a finance expert. No bullet points — write in flowing paragraphs."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=800,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -190,7 +190,7 @@ Respond ONLY with a JSON object (no markdown, no explanation):
 }}"""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=500,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -258,7 +258,7 @@ Use professional but clear language. A board member should understand this.
 Reference specific numbers. Under 400 words. No bullet points."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=800,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -316,7 +316,7 @@ Keep it concise — under 250 words total. Write for an intelligent person,
 not a finance PhD."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=500,
         messages=[{"role": "user", "content": prompt}],
     )

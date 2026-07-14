@@ -670,7 +670,7 @@ class AdvisorChat:
 
         # Initial API call
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-5",
             max_tokens=1500,
             system=SYSTEM_PROMPT,
             tools=TOOLS,
@@ -718,7 +718,7 @@ class AdvisorChat:
 
             # Continue the conversation with tool results
             response = self.client.messages.create(
-                model="claude-sonnet-4-20250514",
+                model="claude-sonnet-5",
                 max_tokens=1500,
                 system=SYSTEM_PROMPT,
                 tools=TOOLS,
